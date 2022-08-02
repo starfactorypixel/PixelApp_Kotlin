@@ -20,4 +20,4 @@ dependencyResolutionManagement {
 
 }
 rootProject.name = "pixel"
-include(":app")
+include(":client:android")

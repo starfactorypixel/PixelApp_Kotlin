@@ -15,7 +15,7 @@ import ru.starfactory.pixel.ui.theme.PixelTheme
 
 
 @Composable
-fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
+fun SettingsView(viewModel: SettingsViewModel = viewModel()) {
     val state by viewModel.state.collectAsState()
     SettingsContent(state)
 }

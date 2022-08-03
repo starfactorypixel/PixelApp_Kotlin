@@ -11,16 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ru.starfactory.pixel.ui.screen.dashboard.DashboardScreen
-import ru.starfactory.pixel.ui.screen.main_menu.MainMenuScreen
+import ru.starfactory.pixel.ui.screen.main_menu.MainMenuView
 
 @Composable
-fun MainScreen() {
+fun MainView() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
     Scaffold(
         scaffoldState = scaffoldState,
-        drawerContent = { MainMenuScreen() }
+        drawerContent = { MainMenuView() }
     ) {
         Box(Modifier.padding(it)) {
             IconButton(

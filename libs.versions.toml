@@ -6,6 +6,7 @@ compose-core = "1.2.0"
 
 # Other
 kodein = "7.12.0"
+decompose = "0.8.0"
 
 gradlePlugins-android = "7.2.0"
 
@@ -20,5 +21,9 @@ kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-co
 
 # Kodein
 kodein-core = { module = "org.kodein.di:kodein-di", version.ref = "kodein" }
+kodein-compose = { module = "org.kodein.di:kodein-di-framework-compose", version.ref = "kodein" }
 
-
+# Decompose
+decompose-core = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
+decompose-jetpack = { module = "com.arkivanov.decompose:extensions-compose-jetpack", version.ref = "decompose" }
+decompose-android = { module = "com.arkivanov.decompose:extensions-android", version.ref = "decompose" }

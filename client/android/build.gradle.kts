@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin.Companion.isKap
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -51,6 +52,13 @@ android {
 }
 
 dependencies { // TODO move to version catalog
+    implementation(libs.kodein.core)
+    implementation(libs.kodein.compose)
+
+    implementation(libs.decompose.core)
+    implementation(libs.decompose.jetpack)
+    implementation(libs.decompose.android)
+
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.compose.ui:ui:${libs.versions.compose.core.get()}")
     implementation("androidx.compose.material:material:${libs.versions.compose.core.get()}")

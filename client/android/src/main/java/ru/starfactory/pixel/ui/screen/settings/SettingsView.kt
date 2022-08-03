@@ -10,12 +10,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import ru.starfactory.core.decompose.view_model.decomposeViewModel
+import ru.starfactory.pixel.domain.theme.Theme
 import ru.starfactory.pixel.ui.theme.PixelTheme
 
 
 @Composable
-fun SettingsView(viewModel: SettingsViewModel = viewModel()) {
+fun SettingsView(viewModel: SettingsViewModel = decomposeViewModel()) {
     val state by viewModel.state.collectAsState()
     SettingsContent(
         state,
@@ -26,7 +27,7 @@ fun SettingsView(viewModel: SettingsViewModel = viewModel()) {
 @Composable
 private fun SettingsContent(
     state: SettingsViewState,
-    onChangeTheme: (SettingsViewState.Theme) -> Unit = {},
+    onChangeTheme: (Theme) -> Unit = {},
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -44,7 +45,7 @@ private fun SettingsContent(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
                 ) {
-                    SettingsViewState.Theme.values().forEach { theme ->
+                    Theme.values().forEach { theme ->
                         DropdownMenuItem(
                             onClick = {
                                 expanded = false
@@ -64,6 +65,6 @@ private fun SettingsContent(
 @Composable
 fun SettingsContentPreview() {
     PixelTheme(darkTheme = true) {
-        SettingsContent(SettingsViewState(SettingsViewState.Theme.SYSTEM))
+        SettingsContent(SettingsViewState(Theme.SYSTEM))
     }
 }

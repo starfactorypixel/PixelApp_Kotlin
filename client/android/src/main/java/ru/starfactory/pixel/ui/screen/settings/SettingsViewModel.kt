@@ -1,17 +1,22 @@
 package ru.starfactory.pixel.ui.screen.settings
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import ru.starfactory.core.decompose.view_model.ViewModel
+import ru.starfactory.pixel.domain.theme.Theme
+import ru.starfactory.pixel.domain.theme.ThemeInteractor
 
-class SettingsViewModel : ViewModel() {
-    val state = MutableStateFlow(SettingsViewState(SettingsViewState.Theme.SYSTEM))
+class SettingsViewModel(
+    private val themeInteractor: ThemeInteractor,
+) : ViewModel() {
+    val state = themeInteractor.observeCurrentTheme().map { SettingsViewState(it) }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, SettingsViewState(Theme.SYSTEM))
 
-    fun onChangeTheme(theme: SettingsViewState.Theme) {
-        state.update {
-            it.copy(theme = theme)
+    fun onChangeTheme(theme: Theme) {
+        viewModelScope.launch {
+            themeInteractor.setCurrentTheme(theme)
         }
     }
 }

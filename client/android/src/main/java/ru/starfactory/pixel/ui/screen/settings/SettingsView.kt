@@ -17,11 +17,17 @@ import ru.starfactory.pixel.ui.theme.PixelTheme
 @Composable
 fun SettingsView(viewModel: SettingsViewModel = viewModel()) {
     val state by viewModel.state.collectAsState()
-    SettingsContent(state)
+    SettingsContent(
+        state,
+        onChangeTheme = { viewModel.onChangeTheme(it) }
+    )
 }
 
 @Composable
-private fun SettingsContent(state: SettingsViewState) {
+private fun SettingsContent(
+    state: SettingsViewState,
+    onChangeTheme: (SettingsViewState.Theme) -> Unit = {},
+) {
     var expanded by remember { mutableStateOf(false) }
 
     Card(
@@ -37,10 +43,13 @@ private fun SettingsContent(state: SettingsViewState) {
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
-                    ) {
+                ) {
                     SettingsViewState.Theme.values().forEach { theme ->
                         DropdownMenuItem(
-                            onClick = { expanded = false }
+                            onClick = {
+                                expanded = false
+                                onChangeTheme(theme)
+                            }
                         ) {
                             Text(text = theme.name)
                         }

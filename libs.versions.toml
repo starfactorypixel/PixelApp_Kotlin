@@ -4,6 +4,9 @@ kotlin-core = "1.7.0"
 kotlin-coroutines = "1.6.2"
 compose-core = "1.2.0"
 
+# Android
+android-datastore = "1.0.0"
+
 # Other
 kodein = "7.12.0"
 decompose = "0.8.0"
@@ -18,6 +21,9 @@ gradlePlugins-android = { module = "com.android.tools.build:gradle", version.ref
 
 # Kotlin
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+
+# Android
+android-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "android-datastore" }
 
 # Kodein
 kodein-core = { module = "org.kodein.di:kodein-di", version.ref = "kodein" }

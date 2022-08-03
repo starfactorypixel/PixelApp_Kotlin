@@ -59,6 +59,8 @@ dependencies { // TODO move to version catalog
     implementation(libs.decompose.jetpack)
     implementation(libs.decompose.android)
 
+    implementation(libs.android.datastore.preferences)
+
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.compose.ui:ui:${libs.versions.compose.core.get()}")
     implementation("androidx.compose.material:material:${libs.versions.compose.core.get()}")

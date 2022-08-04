@@ -8,10 +8,15 @@ import ru.starfactory.pixel.domain.theme.ThemeInteractor
 import ru.starfactory.pixel.domain.theme.ThemeInteractorImpl
 import ru.starfactory.pixel.repository.theme.ThemeRepository
 import ru.starfactory.pixel.repository.theme.ThemeRepositoryImpl
+import ru.starfactory.pixel.service.usb.UsbService
+import ru.starfactory.pixel.service.usb.UsbServiceImpl
 import ru.starfactory.pixel.ui.screen.settings.SettingsViewModel
 
 @Suppress("FunctionName")
 fun MainModule() = DI.Module("main-module") {
+    // Service
+    bindSingleton<UsbService> { UsbServiceImpl(instance()) }
+
     // Repository
     bindSingleton<ThemeRepository> { ThemeRepositoryImpl(instance()) }
 

@@ -3,6 +3,7 @@ package ru.starfactory.pixel.ui.screen
 import androidx.compose.runtime.Composable
 import kotlinx.parcelize.Parcelize
 import ru.starfactory.core.navigation.Screen
+import ru.starfactory.pixel.ui.screen.debug.DebugView
 import ru.starfactory.pixel.ui.screen.main.MainView
 import ru.starfactory.pixel.ui.screen.settings.SettingsView
 
@@ -13,6 +14,15 @@ object MainScreen : Screen {
         MainView()
     }
 }
+
+@Parcelize
+object DebugScreen : Screen {
+    @Composable
+    override fun ScreenView() {
+        DebugView()
+    }
+}
+
 
 @Parcelize
 object SettingsScreen : Screen {

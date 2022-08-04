@@ -18,12 +18,16 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.push
 import ru.starfactory.core.navigation.ui.LocalNavigation
 import ru.starfactory.pixel.R
+import ru.starfactory.pixel.ui.screen.DebugScreen
 import ru.starfactory.pixel.ui.screen.SettingsScreen
 
 @Composable
 fun MainMenuView() {
     val navigation = LocalNavigation.current
-    MainMenuContent(onClickSettings = { navigation.push(SettingsScreen) })
+    MainMenuContent(
+        onClickDebug = { navigation.push(DebugScreen) },
+        onClickSettings = { navigation.push(SettingsScreen) }
+    )
 }
 
 @Composable

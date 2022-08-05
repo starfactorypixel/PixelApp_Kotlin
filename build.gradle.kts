@@ -13,3 +13,7 @@ buildscript {
 tasks.register<Delete>("clean") {
     delete(rootProject.buildDir)
 }
+
+tasks.register("ci") {
+    dependsOn(":client:android:assembleDebug")
+}

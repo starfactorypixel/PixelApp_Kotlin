@@ -22,11 +22,20 @@ import ru.starfactory.pixel.ui.screen.DebugScreen
 import ru.starfactory.pixel.ui.screen.SettingsScreen
 
 @Composable
-fun MainMenuView() {
+fun MainMenuView(
+    onCloseRequest: () -> Unit = {}
+) {
     val navigation = LocalNavigation.current
+
     MainMenuContent(
-        onClickDebug = { navigation.push(DebugScreen) },
-        onClickSettings = { navigation.push(SettingsScreen) }
+        onClickDebug = {
+            navigation.push(DebugScreen)
+            onCloseRequest()
+        },
+        onClickSettings = {
+            navigation.push(SettingsScreen)
+            onCloseRequest()
+        }
     )
 }
 

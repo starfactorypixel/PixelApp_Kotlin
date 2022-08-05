@@ -1,5 +1,6 @@
 package ru.starfactory.pixel.ui.screen.main
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -18,9 +19,15 @@ fun MainView() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
+    val closeDrawer: () -> Unit = {
+        scope.launch { scaffoldState.drawerState.close() }
+    }
+
+    BackHandler(onBack = closeDrawer, enabled = scaffoldState.drawerState.isOpen)
+
     Scaffold(
         scaffoldState = scaffoldState,
-        drawerContent = { MainMenuView() }
+        drawerContent = { MainMenuView(onCloseRequest = closeDrawer) }
     ) {
         Box(Modifier.padding(it)) {
             IconButton(

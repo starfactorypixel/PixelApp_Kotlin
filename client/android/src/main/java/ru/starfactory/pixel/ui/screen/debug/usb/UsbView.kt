@@ -49,12 +49,12 @@ fun UsbHasDevices(devices: List<UsbViewState.UsbDeviceState>) {
                 Text(text = it.name, style = MaterialTheme.typography.h6)
                 Row {
                     Text(text = "Vendor", Modifier.weight(1f))
-                    Text(text = "ID:${it.vendorId}", Modifier.weight(1f))
+                    Text(text = "ID:0x${it.vendorId.toString(16)}", Modifier.weight(1f))
                     Text(text = "Name:${it.vendorName}", Modifier.weight(2f))
                 }
                 Row {
                     Text(text = "Product", Modifier.weight(1f))
-                    Text(text = "ID:${it.productId}", Modifier.weight(1f))
+                    Text(text = "ID:${it.productId.toString(16)}", Modifier.weight(1f))
                     Text(text = "Name:${it.productName}", Modifier.weight(2f))
                 }
             }

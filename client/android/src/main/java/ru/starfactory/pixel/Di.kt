@@ -8,6 +8,8 @@ import ru.starfactory.pixel.domain.theme.ThemeInteractor
 import ru.starfactory.pixel.domain.theme.ThemeInteractorImpl
 import ru.starfactory.pixel.domain.usb.UsbInteractor
 import ru.starfactory.pixel.domain.usb.UsbInteractorImpl
+import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractor
+import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractorImpl
 import ru.starfactory.pixel.repository.theme.ThemeRepository
 import ru.starfactory.pixel.repository.theme.ThemeRepositoryImpl
 import ru.starfactory.pixel.service.usb.UsbService
@@ -29,6 +31,7 @@ fun MainModule() = DI.Module("main-module") {
     // Domain
     bindSingleton<ThemeInteractor> { ThemeInteractorImpl(instance()) }
     bindSingleton<UsbInteractor> { UsbInteractorImpl(instance()) }
+    bindSingleton<UsbSerialInteractor> { UsbSerialInteractorImpl(instance()) }
 
     // View Models
     bindProvider { SettingsViewModel(instance()) }

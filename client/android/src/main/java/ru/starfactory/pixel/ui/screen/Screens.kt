@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.pixel.ui.screen.debug.DebugView
 import ru.starfactory.pixel.ui.screen.debug.usb.UsbView
+import ru.starfactory.pixel.ui.screen.debug.usb_serial.UsbSerialView
 import ru.starfactory.pixel.ui.screen.main.MainView
 import ru.starfactory.pixel.ui.screen.settings.SettingsView
 
@@ -29,6 +30,14 @@ object UsbScreen : Screen {
     @Composable
     override fun ScreenView() {
         UsbView()
+    }
+}
+
+@Parcelize
+object UsbSerialScreen : Screen {
+    @Composable
+    override fun ScreenView() {
+        UsbSerialView()
     }
 }
 

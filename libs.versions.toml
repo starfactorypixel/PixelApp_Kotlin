@@ -10,6 +10,7 @@ android-datastore = "1.0.0"
 # Other
 kodein = "7.12.0"
 decompose = "0.8.0"
+serial-usb = "3.4.6"
 
 gradlePlugins-android = "7.2.0"
 
@@ -33,3 +34,6 @@ kodein-compose = { module = "org.kodein.di:kodein-di-framework-compose", version
 decompose-core = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-jetpack = { module = "com.arkivanov.decompose:extensions-compose-jetpack", version.ref = "decompose" }
 decompose-android = { module = "com.arkivanov.decompose:extensions-android", version.ref = "decompose" }
+
+# Oher
+serial-usb = { module = "com.github.mik3y:usb-serial-for-android", version.ref = "serial-usb" }

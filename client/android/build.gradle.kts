@@ -61,6 +61,8 @@ dependencies { // TODO move to version catalog
 
     implementation(libs.android.datastore.preferences)
 
+    implementation(libs.serial.usb)
+
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.compose.ui:ui:${libs.versions.compose.core.get()}")
     implementation("androidx.compose.material:material:${libs.versions.compose.core.get()}")

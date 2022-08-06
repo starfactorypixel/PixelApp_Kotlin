@@ -19,6 +19,8 @@ interface UsbService {
     fun observeUsbDevices(): Flow<Map<String, UsbDevice>>
     fun getUsbDevices(): Map<String, UsbDevice>
     suspend fun requestPermission(device: UsbDevice): Boolean
+
+    fun getRawManager(): UsbManager
 }
 
 class UsbServiceImpl(private val context: Context) : UsbService {
@@ -60,6 +62,10 @@ class UsbServiceImpl(private val context: Context) : UsbService {
 
             response.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)
         }
+    }
+
+    override fun getRawManager(): UsbManager {
+        return usbManager
     }
 
     companion object {

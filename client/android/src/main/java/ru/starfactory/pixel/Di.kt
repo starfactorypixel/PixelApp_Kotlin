@@ -22,7 +22,7 @@ import ru.starfactory.pixel.ui.screen.settings.SettingsViewModel
 @Suppress("FunctionName")
 fun MainModule() = DI.Module("main-module") {
     // Service
-    bindSingleton<UsbService> { UsbServiceImpl(instance()) }
+    bindSingleton<UsbService> { UsbServiceImpl(instance(), instance()) }
     bindSingleton<UsbSerialService> { UsbSerialServiceImpl(instance()) }
 
     // Repository

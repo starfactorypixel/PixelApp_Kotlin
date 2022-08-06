@@ -12,8 +12,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import ru.starfactory.core.utils.observeBroadcastIntents
+import ru.starfactory.core.utils.shareDefault
 import ru.starfactory.pixel.Tag
-import java.time.Duration
 
 interface UsbService {
     fun observeUsbDevices(): Flow<Map<String, UsbDevice>>
@@ -43,14 +43,12 @@ class UsbServiceImpl(
             .onStart { Log.i(TAG, "Start observing usb devices") }
             .onCompletion { Log.i(TAG, "Stop observing usb devices") }
             .onEach { Log.i(TAG, "Usb devices: ${it.keys}") }
-            .shareIn(scope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 1000, replayExpirationMillis = 0), 1)
+            .shareDefault(scope)
     }
 
     override fun observeUsbDevices(): Flow<Map<String, UsbDevice>> = usbDevicesObservable
 
-    override fun getUsbDevices(): Map<String, UsbDevice> {
-        return usbManager.deviceList
-    }
+    override fun getUsbDevices(): Map<String, UsbDevice> = usbManager.deviceList
 
     override suspend fun requestPermission(device: UsbDevice): Boolean {
         if (usbManager.hasPermission(device)) return true
@@ -73,9 +71,7 @@ class UsbServiceImpl(
         }
     }
 
-    override fun getRawManager(): UsbManager {
-        return usbManager
-    }
+    override fun getRawManager(): UsbManager = usbManager
 
     companion object {
         private const val TAG = Tag.USB

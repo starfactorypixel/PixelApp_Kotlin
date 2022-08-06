@@ -17,13 +17,14 @@ import ru.starfactory.pixel.service.usb.UsbServiceImpl
 import ru.starfactory.pixel.service.usb_serial.UsbSerialService
 import ru.starfactory.pixel.service.usb_serial.UsbSerialServiceImpl
 import ru.starfactory.pixel.ui.screen.debug.usb.UsbViewModel
+import ru.starfactory.pixel.ui.screen.debug.usb_serial.UsbSerialViewModel
 import ru.starfactory.pixel.ui.screen.settings.SettingsViewModel
 
 @Suppress("FunctionName")
 fun MainModule() = DI.Module("main-module") {
     // Service
     bindSingleton<UsbService> { UsbServiceImpl(instance(), instance()) }
-    bindSingleton<UsbSerialService> { UsbSerialServiceImpl(instance()) }
+    bindSingleton<UsbSerialService> { UsbSerialServiceImpl(instance(), instance()) }
 
     // Repository
     bindSingleton<ThemeRepository> { ThemeRepositoryImpl(instance()) }
@@ -36,4 +37,5 @@ fun MainModule() = DI.Module("main-module") {
     // View Models
     bindProvider { SettingsViewModel(instance()) }
     bindProvider { UsbViewModel(instance()) }
+    bindProvider { UsbSerialViewModel(instance()) }
 }

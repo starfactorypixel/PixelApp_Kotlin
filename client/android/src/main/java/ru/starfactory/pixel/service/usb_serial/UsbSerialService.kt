@@ -5,23 +5,37 @@ import com.hoho.android.usbserial.driver.CdcAcmSerialDriver
 import com.hoho.android.usbserial.driver.ProbeTable
 import com.hoho.android.usbserial.driver.UsbSerialPort
 import com.hoho.android.usbserial.driver.UsbSerialProber
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
+import ru.starfactory.core.utils.shareDefault
 import ru.starfactory.pixel.Tag
 import ru.starfactory.pixel.service.usb.UsbService
 
 interface UsbSerialService {
+    fun observeUsbSerialDevices(): Flow<Map<String, UsbSerialDevice>>
 }
 
-class UsbSerialServiceImpl(private val usbService: UsbService) : UsbSerialService {
+class UsbSerialServiceImpl(
+    private val usbService: UsbService,
+    private val scope: CoroutineScope,
+) : UsbSerialService {
     private val usbManager = usbService.getRawManager()
 
     //TODO Sumin: дописать сюда или законтребьютить в либу странный vendorId у моей ардуинки
     private val prober = UsbSerialProber.getDefaultProber()
+
+    private val usbSerialDevicesObservable: Flow<Map<String, UsbSerialDevice>> =
+        usbService.observeUsbDevices().map { devices ->
+            devices.mapValues { UsbSerialDevice(it.value, prober.probeDevice(it.value)) }
+        }
+            .shareDefault(scope)
+
+    override fun observeUsbSerialDevices(): Flow<Map<String, UsbSerialDevice>> = usbSerialDevicesObservable
 
     fun test() {
         GlobalScope.launch {

@@ -1,9 +1,6 @@
 package ru.starfactory.pixel
 
-import org.kodein.di.DI
-import org.kodein.di.bindProvider
-import org.kodein.di.bindSingleton
-import org.kodein.di.instance
+import org.kodein.di.*
 import ru.starfactory.pixel.domain.theme.ThemeInteractor
 import ru.starfactory.pixel.domain.theme.ThemeInteractorImpl
 import ru.starfactory.pixel.domain.usb.UsbInteractor
@@ -18,6 +15,7 @@ import ru.starfactory.pixel.service.usb_serial.UsbSerialService
 import ru.starfactory.pixel.service.usb_serial.UsbSerialServiceImpl
 import ru.starfactory.pixel.ui.screen.debug.usb.UsbViewModel
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.UsbSerialViewModel
+import ru.starfactory.pixel.ui.screen.debug.usb_serial.terminal.UsbSerialTerminalViewModel
 import ru.starfactory.pixel.ui.screen.settings.SettingsViewModel
 
 @Suppress("FunctionName")
@@ -38,4 +36,5 @@ fun MainModule() = DI.Module("main-module") {
     bindProvider { SettingsViewModel(instance()) }
     bindProvider { UsbViewModel(instance()) }
     bindProvider { UsbSerialViewModel(instance(), instance()) }
+    bindFactory<String, UsbSerialTerminalViewModel> { UsbSerialTerminalViewModel(instance(), it) }
 }

@@ -15,12 +15,13 @@ import ru.starfactory.core.navigation.ui.LocalRootNavigationHolder
 import ru.starfactory.core.navigation.ui.NavigationContentView
 import ru.starfactory.core.navigation.ui.defaultChildStack
 import ru.starfactory.pixel.ui.screen.MainScreen
+import ru.starfactory.pixel.ui.screen.UsbSerialScreen
 import ru.starfactory.pixel.ui.theme.PixelTheme
 
 @Composable
 fun RootView(componentContext: ComponentContext) {
     val navigation = remember { StackNavigation<Screen>() }
-    val childStack = componentContext.defaultChildStack(navigation, MainScreen)
+    val childStack = componentContext.defaultChildStack(navigation, UsbSerialScreen)
 
     LocalComponentContextHolder(componentContext) {
         LocalRootNavigationHolder(navigation) {

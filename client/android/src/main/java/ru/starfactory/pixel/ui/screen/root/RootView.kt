@@ -8,14 +8,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.value.getValue
 import ru.starfactory.core.decompose.LocalComponentContextHolder
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.LocalRootNavigationHolder
 import ru.starfactory.core.navigation.ui.NavigationContentView
 import ru.starfactory.core.navigation.ui.defaultChildStack
 import ru.starfactory.pixel.ui.screen.MainScreen
-import ru.starfactory.pixel.ui.screen.UsbSerialScreen
+import ru.starfactory.pixel.ui.screen.permission.PermissionView
 import ru.starfactory.pixel.ui.theme.PixelTheme
 
 @Composable
@@ -24,6 +23,9 @@ fun RootView(componentContext: ComponentContext) {
     val childStack = componentContext.defaultChildStack(navigation, MainScreen)
 
     LocalComponentContextHolder(componentContext) {
+
+        PermissionView()
+
         LocalRootNavigationHolder(navigation) {
             PixelTheme(darkTheme = true) {
                 Surface(

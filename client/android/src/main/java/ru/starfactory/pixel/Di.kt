@@ -9,6 +9,8 @@ import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractor
 import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractorImpl
 import ru.starfactory.pixel.repository.theme.ThemeRepository
 import ru.starfactory.pixel.repository.theme.ThemeRepositoryImpl
+import ru.starfactory.pixel.service.permission.PermissionService
+import ru.starfactory.pixel.service.permission.PermissionServiceImpl
 import ru.starfactory.pixel.service.usb.UsbService
 import ru.starfactory.pixel.service.usb.UsbServiceImpl
 import ru.starfactory.pixel.service.usb_serial.UsbSerialService
@@ -16,11 +18,13 @@ import ru.starfactory.pixel.service.usb_serial.UsbSerialServiceImpl
 import ru.starfactory.pixel.ui.screen.debug.usb.UsbViewModel
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.UsbSerialViewModel
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.terminal.UsbSerialTerminalViewModel
+import ru.starfactory.pixel.ui.screen.permission.PermissionViewModel
 import ru.starfactory.pixel.ui.screen.settings.SettingsViewModel
 
 @Suppress("FunctionName")
 fun MainModule() = DI.Module("main-module") {
     // Service
+    bindSingleton<PermissionService> { PermissionServiceImpl(instance()) }
     bindSingleton<UsbService> { UsbServiceImpl(instance(), instance()) }
     bindSingleton<UsbSerialService> { UsbSerialServiceImpl(instance(), instance()) }
 
@@ -36,5 +40,6 @@ fun MainModule() = DI.Module("main-module") {
     bindProvider { SettingsViewModel(instance()) }
     bindProvider { UsbViewModel(instance()) }
     bindProvider { UsbSerialViewModel(instance(), instance()) }
+    bindProvider { PermissionViewModel(instance()) }
     bindFactory<String, UsbSerialTerminalViewModel> { UsbSerialTerminalViewModel(instance(), it) }
 }

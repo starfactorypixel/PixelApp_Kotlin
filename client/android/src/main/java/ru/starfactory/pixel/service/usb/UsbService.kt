@@ -68,9 +68,13 @@ class UsbServiceImpl(
 
             usbManager.requestPermission(device, requestPermissionIntent)
 
-            val response = deferredResponse.await()
+            deferredResponse.await()
 
-            response.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)
+            // This officially recommended by google way doesn't work
+            // response.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)
+
+            // This way works perfectly
+            usbManager.hasPermission(device)
         }
     }
 

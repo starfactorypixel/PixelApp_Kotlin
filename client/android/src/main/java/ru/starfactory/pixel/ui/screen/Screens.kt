@@ -6,7 +6,8 @@ import ru.starfactory.core.navigation.Screen
 import ru.starfactory.pixel.ui.screen.debug.DebugView
 import ru.starfactory.pixel.ui.screen.debug.usb.UsbView
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.UsbSerialView
-import ru.starfactory.pixel.ui.screen.debug.usb_serial.select_usb_serial_params.SelectSerialParamsView
+import ru.starfactory.pixel.ui.screen.debug.usb_serial.select_params.SelectSerialParamsView
+import ru.starfactory.pixel.ui.screen.debug.usb_serial.terminal.UsbSerialTerminalView
 import ru.starfactory.pixel.ui.screen.main.MainView
 import ru.starfactory.pixel.ui.screen.settings.SettingsView
 
@@ -43,10 +44,18 @@ object UsbSerialScreen : Screen {
 }
 
 @Parcelize
-object SelectUsbSerialParamsScreen : Screen {
+data class SelectUsbSerialParamsScreen(val usbDeviceName: String) : Screen {
     @Composable
     override fun ScreenView() {
-        SelectSerialParamsView()
+        SelectSerialParamsView(usbDeviceName)
+    }
+}
+
+@Parcelize
+data class UsbSerialTerminalScreen(val usbDeviceName: String) : Screen {
+    @Composable
+    override fun ScreenView() {
+        UsbSerialTerminalView(usbDeviceName)
     }
 }
 

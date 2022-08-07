@@ -27,7 +27,7 @@ fun UsbSerialView(viewModel: UsbSerialViewModel = decomposeViewModel()) {
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(viewModel, navigation) {
-        viewModel.navigateToSelectUsbParamsScreen.receiveAsFlow().collect { navigation.push(SelectUsbSerialParamsScreen) }
+        viewModel.navigateToSelectUsbParamsScreen.receiveAsFlow().collect { navigation.push(SelectUsbSerialParamsScreen(it)) }
     }
 
     UsbSerialContent(

@@ -37,5 +37,5 @@ fun MainModule() = DI.Module("main-module") {
     // View Models
     bindProvider { SettingsViewModel(instance()) }
     bindProvider { UsbViewModel(instance()) }
-    bindProvider { UsbSerialViewModel(instance()) }
+    bindProvider { UsbSerialViewModel(instance(), instance()) }
 }

@@ -18,6 +18,7 @@ import ru.starfactory.pixel.Tag
 interface UsbService {
     fun observeUsbDevices(): Flow<Map<String, UsbDevice>>
     fun getUsbDevices(): Map<String, UsbDevice>
+    fun findUsbDeviceByName(name: String): UsbDevice?
     suspend fun requestPermission(device: UsbDevice): Boolean
 
     fun getRawManager(): UsbManager
@@ -49,6 +50,8 @@ class UsbServiceImpl(
     override fun observeUsbDevices(): Flow<Map<String, UsbDevice>> = usbDevicesObservable
 
     override fun getUsbDevices(): Map<String, UsbDevice> = usbManager.deviceList
+
+    override fun findUsbDeviceByName(name: String): UsbDevice? = getUsbDevices()[name]
 
     override suspend fun requestPermission(device: UsbDevice): Boolean {
         if (usbManager.hasPermission(device)) return true

@@ -26,8 +26,11 @@ class UsbSerialServiceImpl(
 ) : UsbSerialService {
     private val usbManager = usbService.getRawManager()
 
-    //TODO Sumin: дописать сюда или законтребьютить в либу странный vendorId у моей ардуинки
-    private val prober = UsbSerialProber.getDefaultProber()
+    private val probeTable = UsbSerialProber.getDefaultProbeTable().apply {
+        addProduct(0x2A03, 0x43, CdcAcmSerialDriver::class.java) // Arduino Uno
+    }
+
+    private val prober = UsbSerialProber(probeTable)
 
     private val usbSerialDevicesObservable: Flow<Map<String, UsbSerialDevice>> =
         usbService.observeUsbDevices().map { devices ->

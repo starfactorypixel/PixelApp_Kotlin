@@ -24,10 +24,10 @@ class DebugViewModel(private val permissionInteractor: PermissionInteractor) : V
 
     fun onBluetoothSerialTerminal() {
         viewModelScope.launch {
-            val screen = if (permissionInteractor.getIsPermissionGranted(Permission.BLUETOOTH)) {
+            val screen = if (permissionInteractor.getIsPermissionGranted(Permission.BLUETOOTH_CONNECT)) {
                 BluetoothSerialScreen
             } else {
-                RequestPermissionScreen(Permission.BLUETOOTH, BluetoothSerialScreen)
+                RequestPermissionScreen(Permission.BLUETOOTH_CONNECT, BluetoothSerialScreen)
             }
             navigateTo.send(screen)
         }

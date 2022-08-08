@@ -5,6 +5,9 @@ import kotlinx.coroutines.launch
 import ru.starfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.pixel.domain.permission.PermissionInteractor
+import ru.starfactory.pixel.service.permission.Permission
+import ru.starfactory.pixel.ui.screen.BluetoothSerialScreen
+import ru.starfactory.pixel.ui.screen.RequestPermissionScreen
 import ru.starfactory.pixel.ui.screen.UsbScreen
 import ru.starfactory.pixel.ui.screen.UsbSerialScreen
 
@@ -17,5 +20,16 @@ class DebugViewModel(private val permissionInteractor: PermissionInteractor) : V
 
     fun onClickUsbSerialTerminal() {
         viewModelScope.launch { navigateTo.send(UsbSerialScreen) }
+    }
+
+    fun onBluetoothSerialTerminal() {
+        viewModelScope.launch {
+            val screen = if (permissionInteractor.getIsPermissionGranted(Permission.BLUETOOTH)) {
+                BluetoothSerialScreen
+            } else {
+                RequestPermissionScreen(Permission.BLUETOOTH, BluetoothSerialScreen)
+            }
+            navigateTo.send(screen)
+        }
     }
 }

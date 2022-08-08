@@ -29,7 +29,13 @@ private fun RequestPermissionContent(onClickAcceptPermission: () -> Unit = {}) {
                 text = "Для достуа к данной функции необходимо предоставить разрешения",
                 Modifier.padding(horizontal = 16.dp)
             )
-            Button(onClick = onClickAcceptPermission) {
+            Button(
+                onClick = onClickAcceptPermission,
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 8.dp)
+            ) {
                 Text(text = "Предоставить")
             }
         }

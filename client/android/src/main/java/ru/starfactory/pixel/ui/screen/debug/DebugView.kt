@@ -31,6 +31,7 @@ fun DebugView(viewModel: DebugViewModel = decomposeViewModel()) {
     DebugContent(
         onClickUsbDevices = viewModel::onClickUsbDevices,
         onClickUsbSerialTerminal = viewModel::onClickUsbSerialTerminal,
+        onBluetoothSerialTerminal = viewModel::onBluetoothSerialTerminal,
     )
 }
 
@@ -38,11 +39,17 @@ fun DebugView(viewModel: DebugViewModel = decomposeViewModel()) {
 fun DebugContent(
     onClickUsbDevices: () -> Unit = {},
     onClickUsbSerialTerminal: () -> Unit = {},
+    onBluetoothSerialTerminal: () -> Unit = {},
 ) {
     Column {
         Divider()
         MenuButton(text = "USB Devices", icon = painterResource(id = R.drawable.ic_usb), onClick = onClickUsbDevices)
         MenuButton(text = "USB-Serial Terminal", icon = painterResource(id = R.drawable.ic_usb), onClick = onClickUsbSerialTerminal)
+        MenuButton(
+            text = "Bluetooth-Serial Terminal",
+            icon = painterResource(id = R.drawable.ic_bluetooth),
+            onClick = onBluetoothSerialTerminal
+        )
     }
 }
 

@@ -11,6 +11,8 @@ import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractor
 import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractorImpl
 import ru.starfactory.pixel.repository.theme.ThemeRepository
 import ru.starfactory.pixel.repository.theme.ThemeRepositoryImpl
+import ru.starfactory.pixel.service.bluetooth.BluetoothService
+import ru.starfactory.pixel.service.bluetooth.BluetoothServiceImpl
 import ru.starfactory.pixel.service.permission.Permission
 import ru.starfactory.pixel.service.permission.PermissionService
 import ru.starfactory.pixel.service.permission.PermissionServiceImpl
@@ -29,6 +31,7 @@ import ru.starfactory.pixel.ui.screen.settings.SettingsViewModel
 @Suppress("FunctionName")
 fun MainModule() = DI.Module("main-module") {
     // Service
+    bindSingleton<BluetoothService> { BluetoothServiceImpl(instance()) }
     bindSingleton<PermissionService> { PermissionServiceImpl(instance()) }
     bindSingleton<UsbService> { UsbServiceImpl(instance(), instance()) }
     bindSingleton<UsbSerialService> { UsbSerialServiceImpl(instance(), instance()) }

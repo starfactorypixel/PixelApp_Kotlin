@@ -1,6 +1,8 @@
 package ru.starfactory.pixel
 
 import org.kodein.di.*
+import ru.starfactory.pixel.domain.bluetooth.BluetoothInteractor
+import ru.starfactory.pixel.domain.bluetooth.BluetoothInteractorImpl
 import ru.starfactory.pixel.domain.permission.PermissionInteractor
 import ru.starfactory.pixel.domain.permission.PermissionInteractorImpl
 import ru.starfactory.pixel.domain.theme.ThemeInteractor
@@ -21,6 +23,7 @@ import ru.starfactory.pixel.service.usb.UsbServiceImpl
 import ru.starfactory.pixel.service.usb_serial.UsbSerialService
 import ru.starfactory.pixel.service.usb_serial.UsbSerialServiceImpl
 import ru.starfactory.pixel.ui.screen.debug.DebugViewModel
+import ru.starfactory.pixel.ui.screen.debug.bluetooth_serial.BluetoothSerialViewModel
 import ru.starfactory.pixel.ui.screen.debug.usb.UsbViewModel
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.UsbSerialViewModel
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.terminal.UsbSerialTerminalViewModel
@@ -40,6 +43,7 @@ fun MainModule() = DI.Module("main-module") {
     bindSingleton<ThemeRepository> { ThemeRepositoryImpl(instance()) }
 
     // Domain
+    bindSingleton<BluetoothInteractor> { BluetoothInteractorImpl(instance()) }
     bindSingleton<PermissionInteractor> { PermissionInteractorImpl(instance()) }
     bindSingleton<ThemeInteractor> { ThemeInteractorImpl(instance()) }
     bindSingleton<UsbInteractor> { UsbInteractorImpl(instance()) }
@@ -51,6 +55,7 @@ fun MainModule() = DI.Module("main-module") {
     bindProvider { UsbSerialViewModel(instance(), instance()) }
     bindProvider { PermissionViewModel(instance()) }
     bindProvider { DebugViewModel(instance()) }
+    bindProvider { BluetoothSerialViewModel(instance()) }
     bindFactory<Permission, RequestPermissionViewModel> { RequestPermissionViewModel(instance(), it) }
     bindFactory<String, UsbSerialTerminalViewModel> { UsbSerialTerminalViewModel(instance(), it) }
 }

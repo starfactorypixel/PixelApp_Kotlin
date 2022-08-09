@@ -1,15 +1,14 @@
 package ru.starfactory.pixel.ui.screen.debug.bluetooth_serial
 
-import android.util.Log
+import kotlinx.coroutines.flow.*
 import ru.starfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.pixel.domain.bluetooth.BluetoothInteractor
 
 class BluetoothSerialViewModel(
-    private val bluetoothInteractor: BluetoothInteractor,
+    bluetoothInteractor: BluetoothInteractor,
 ) : ViewModel() {
 
-    init {
-        val boundedDevices = bluetoothInteractor.getBoundedDevices()
-        Log.i("AAAAA", boundedDevices.toString())
-    }
+    val state: StateFlow<BluetoothSerialViewState> = bluetoothInteractor.observeBoundedDevices()
+        .map { BluetoothSerialViewState.Data(it) }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, BluetoothSerialViewState.Loading)
 }

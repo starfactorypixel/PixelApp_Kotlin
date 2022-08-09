@@ -7,20 +7,16 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.push
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.navigation.ui.LocalNavigation
 import ru.starfactory.pixel.R
-import ru.starfactory.pixel.ui.screen.UsbScreen
-import ru.starfactory.pixel.ui.screen.UsbSerialScreen
 
 @Composable
 fun DebugView(viewModel: DebugViewModel = decomposeViewModel()) {
@@ -31,7 +27,7 @@ fun DebugView(viewModel: DebugViewModel = decomposeViewModel()) {
     DebugContent(
         onClickUsbDevices = viewModel::onClickUsbDevices,
         onClickUsbSerialTerminal = viewModel::onClickUsbSerialTerminal,
-        onBluetoothSerialTerminal = viewModel::onBluetoothSerialTerminal,
+        onBluetoothSerialTerminal = viewModel::onClickBluetoothSerialTerminal,
     )
 }
 

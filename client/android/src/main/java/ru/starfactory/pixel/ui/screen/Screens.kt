@@ -3,9 +3,11 @@ package ru.starfactory.pixel.ui.screen
 import androidx.compose.runtime.Composable
 import kotlinx.parcelize.Parcelize
 import ru.starfactory.core.navigation.Screen
+import ru.starfactory.pixel.service.bluetooth.BluetoothDevice
 import ru.starfactory.pixel.service.permission.Permission
 import ru.starfactory.pixel.ui.screen.debug.DebugView
 import ru.starfactory.pixel.ui.screen.debug.bluetooth_serial.BluetoothSerialView
+import ru.starfactory.pixel.ui.screen.debug.bluetooth_serial.terminal.BluetoothSerialTerminalView
 import ru.starfactory.pixel.ui.screen.debug.usb.UsbView
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.UsbSerialView
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.select_params.SelectSerialParamsView
@@ -51,6 +53,14 @@ object BluetoothSerialScreen : Screen {
     @Composable
     override fun ScreenView() {
         BluetoothSerialView()
+    }
+}
+
+@Parcelize
+data class BluetoothSerialTerminalScreen(private val bluetoothDevice: BluetoothDevice) : Screen {
+    @Composable
+    override fun ScreenView() {
+        BluetoothSerialTerminalView(bluetoothDevice)
     }
 }
 

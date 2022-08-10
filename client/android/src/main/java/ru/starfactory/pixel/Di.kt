@@ -13,6 +13,7 @@ import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractor
 import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractorImpl
 import ru.starfactory.pixel.repository.theme.ThemeRepository
 import ru.starfactory.pixel.repository.theme.ThemeRepositoryImpl
+import ru.starfactory.pixel.service.bluetooth.BluetoothDevice
 import ru.starfactory.pixel.service.bluetooth.BluetoothService
 import ru.starfactory.pixel.service.bluetooth.BluetoothServiceImpl
 import ru.starfactory.pixel.service.permission.Permission
@@ -24,6 +25,7 @@ import ru.starfactory.pixel.service.usb_serial.UsbSerialService
 import ru.starfactory.pixel.service.usb_serial.UsbSerialServiceImpl
 import ru.starfactory.pixel.ui.screen.debug.DebugViewModel
 import ru.starfactory.pixel.ui.screen.debug.bluetooth_serial.BluetoothSerialViewModel
+import ru.starfactory.pixel.ui.screen.debug.bluetooth_serial.terminal.BluetoothSerialTerminalViewModel
 import ru.starfactory.pixel.ui.screen.debug.usb.UsbViewModel
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.UsbSerialViewModel
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.terminal.UsbSerialTerminalViewModel
@@ -58,4 +60,5 @@ fun MainModule() = DI.Module("main-module") {
     bindProvider { BluetoothSerialViewModel(instance()) }
     bindFactory<Permission, RequestPermissionViewModel> { RequestPermissionViewModel(instance(), it) }
     bindFactory<String, UsbSerialTerminalViewModel> { UsbSerialTerminalViewModel(instance(), it) }
+    bindFactory<BluetoothDevice, BluetoothSerialTerminalViewModel> { BluetoothSerialTerminalViewModel(instance(), it) }
 }

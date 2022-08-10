@@ -5,14 +5,27 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice as AndroidBluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.Context
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.withContext
 import ru.starfactory.pixel.Tag
+import java.io.InputStream
+import java.io.OutputStream
+import java.util.*
 
 interface BluetoothService {
     fun getIsEnabled(): Boolean
     fun getBoundedDevices(): List<BluetoothDevice>
     fun observeBoundedDevices(): Flow<List<BluetoothDevice>>
+    suspend fun connect(address: String, channelId: UUID, block: suspend CoroutineScope.(BluetoothConnection) -> Unit)
+
+    interface BluetoothConnection {
+        val inputStream: InputStream
+        val outputStream: OutputStream
+    }
 }
 
 class BluetoothServiceImpl(context: Context) : BluetoothService {
@@ -27,6 +40,27 @@ class BluetoothServiceImpl(context: Context) : BluetoothService {
     override fun observeBoundedDevices(): Flow<List<BluetoothDevice>> {
         return flowOf(getBoundedDevices()) // TODO
     }
+
+    @SuppressLint("MissingPermission")
+    override suspend fun connect(
+        address: String,
+        channelId: UUID,
+        block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit
+    ) = withContext(Dispatchers.IO) {
+            val device = bluetoothAdapter.getRemoteDevice(address)
+            println(device.address)
+            device.createRfcommSocketToServiceRecord(channelId).use { channel ->
+                channel.connect()
+
+                val connection = object : BluetoothService.BluetoothConnection {
+                    override val inputStream: InputStream = channel.inputStream
+                    override val outputStream: OutputStream = channel.outputStream
+                }
+                coroutineScope {
+                    block(this, connection)
+                }
+            }
+        }
 
     companion object {
         private const val TAG = Tag.BLUETOOTH

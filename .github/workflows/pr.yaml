@@ -23,4 +23,5 @@ jobs:
       - name: Run gradle
         run: >-
           ./gradlew
+          -PpIsGithubActions=true
           :pr

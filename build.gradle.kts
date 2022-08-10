@@ -17,3 +17,7 @@ tasks.register<Delete>("clean") {
 tasks.register("ci") {
     dependsOn(":client:android:assembleDebug")
 }
+
+tasks.register("pr") {
+    dependsOn(":client:android:assembleDebug")
+}

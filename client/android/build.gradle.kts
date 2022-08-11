@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "ru.starfactory.pixel"
-        minSdk = 31
+        minSdk = 24
         targetSdk = 32
         versionCode = 1
         versionName = "1.0"

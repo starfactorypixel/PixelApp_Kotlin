@@ -3,5 +3,6 @@
 
 *.iml
 /local.properties
+/build-script/.gradle
 
 **/build/

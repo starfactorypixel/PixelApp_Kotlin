@@ -1,13 +1,5 @@
-buildscript {
-    repositories { // TODO
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath(libs.gradlePlugins.kotlin.core)
-        classpath(libs.gradlePlugins.android)
-    }
+plugins {
+    id("ru.starfactory.convention.check-updates")
 }
 
 tasks.register<Delete>("clean") {
@@ -15,6 +7,7 @@ tasks.register<Delete>("clean") {
 }
 
 tasks.register("ci") {
+    dependsOn(":dependencyUpdates")
     dependsOn(":client:android:assembleDebug")
 }
 

@@ -16,6 +16,6 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
         // TODO Sumin: конечно мы не будем весь код писать в активити, а сделаем по всем правилам но пока для теста оставлю так
         val wv = findViewById<WebView>(R.id.web_view)
-        wv.loadUrl("file:///android_asset/src/index.html")
+        wv.loadUrl("localhost:3000"); // Надо припилить какой то параметр типа env, чтобы можно было подкидывать ссылку без изменения исходников
     }
 }

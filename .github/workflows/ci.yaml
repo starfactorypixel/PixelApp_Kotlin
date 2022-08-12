@@ -32,3 +32,9 @@ jobs:
         with:
           name: debug-apk
           path: "client/android/build/outputs/apk/debug/**.apk"
+
+      - name: Upload debug wv apk
+        uses: actions/upload-artifact@v2
+        with:
+          name: debug-wv-apk
+          path: "client-wv/android/build/outputs/apk/debug/**.apk"

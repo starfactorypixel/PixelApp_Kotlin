@@ -48,6 +48,8 @@ dependencies { // TODO move to version catalog
     implementation(libs.decompose.android)
 
     implementation(libs.android.datastore.preferences)
+    implementation(libs.android.activity.core)
+    implementation(libs.android.activity.compose)
 
     implementation(libs.serial.usb)
 
@@ -57,7 +59,6 @@ dependencies { // TODO move to version catalog
     implementation("androidx.compose.ui:ui-tooling-preview:${libs.versions.compose.core.get()}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-    implementation("androidx.activity:activity-compose:1.5.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

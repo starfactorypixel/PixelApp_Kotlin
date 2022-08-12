@@ -13,6 +13,8 @@ kodein = "7.12.0"
 decompose = "0.8.0"
 serial-usb = "3.4.6"
 
+jb-compose = "1.2.0-alpha01-dev755"
+
 gradlePlugins-android = "7.2.0"
 gradlePlugins-checkUpdates = "0.39.0"
 
@@ -21,6 +23,7 @@ gradlePlugins-checkUpdates = "0.39.0"
 # Plugins
 gradlePlugins-kotlin-core = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-core" }
 gradlePlugins-android = { module = "com.android.tools.build:gradle", version.ref = "gradlePlugins-android" }
+gradlePlugins-jb-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "jb-compose" }
 gradlePlugins-checkUpdates = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradlePlugins-checkUpdates" }
 
 # Kotlin
@@ -38,6 +41,7 @@ kodein-compose = { module = "org.kodein.di:kodein-di-framework-compose", version
 # Decompose
 decompose-core = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-jetpack = { module = "com.arkivanov.decompose:extensions-compose-jetpack", version.ref = "decompose" }
+decompose-jetbrains = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "decompose" }
 decompose-android = { module = "com.arkivanov.decompose:extensions-android", version.ref = "decompose" }
 
 # Oher

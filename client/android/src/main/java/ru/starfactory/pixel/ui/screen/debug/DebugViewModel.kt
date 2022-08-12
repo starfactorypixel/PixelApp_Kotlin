@@ -2,7 +2,7 @@ package ru.starfactory.pixel.ui.screen.debug
 
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
-import ru.starfactory.core.decompose.view_model.ViewModel
+import ru.startfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.pixel.domain.permission.PermissionInteractor
 import ru.starfactory.pixel.service.permission.Permission

@@ -1,4 +1,4 @@
-package ru.starfactory.core.decompose
+package ru.startfactory.core.decompose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider

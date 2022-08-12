@@ -1,7 +1,5 @@
-package ru.starfactory.core.decompose.view_model
+package ru.startfactory.core.decompose.view_model
 
-import android.util.Log
-import androidx.annotation.CallSuper
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,12 +10,11 @@ abstract class ViewModel : InstanceKeeper.Instance {
     protected val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     init {
-        Log.i("ViewModel", "Create ${this::class.simpleName}")
+        // Log.i("ViewModel", "Create ${this::class.simpleName}") TODO add shared logger
     }
 
-    @CallSuper
     override fun onDestroy() {
-        Log.i("ViewModel", "Destroy ${this::class.simpleName}")
+        // Log.i("ViewModel", "Destroy ${this::class.simpleName}")
         viewModelScope.cancel()
     }
 }

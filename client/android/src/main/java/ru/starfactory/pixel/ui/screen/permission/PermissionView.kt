@@ -5,7 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import kotlinx.coroutines.flow.receiveAsFlow
-import ru.starfactory.core.decompose.view_model.decomposeViewModel
+import ru.startfactory.core.decompose.view_model.decomposeViewModel
 
 @Composable
 fun PermissionView(viewModel: PermissionViewModel = decomposeViewModel()) {

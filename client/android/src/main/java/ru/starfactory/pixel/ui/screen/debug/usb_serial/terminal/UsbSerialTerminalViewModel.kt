@@ -2,7 +2,7 @@ package ru.starfactory.pixel.ui.screen.debug.usb_serial.terminal
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ru.starfactory.core.decompose.view_model.ViewModel
+import ru.startfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractor
 
 class UsbSerialTerminalViewModel(

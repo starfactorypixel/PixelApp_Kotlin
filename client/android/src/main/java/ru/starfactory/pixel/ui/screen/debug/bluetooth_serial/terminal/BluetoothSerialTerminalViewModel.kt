@@ -3,7 +3,7 @@ package ru.starfactory.pixel.ui.screen.debug.bluetooth_serial.terminal
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ru.starfactory.core.decompose.view_model.ViewModel
+import ru.startfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.pixel.domain.bluetooth.BluetoothInteractor
 import ru.starfactory.pixel.service.bluetooth.BluetoothDevice
 import java.util.*

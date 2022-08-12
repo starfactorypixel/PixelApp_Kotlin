@@ -27,5 +27,13 @@ dependencyResolutionManagement {
 
 }
 rootProject.name = "pixel"
+
+include(
+    ":core:compose",
+    ":core:decompose",
+    ":core:di",
+)
+
 include(":client:android")
+
 include(":client-wv:android")

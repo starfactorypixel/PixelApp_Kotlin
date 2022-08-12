@@ -2,7 +2,7 @@ package ru.starfactory.pixel.ui.screen.debug.usb
 
 import android.hardware.usb.UsbDevice
 import kotlinx.coroutines.flow.*
-import ru.starfactory.core.decompose.view_model.ViewModel
+import ru.startfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.pixel.domain.usb.UsbInteractor
 
 class UsbViewModel(

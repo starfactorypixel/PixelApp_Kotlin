@@ -1,18 +1,13 @@
-import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin.Companion.isKaptVerbose
+@file:Suppress("UnstableApiUsage")
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    id("ru.starfactory.convention.android.application")
     id("kotlin-parcelize")
 }
 
 android {
-    compileSdk = 32
-
     defaultConfig {
         applicationId = "ru.starfactory.pixel"
-        minSdk = 24
-        targetSdk = 32
         versionCode = 1
         versionName = "1.0"
 
@@ -30,13 +25,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true

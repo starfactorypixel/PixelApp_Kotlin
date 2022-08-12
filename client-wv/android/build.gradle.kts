@@ -35,5 +35,5 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.android.activity.core)
 }

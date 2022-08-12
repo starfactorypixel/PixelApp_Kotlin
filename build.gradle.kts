@@ -11,14 +11,14 @@ tasks.register("ci") {
     dependsOn(":client:android:assembleDebug")
     dependsOn(":client:android:lintDebug")
 
-    dependsOn(":client:android-wv:assembleDebug")
-    dependsOn(":client:android-wv:lintDebug")
+    dependsOn(":client-wv:android:assembleDebug")
+    dependsOn(":client-wv:android:lintDebug")
 }
 
 tasks.register("pr") {
     dependsOn(":client:android:assembleDebug")
     dependsOn(":client:android:lintDebug")
 
-    dependsOn(":client:android-wv:assembleDebug")
-    dependsOn(":client:android-wv:lintDebug")
+    dependsOn(":client-wv:android:assembleDebug")
+    dependsOn(":client-wv:android:lintDebug")
 }

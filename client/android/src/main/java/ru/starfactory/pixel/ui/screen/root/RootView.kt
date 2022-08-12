@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
-import ru.startfactory.core.decompose.LocalComponentContextHolder
+import ru.starfactory.core.decompose.LocalComponentContextHolder
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.LocalRootNavigationHolder
 import ru.starfactory.core.navigation.ui.NavigationContentView

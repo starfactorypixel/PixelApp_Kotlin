@@ -14,7 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.router.stack.push
 import kotlinx.coroutines.flow.receiveAsFlow
-import ru.startfactory.core.decompose.view_model.decomposeViewModel
+import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.navigation.ui.LocalNavigation
 import ru.starfactory.pixel.service.bluetooth.BluetoothDevice
 

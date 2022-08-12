@@ -32,7 +32,7 @@ import ru.starfactory.pixel.ui.screen.debug.usb_serial.terminal.UsbSerialTermina
 import ru.starfactory.pixel.ui.screen.permission.PermissionViewModel
 import ru.starfactory.pixel.ui.screen.request_permission.RequestPermissionViewModel
 import ru.starfactory.pixel.ui.screen.settings.SettingsViewModel
-import ru.startfactory.core.di.Modules
+import ru.starfactory.core.di.Modules
 
 @Suppress("UnusedReceiverParameter")
 fun Modules.mainAndroidModule() = DI.Module("main-android-module") {

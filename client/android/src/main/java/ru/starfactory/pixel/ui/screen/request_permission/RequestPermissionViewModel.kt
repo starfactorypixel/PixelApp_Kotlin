@@ -2,7 +2,7 @@ package ru.starfactory.pixel.ui.screen.request_permission
 
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
-import ru.startfactory.core.decompose.view_model.ViewModel
+import ru.starfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.pixel.domain.permission.PermissionInteractor
 import ru.starfactory.pixel.service.permission.Permission
 

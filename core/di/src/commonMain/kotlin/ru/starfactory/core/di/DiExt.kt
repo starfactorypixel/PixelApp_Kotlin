@@ -1,4 +1,4 @@
-package ru.startfactory.core.di
+package ru.starfactory.core.di
 
 import org.kodein.di.DirectDIAware
 import org.kodein.di.instance

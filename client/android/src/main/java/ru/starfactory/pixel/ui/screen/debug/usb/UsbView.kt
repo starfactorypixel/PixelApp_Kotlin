@@ -12,7 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.startfactory.core.decompose.view_model.decomposeViewModel
+import ru.starfactory.core.decompose.view_model.decomposeViewModel
 
 @Composable
 fun UsbView(viewModel: UsbViewModel = decomposeViewModel()) {

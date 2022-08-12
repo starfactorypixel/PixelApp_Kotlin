@@ -4,7 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import ru.startfactory.core.decompose.view_model.decomposeViewModelFactory
+import ru.starfactory.core.decompose.view_model.decomposeViewModelFactory
 
 @Composable
 fun UsbSerialTerminalView(usbDeviceName: String) {

@@ -4,7 +4,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import ru.startfactory.core.decompose.view_model.ViewModel
+import ru.starfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.pixel.service.permission.PermissionRequester
 import ru.starfactory.pixel.service.permission.PermissionService
 import ru.starfactory.pixel.service.permission.PermissionServiceImpl

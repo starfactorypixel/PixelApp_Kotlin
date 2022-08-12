@@ -1,4 +1,4 @@
-package ru.startfactory.core.decompose.view_model
+package ru.starfactory.core.decompose.view_model
 
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import kotlinx.coroutines.CoroutineScope

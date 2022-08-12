@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import ru.startfactory.core.decompose.view_model.ViewModel
+import ru.starfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.pixel.Tag
 import ru.starfactory.pixel.domain.usb.UsbInteractor
 import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractor

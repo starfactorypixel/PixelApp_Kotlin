@@ -1,4 +1,4 @@
-package ru.startfactory.core.di
+package ru.starfactory.core.di
 
 /**
  * Need to group modules.

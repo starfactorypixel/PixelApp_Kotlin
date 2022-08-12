@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.push
 import kotlinx.coroutines.flow.receiveAsFlow
-import ru.startfactory.core.decompose.view_model.decomposeViewModel
+import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.navigation.ui.LocalNavigation
 import ru.starfactory.pixel.R
 

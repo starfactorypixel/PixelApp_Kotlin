@@ -40,16 +40,16 @@ android {
 }
 
 dependencies { // TODO move to version catalog
-    implementation(libs.kodein.core)
+    implementation(project(":core:compose"))
+    implementation(project(":core:decompose"))
+    implementation(project(":core:di"))
     implementation(libs.kodein.compose)
 
-    implementation(libs.decompose.core)
     implementation(libs.decompose.jetpack)
     implementation(libs.decompose.android)
 
     implementation(libs.android.datastore.preferences)
     implementation(libs.android.activity.core)
-    implementation(libs.android.activity.compose)
 
     implementation(libs.serial.usb)
 

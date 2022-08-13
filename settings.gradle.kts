@@ -16,6 +16,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { setUrl("https://jitpack.io") }
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 
     versionCatalogs {
@@ -26,5 +27,13 @@ dependencyResolutionManagement {
 
 }
 rootProject.name = "pixel"
+
+include(
+    ":core:compose",
+    ":core:decompose",
+    ":core:di",
+)
+
 include(":client:android")
+
 include(":client-wv:android")

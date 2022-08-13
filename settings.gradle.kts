@@ -33,6 +33,7 @@ include(
     ":core:coroutines",
     ":core:decompose",
     ":core:di",
+    ":core:navigation",
 )
 
 include(":client:android")

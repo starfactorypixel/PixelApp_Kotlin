@@ -1,4 +1,4 @@
-package ru.starfactory.core.utils
+package ru.starfactory.core.coroutines
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

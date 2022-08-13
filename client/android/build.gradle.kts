@@ -1,18 +1,13 @@
-import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin.Companion.isKaptVerbose
+@file:Suppress("UnstableApiUsage")
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    id("ru.starfactory.convention.android.application")
     id("kotlin-parcelize")
 }
 
 android {
-    compileSdk = 32
-
     defaultConfig {
         applicationId = "ru.starfactory.pixel"
-        minSdk = 24
-        targetSdk = 32
         versionCode = 1
         versionName = "1.0"
 
@@ -31,13 +26,6 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
     buildFeatures {
         compose = true
     }
@@ -52,14 +40,16 @@ android {
 }
 
 dependencies { // TODO move to version catalog
-    implementation(libs.kodein.core)
+    implementation(project(":core:compose"))
+    implementation(project(":core:decompose"))
+    implementation(project(":core:di"))
     implementation(libs.kodein.compose)
 
-    implementation(libs.decompose.core)
     implementation(libs.decompose.jetpack)
     implementation(libs.decompose.android)
 
     implementation(libs.android.datastore.preferences)
+    implementation(libs.android.activity.core)
 
     implementation(libs.serial.usb)
 
@@ -69,7 +59,6 @@ dependencies { // TODO move to version catalog
     implementation("androidx.compose.ui:ui-tooling-preview:${libs.versions.compose.core.get()}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-    implementation("androidx.activity:activity-compose:1.5.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

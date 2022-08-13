@@ -32,9 +32,10 @@ import ru.starfactory.pixel.ui.screen.debug.usb_serial.terminal.UsbSerialTermina
 import ru.starfactory.pixel.ui.screen.permission.PermissionViewModel
 import ru.starfactory.pixel.ui.screen.request_permission.RequestPermissionViewModel
 import ru.starfactory.pixel.ui.screen.settings.SettingsViewModel
+import ru.starfactory.core.di.Modules
 
-@Suppress("FunctionName")
-fun MainModule() = DI.Module("main-module") {
+@Suppress("UnusedReceiverParameter")
+fun Modules.mainAndroidModule() = DI.Module("main-android-module") {
     // Service
     bindSingleton<BluetoothService> { BluetoothServiceImpl(instance()) }
     bindSingleton<PermissionService> { PermissionServiceImpl(instance()) }

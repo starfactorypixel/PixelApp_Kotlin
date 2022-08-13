@@ -6,6 +6,7 @@ compose-core = "1.2.0"
 
 # Android
 android-datastore = "1.0.0"
+android-activity = "1.5.1"
 
 # JB
 jb-compose = "1.2.0-alpha01-dev755"
@@ -14,6 +15,8 @@ jb-compose = "1.2.0-alpha01-dev755"
 kodein = "7.12.0"
 decompose = "0.8.0"
 serial-usb = "3.4.6"
+
+jb-compose = "1.2.0-alpha01-dev755"
 
 gradlePlugins-android = "7.2.0"
 gradlePlugins-checkUpdates = "0.39.0"
@@ -31,6 +34,8 @@ kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-co
 
 # Android
 android-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "android-datastore" }
+android-activity-core = { module = "androidx.activity:activity-ktx", version.ref = "android-activity" }
+android-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "android-activity" }
 
 # Kodein
 kodein-core = { module = "org.kodein.di:kodein-di", version.ref = "kodein" }

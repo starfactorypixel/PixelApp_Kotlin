@@ -12,13 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.push
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
 import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.navigation.ui.LocalNavigation
-import ru.starfactory.core.navigation.ui.LocalNavigationHolder
 import ru.starfactory.pixel.ui.screen.SelectUsbSerialParamsScreen
 
 @Composable

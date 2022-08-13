@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.replaceCurrent
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import ru.starfactory.core.decompose.view_model.decomposeViewModelFactory
 import ru.starfactory.core.navigation.Screen

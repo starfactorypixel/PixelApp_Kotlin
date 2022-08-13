@@ -9,7 +9,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
-import ru.starfactory.core.utils.shareDefault
+import ru.starfactory.core.coroutines.shareDefault
 import ru.starfactory.pixel.Tag
 import ru.starfactory.pixel.service.usb.UsbService
 import java.io.IOException

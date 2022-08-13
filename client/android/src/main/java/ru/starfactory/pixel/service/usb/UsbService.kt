@@ -12,7 +12,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import ru.starfactory.core.utils.observeBroadcastIntents
-import ru.starfactory.core.utils.shareDefault
+import ru.starfactory.core.coroutines.shareDefault
 import ru.starfactory.pixel.Tag
 
 interface UsbService {

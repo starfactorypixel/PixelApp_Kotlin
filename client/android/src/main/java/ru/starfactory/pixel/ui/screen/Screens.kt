@@ -57,7 +57,8 @@ object BluetoothSerialScreen : Screen {
 }
 
 @Parcelize
-data class BluetoothSerialTerminalScreen(private val bluetoothDevice: BluetoothDevice) : Screen {
+data class BluetoothSerialTerminalScreen(private val bluetoothDevice: BluetoothDevice) :
+    Screen {
     @Composable
     override fun ScreenView() {
         BluetoothSerialTerminalView(bluetoothDevice)
@@ -81,7 +82,8 @@ data class UsbSerialTerminalScreen(val usbDeviceName: String) : Screen {
 }
 
 @Parcelize
-data class RequestPermissionScreen(private val permission: Permission, private val nextScreen: Screen) : Screen {
+data class RequestPermissionScreen(private val permission: Permission, private val nextScreen: Screen) :
+    Screen {
     @Composable
     override fun ScreenView() {
         RequestPermissionView(permission = permission, nextScreen = nextScreen)

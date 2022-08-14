@@ -41,8 +41,11 @@ android {
 
 dependencies { // TODO move to version catalog
     implementation(project(":core:compose"))
+    implementation(project(":core:coroutines"))
     implementation(project(":core:decompose"))
     implementation(project(":core:di"))
+    implementation(project(":core:navigation"))
+
     implementation(libs.kodein.compose)
 
     implementation(libs.decompose.jetpack)

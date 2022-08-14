@@ -12,9 +12,10 @@ android-activity = "1.5.1"
 jb-compose = "1.2.0-alpha01-dev755"
 
 # Other
-kodein = "7.12.0"
-decompose = "0.8.0"
+kodein = "7.15.0"
+decompose = "1.0.0-alpha-01-native-compose"
 serial-usb = "3.4.6"
+moko-resources = "0.22.0"
 
 gradlePlugins-android = "7.2.0"
 gradlePlugins-checkUpdates = "0.39.0"
@@ -25,6 +26,7 @@ gradlePlugins-checkUpdates = "0.39.0"
 gradlePlugins-kotlin-core = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-core" }
 gradlePlugins-android = { module = "com.android.tools.build:gradle", version.ref = "gradlePlugins-android" }
 gradlePlugins-jb-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "jb-compose" }
+gradlePlugins-moko-resources = { module = "dev.icerock.moko:resources-generator", version.ref = "moko-resources" }
 gradlePlugins-checkUpdates = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradlePlugins-checkUpdates" }
 
 # Kotlin
@@ -47,3 +49,5 @@ decompose-android = { module = "com.arkivanov.decompose:extensions-android", ver
 
 # Oher
 serial-usb = { module = "com.github.mik3y:usb-serial-for-android", version.ref = "serial-usb" }
+moko-resources-core = { module = "dev.icerock.moko:resources", version.ref = "moko-resources" }
+moko-resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "moko-resources" }

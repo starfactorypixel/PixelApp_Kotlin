@@ -9,13 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.arkivanov.decompose.router.stack.push
 import ru.starfactory.core.navigation.ui.LocalNavigation
-import ru.starfactory.pixel.R
-import ru.starfactory.pixel.ui.screen.DebugScreen
-import ru.starfactory.pixel.ui.screen.SettingsScreen
 
 @Composable
 fun MainMenuView(
@@ -25,11 +20,11 @@ fun MainMenuView(
 
     MainMenuContent(
         onClickDebug = {
-            navigation.push(DebugScreen)
+//            navigation.push(DebugScreen)
             onCloseRequest()
         },
         onClickSettings = {
-            navigation.push(SettingsScreen)
+//            navigation.push(SettingsScreen)
             onCloseRequest()
         }
     )
@@ -42,8 +37,8 @@ fun MainMenuContent(
 ) {
     Column {
         Divider()
-        MenuButton(text = "Debug", icon = painterResource(id = R.drawable.ic_debug), onClickDebug)
-        MenuButton(text = "Settings", icon = painterResource(id = R.drawable.ic_settings), onClickSettings)
+//        MenuButton(text = "Debug", icon = painterResource(id = R.drawable.ic_debug), onClickDebug)
+//        MenuButton(text = "Settings", icon = painterResource(id = R.drawable.ic_settings), onClickSettings)
     }
 }
 

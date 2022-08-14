@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ru.starfactory.pixel.ui.screen.dashboard.DashboardView
+import ru.starfactory.pixel.ui.screen.main_menu.MainMenuView
 
 @Composable
 fun MainView() {
@@ -25,7 +26,7 @@ fun MainView() {
 
     Scaffold(
         scaffoldState = scaffoldState,
-        drawerContent = { /*MainMenuView(onCloseRequest = closeDrawer)*/ }
+        drawerContent = { MainMenuView(onCloseRequest = closeDrawer) }
     ) {
         Box(Modifier.padding(it)) {
             IconButton(

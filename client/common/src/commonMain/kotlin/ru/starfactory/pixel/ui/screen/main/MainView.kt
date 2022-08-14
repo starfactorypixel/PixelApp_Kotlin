@@ -1,6 +1,5 @@
 package ru.starfactory.pixel.ui.screen.main
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -11,8 +10,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import ru.starfactory.pixel.ui.screen.dashboard.DashboardScreen
-import ru.starfactory.pixel.ui.screen.main_menu.MainMenuView
 
 @Composable
 fun MainView() {
@@ -23,11 +20,11 @@ fun MainView() {
         scope.launch { scaffoldState.drawerState.close() }
     }
 
-    BackHandler(onBack = closeDrawer, enabled = scaffoldState.drawerState.isOpen)
+//    BackHandler(onBack = closeDrawer, enabled = scaffoldState.drawerState.isOpen)
 
     Scaffold(
         scaffoldState = scaffoldState,
-        drawerContent = { MainMenuView(onCloseRequest = closeDrawer) }
+        drawerContent = { /*MainMenuView(onCloseRequest = closeDrawer)*/ }
     ) {
         Box(Modifier.padding(it)) {
             IconButton(
@@ -36,7 +33,7 @@ fun MainView() {
             ) {
                 Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
             }
-            DashboardScreen()
+            //DashboardScreen()
         }
     }
 }

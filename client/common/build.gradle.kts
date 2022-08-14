@@ -3,6 +3,7 @@ plugins {
     id("ru.starfactory.convention.multiplatform.ios-framework")
     id("ru.starfactory.convention.multiplatform.jvm")
     id("org.jetbrains.compose")
+    id("kotlin-parcelize")
 }
 
 kotlin {

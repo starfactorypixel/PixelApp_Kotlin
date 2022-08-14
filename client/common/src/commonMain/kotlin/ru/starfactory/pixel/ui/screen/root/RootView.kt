@@ -14,8 +14,6 @@ import ru.starfactory.core.navigation.ui.LocalRootNavigationHolder
 import ru.starfactory.core.navigation.ui.NavigationContentView
 import ru.starfactory.core.navigation.ui.defaultChildStack
 import ru.starfactory.pixel.ui.screen.MainScreen
-import ru.starfactory.pixel.ui.screen.permission.PermissionView
-import ru.starfactory.pixel.ui.theme.PixelTheme
 
 @Composable
 fun RootView(componentContext: ComponentContext) {
@@ -24,17 +22,17 @@ fun RootView(componentContext: ComponentContext) {
 
     LocalComponentContextHolder(componentContext) {
 
-        PermissionView()
+        //PermissionView()
 
         LocalRootNavigationHolder(navigation) {
-            PixelTheme(darkTheme = true) {
+//            PixelTheme(darkTheme = true) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
                     NavigationContentView(childStack)
                 }
-            }
+//            }
         }
     }
 }

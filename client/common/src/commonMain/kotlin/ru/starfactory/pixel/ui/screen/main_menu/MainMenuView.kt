@@ -31,7 +31,7 @@ fun MainMenuView(
 }
 
 @Composable
-fun MainMenuContent(
+private fun MainMenuContent(
     onClickDebug: () -> Unit = {},
     onClickSettings: () -> Unit = {}
 ) {

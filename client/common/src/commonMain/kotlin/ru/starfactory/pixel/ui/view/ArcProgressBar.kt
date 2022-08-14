@@ -19,10 +19,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import ru.starfactory.pixel.ui.theme.PixelTheme
 
 @Composable
 fun ArcProgressBar(
@@ -86,22 +84,22 @@ fun ArcProgressBar(
     }
 }
 
-@OptIn(ExperimentalTextApi::class)
-@Preview(showBackground = true)
-@Composable
-fun ArcProgressBarPreview() {
-    PixelTheme(darkTheme = true) {
-        ArcProgressBar(
-            modifier = Modifier
-                .size(300.dp)
-                .background(MaterialTheme.colors.background),
-            progress = 0.63f
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Red.copy(alpha = .2f))
-            )
-        }
-    }
-}
+//@OptIn(ExperimentalTextApi::class)
+//@Preview(showBackground = true)
+//@Composable
+//fun ArcProgressBarPreview() {
+//    PixelTheme(darkTheme = true) {
+//        ArcProgressBar(
+//            modifier = Modifier
+//                .size(300.dp)
+//                .background(MaterialTheme.colors.background),
+//            progress = 0.63f
+//        ) {
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .background(Color.Red.copy(alpha = .2f))
+//            )
+//        }
+//    }
+//}

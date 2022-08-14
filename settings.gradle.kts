@@ -37,6 +37,7 @@ include(
 )
 
 include(
+    ":client:common",
     ":client:android",
     ":client:ios",
 )

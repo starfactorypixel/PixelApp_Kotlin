@@ -27,6 +27,7 @@ import androidx.compose.ui.window.Application
 import kotlinx.cinterop.*
 import platform.Foundation.NSStringFromClass
 import platform.UIKit.*
+import ru.starfactory.pixel.ui.view.ArcProgressBar
 import kotlin.math.min
 
 fun main() {
@@ -198,66 +199,4 @@ fun AutoSizeText(
             }
         }
     )
-}
-
-@Composable
-fun ArcProgressBar(
-    modifier: Modifier = Modifier,
-    progress: Float,
-    strokeWidth: Dp = 6.dp,
-    frameWidth: Dp = 12.dp,
-    strokeColor: Color = MaterialTheme.colors.primary,
-    frameColor: Color = MaterialTheme.colors.onPrimary,
-    content: @Composable BoxScope .() -> Unit = {}
-) {
-
-    var rootWidth by remember {
-        mutableStateOf(0)
-    }
-
-    Box(
-        modifier = modifier
-            .aspectRatio(1f)
-            .onGloballyPositioned { layoutCoordinates ->
-                rootWidth = layoutCoordinates.size.width
-            }
-    ) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            val offset = Offset(frameWidth.toPx() / 2, frameWidth.toPx() / 2)
-            val size = Size(this.size.width - 2 * offset.x, this.size.height - 2 * offset.y)
-            // frame
-            drawArc(
-                color = frameColor,
-                startAngle = 180f - 30f,
-                sweepAngle = 180f + 60f,
-                useCenter = false,
-                style = Stroke(frameWidth.toPx(), cap = StrokeCap.Round),
-                topLeft = offset,
-                size = size
-            )
-
-            // progress
-            drawArc(
-                color = strokeColor,
-                startAngle = 180f - 30f,
-                sweepAngle = (180f + 60f) * progress,
-                useCenter = false,
-                style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round),
-                topLeft = offset,
-                size = size
-            )
-        }
-
-        // TODO учитывать frameWidth
-        val padding = with(LocalDensity.current) { rootWidth.toDp() } / 10
-
-        // Internal content
-        Box(
-            Modifier
-                .align(Alignment.Center)
-                .aspectRatio(4f / 3f)
-                .padding(padding),
-            content = content
-        )
-    }
 }

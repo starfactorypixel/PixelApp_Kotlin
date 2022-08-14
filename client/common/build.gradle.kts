@@ -1,13 +1,13 @@
 plugins {
-    id("org.jetbrains.kotlin.multiplatform")
+    id("ru.starfactory.convention.preset.core") //TODO
     id("org.jetbrains.compose")
 }
 
 kotlin {
     iosX64("uikitX64") {
         binaries {
-            executable() {
-                entryPoint = "main"
+            framework() {
+//                entryPoint = "main"
                 freeCompilerArgs += listOf(
                     "-linker-option", "-framework", "-linker-option", "Metal",
                     "-linker-option", "-framework", "-linker-option", "CoreText",
@@ -18,8 +18,8 @@ kotlin {
     }
     iosArm64("uikitArm64") {
         binaries {
-            executable() {
-                entryPoint = "main"
+            framework() {
+//                entryPoint = "main"
                 freeCompilerArgs += listOf(
                     "-linker-option", "-framework", "-linker-option", "Metal",
                     "-linker-option", "-framework", "-linker-option", "CoreText",
@@ -39,7 +39,6 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material)
                 implementation(compose.runtime)
-                implementation(project(":client:common"))
             }
         }
 
@@ -67,22 +66,22 @@ kotlin {
     }
 }
 
-compose.experimental {
-    uikit.application {
-        bundleIdPrefix = "ru.starfactory"
-        projectName = "Pixel"
-        deployConfigurations {
-            simulator("IPhone13") {
-                //Usage: ./gradlew iosDeployIPhone13Debug
-                device = org.jetbrains.compose.experimental.dsl.IOSDevices.IPHONE_13_PRO
-            }
-            simulator("IPadUI") {
-                //Usage: ./gradlew iosDeployIPadUIDebug
-                device = org.jetbrains.compose.experimental.dsl.IOSDevices.IPAD_MINI_6th_Gen
-            }
-        }
-    }
-}
+//compose.experimental {
+//    uikit.application {
+//        bundleIdPrefix = "ru.starfactory"
+//        projectName = "Pixel"
+//        deployConfigurations {
+//            simulator("IPhone13") {
+//                //Usage: ./gradlew iosDeployIPhone13Debug
+//                device = org.jetbrains.compose.experimental.dsl.IOSDevices.IPHONE_13_PRO
+//            }
+//            simulator("IPadUI") {
+//                //Usage: ./gradlew iosDeployIPadUIDebug
+//                device = org.jetbrains.compose.experimental.dsl.IOSDevices.IPAD_MINI_6th_Gen
+//            }
+//        }
+//    }
+//}
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = "11"

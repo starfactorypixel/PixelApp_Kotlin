@@ -22,4 +22,4 @@ fun NavigationContentView(childStack: Value<ChildStack<Screen, ScreenInstance>>)
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
 private fun animation(): StackAnimation<Screen, ScreenInstance> =
-    stackAnimation { _, _ -> scale() + fade() }
+    stackAnimation { _, _, _ -> scale() + fade() }

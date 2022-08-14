@@ -9,10 +9,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(compose.ui)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.runtime)
+                api(project(":core:compose"))
+                api(project(":core:coroutines"))
+                api(project(":core:decompose"))
+                api(project(":core:di"))
+                api(project(":core:navigation"))
             }
         }
     }

@@ -30,8 +30,10 @@ rootProject.name = "pixel"
 
 include(
     ":core:compose",
+    ":core:coroutines",
     ":core:decompose",
     ":core:di",
+    ":core:navigation",
 )
 
 include(

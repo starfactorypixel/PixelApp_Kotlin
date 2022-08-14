@@ -5,19 +5,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ru.starfactory.pixel.ui.theme.PixelTheme
 import ru.starfactory.pixel.ui.widget.ArcValueIndicatorWidget
 
 @Composable
-fun DashboardScreen() {
+fun DashboardView() {
     DashboardContent()
 }
 
@@ -76,18 +72,4 @@ private fun ColumnScope.Speed() {
         maxValue = 60,
         text = "km/h"
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DashboardPreview() {
-    PixelTheme(darkTheme = true) {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
-        ) {
-            DashboardContent()
-        }
-    }
 }

@@ -10,6 +10,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import ru.starfactory.pixel.ui.screen.dashboard.DashboardView
 
 @Composable
 fun MainView() {
@@ -33,7 +34,7 @@ fun MainView() {
             ) {
                 Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
             }
-            //DashboardScreen()
+            DashboardView()
         }
     }
 }

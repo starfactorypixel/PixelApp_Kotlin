@@ -49,7 +49,7 @@ fun ArcValueIndicatorWidget(
                 textStyle = LocalTextStyle.current.copy(
                     fontSize = 400.sp,
                     fontWeight = FontWeight.Bold,
-                    platformStyle = PlatformTextStyle(false),
+                    //platformStyle = PlatformTextStyle(false),
                 ),
             )
             Text(

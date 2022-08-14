@@ -16,13 +16,6 @@ import ru.starfactory.pixel.ui.screen.main.MainView
 import ru.starfactory.pixel.ui.screen.request_permission.RequestPermissionView
 import ru.starfactory.pixel.ui.screen.settings.SettingsView
 
-@Parcelize
-object MainScreen : Screen {
-    @Composable
-    override fun ScreenView() {
-        MainView()
-    }
-}
 
 @Parcelize
 object DebugScreen : Screen {

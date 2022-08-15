@@ -46,6 +46,7 @@ dependencies {
     implementation(project(":core:di"))
     implementation(project(":core:key-value-storage"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:uikit"))
 
     implementation(project(":feature:theming"))
 

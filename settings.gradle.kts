@@ -35,6 +35,7 @@ include(
     ":core:di",
     ":core:key-value-storage",
     ":core:navigation",
+    ":core:uikit",
 )
 
 include(

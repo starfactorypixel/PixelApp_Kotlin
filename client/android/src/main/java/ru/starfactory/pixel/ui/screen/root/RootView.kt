@@ -15,7 +15,7 @@ import ru.starfactory.core.navigation.ui.NavigationContentView
 import ru.starfactory.core.navigation.ui.defaultChildStack
 import ru.starfactory.pixel.ui.screen.MainScreen
 import ru.starfactory.pixel.ui.screen.permission.PermissionView
-import ru.starfactory.pixel.ui.theme.PixelTheme
+import ru.starfactory.core.uikit.theme.PixelTheme
 
 @Composable
 fun RootView(componentContext: ComponentContext) {

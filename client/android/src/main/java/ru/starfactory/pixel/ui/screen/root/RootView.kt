@@ -15,7 +15,7 @@ import ru.starfactory.core.navigation.ui.NavigationContentView
 import ru.starfactory.core.navigation.ui.defaultChildStack
 import ru.starfactory.pixel.ui.screen.MainScreen
 import ru.starfactory.pixel.ui.screen.permission.PermissionView
-import ru.starfactory.core.uikit.theme.PixelTheme
+import ru.starfactory.pixel.theming.ui.theme.ThemeView
 
 @Composable
 fun RootView(componentContext: ComponentContext) {
@@ -27,7 +27,7 @@ fun RootView(componentContext: ComponentContext) {
         PermissionView()
 
         LocalRootNavigationHolder(navigation) {
-            PixelTheme(darkTheme = true) {
+            ThemeView {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background

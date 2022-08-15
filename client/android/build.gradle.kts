@@ -30,7 +30,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.core.get()
+        kotlinCompilerExtensionVersion = libs.versions.android.compose.compiler.get()
     }
     packagingOptions {
         resources {
@@ -39,14 +39,12 @@ android {
     }
 }
 
-dependencies { // TODO move to version catalog
+dependencies {
     implementation(project(":core:compose"))
     implementation(project(":core:coroutines"))
     implementation(project(":core:decompose"))
     implementation(project(":core:di"))
     implementation(project(":core:navigation"))
-
-    implementation(libs.kodein.compose)
 
     implementation(libs.decompose.jetpack)
     implementation(libs.decompose.android)
@@ -56,16 +54,8 @@ dependencies { // TODO move to version catalog
 
     implementation(libs.serial.usb)
 
-    implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.compose.ui:ui:${libs.versions.compose.core.get()}")
-    implementation("androidx.compose.material:material:${libs.versions.compose.core.get()}")
-    implementation("androidx.compose.ui:ui-tooling-preview:${libs.versions.compose.core.get()}")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${libs.versions.compose.core.get()}")
-    debugImplementation("androidx.compose.ui:ui-tooling:${libs.versions.compose.core.get()}")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:${libs.versions.compose.core.get()}")
+    implementation(libs.android.core)
+    implementation(libs.android.compose.ui)
+    implementation(libs.android.compose.material)
+    implementation(libs.android.compose.preview)
 }

@@ -1,7 +1,7 @@
-package ru.starfactory.pixel.domain.theme
+package ru.starfactory.pixel.theming.domain
 
 import kotlinx.coroutines.flow.Flow
-import ru.starfactory.pixel.repository.theme.ThemeRepository
+import ru.starfactory.pixel.theming.repository.ThemeRepository
 
 
 interface ThemeInteractor {
@@ -9,7 +9,7 @@ interface ThemeInteractor {
     suspend fun setCurrentTheme(theme: Theme)
 }
 
-class ThemeInteractorImpl(
+internal class ThemeInteractorImpl(
     private val themeRepository: ThemeRepository
 ) : ThemeInteractor {
     override fun observeCurrentTheme(): Flow<Theme> = themeRepository.observeCurrentTheme()

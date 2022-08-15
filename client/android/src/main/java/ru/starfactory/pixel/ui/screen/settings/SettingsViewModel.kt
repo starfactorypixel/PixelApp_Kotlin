@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ru.starfactory.core.decompose.view_model.ViewModel
-import ru.starfactory.pixel.domain.theme.Theme
-import ru.starfactory.pixel.domain.theme.ThemeInteractor
+import ru.starfactory.pixel.theming.domain.Theme
+import ru.starfactory.pixel.theming.domain.ThemeInteractor
 
 class SettingsViewModel(
     private val themeInteractor: ThemeInteractor,

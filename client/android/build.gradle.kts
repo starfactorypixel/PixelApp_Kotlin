@@ -44,7 +44,10 @@ dependencies {
     implementation(project(":core:coroutines"))
     implementation(project(":core:decompose"))
     implementation(project(":core:di"))
+    implementation(project(":core:key-value-storage"))
     implementation(project(":core:navigation"))
+
+    implementation(project(":feature:theming"))
 
     implementation(libs.decompose.jetpack)
     implementation(libs.decompose.android)

@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.starfactory.core.decompose.view_model.decomposeViewModel
-import ru.starfactory.pixel.domain.theme.Theme
+import ru.starfactory.pixel.theming.domain.Theme
 import ru.starfactory.pixel.ui.theme.PixelTheme
 
 

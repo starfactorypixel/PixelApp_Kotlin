@@ -1,4 +1,4 @@
-package ru.starfactory.pixel.domain.theme
+package ru.starfactory.pixel.theming.domain
 
 // Warning: Value name used in persistent storage
 enum class Theme {

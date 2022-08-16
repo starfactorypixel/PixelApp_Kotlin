@@ -25,7 +25,7 @@ import ru.starfactory.core.decompose.LocalComponentContext
 import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.*
-import ru.starfactory.pixel.main_screen.ui.screen.GeneralScreen
+import ru.starfactory.pixel.dashboard_screen.ui.screen.DashboardScreen
 import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMainMenu
 import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMenuItem
 
@@ -35,7 +35,7 @@ fun MainView() {
 
     val componentContext = LocalComponentContext.current
     val navigation = remember { StackNavigation<Screen>() }
-    val childStack = componentContext.defaultChildStack(navigation, GeneralScreen, "main-screen-router")
+    val childStack = componentContext.defaultChildStack(navigation, DashboardScreen, "main-screen-router")
 
     LaunchedEffect(viewModel, navigation) {
         viewModel.setCurrentScreen.receiveAsFlow().collect { newScreen -> navigation.navigate { listOf(newScreen) } }

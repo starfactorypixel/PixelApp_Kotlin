@@ -18,14 +18,6 @@ object MainScreen : Screen {
 }
 
 @Parcelize
-internal object GeneralScreen : Screen {
-    @Composable
-    override fun ScreenView() {
-        Text("General screen in development")
-    }
-}
-
-@Parcelize
 internal object NavigatorScreen : Screen {
     @Composable
     override fun ScreenView() {

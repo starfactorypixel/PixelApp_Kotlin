@@ -30,6 +30,7 @@ import ru.starfactory.pixel.ui.screen.request_permission.RequestPermissionViewMo
 import ru.starfactory.pixel.ui.screen.settings.SettingsViewModel
 import ru.starfactory.core.di.Modules
 import ru.starfactory.core.key_value_storage.coreKeyValueStorage
+import ru.starfactory.pixel.main_screen.featureMainScreen
 import ru.starfactory.pixel.theming.featureTheming
 
 @Suppress("UnusedReceiverParameter")
@@ -38,6 +39,7 @@ fun Modules.mainAndroidModule() = DI.Module("main-android-module") {
     importOnce(Modules.coreKeyValueStorage())
 
     // Feature
+    importOnce(Modules.featureMainScreen())
     importOnce(Modules.featureTheming())
 
     // Service

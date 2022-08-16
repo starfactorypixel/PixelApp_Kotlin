@@ -5,14 +5,10 @@ import ru.starfactory.pixel.domain.bluetooth.BluetoothInteractor
 import ru.starfactory.pixel.domain.bluetooth.BluetoothInteractorImpl
 import ru.starfactory.pixel.domain.permission.PermissionInteractor
 import ru.starfactory.pixel.domain.permission.PermissionInteractorImpl
-import ru.starfactory.pixel.domain.theme.ThemeInteractor
-import ru.starfactory.pixel.domain.theme.ThemeInteractorImpl
 import ru.starfactory.pixel.domain.usb.UsbInteractor
 import ru.starfactory.pixel.domain.usb.UsbInteractorImpl
 import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractor
 import ru.starfactory.pixel.domain.usb_serial.UsbSerialInteractorImpl
-import ru.starfactory.pixel.repository.theme.ThemeRepository
-import ru.starfactory.pixel.repository.theme.ThemeRepositoryImpl
 import ru.starfactory.pixel.service.bluetooth.BluetoothDevice
 import ru.starfactory.pixel.service.bluetooth.BluetoothService
 import ru.starfactory.pixel.service.bluetooth.BluetoothServiceImpl
@@ -33,9 +29,17 @@ import ru.starfactory.pixel.ui.screen.permission.PermissionViewModel
 import ru.starfactory.pixel.ui.screen.request_permission.RequestPermissionViewModel
 import ru.starfactory.pixel.ui.screen.settings.SettingsViewModel
 import ru.starfactory.core.di.Modules
+import ru.starfactory.core.key_value_storage.coreKeyValueStorage
+import ru.starfactory.pixel.theming.featureTheming
 
 @Suppress("UnusedReceiverParameter")
 fun Modules.mainAndroidModule() = DI.Module("main-android-module") {
+    // Core
+    importOnce(Modules.coreKeyValueStorage())
+
+    // Feature
+    importOnce(Modules.featureTheming())
+
     // Service
     bindSingleton<BluetoothService> { BluetoothServiceImpl(instance()) }
     bindSingleton<PermissionService> { PermissionServiceImpl(instance()) }
@@ -43,12 +47,10 @@ fun Modules.mainAndroidModule() = DI.Module("main-android-module") {
     bindSingleton<UsbSerialService> { UsbSerialServiceImpl(instance(), instance()) }
 
     // Repository
-    bindSingleton<ThemeRepository> { ThemeRepositoryImpl(instance()) }
 
     // Domain
     bindSingleton<BluetoothInteractor> { BluetoothInteractorImpl(instance()) }
     bindSingleton<PermissionInteractor> { PermissionInteractorImpl(instance()) }
-    bindSingleton<ThemeInteractor> { ThemeInteractorImpl(instance()) }
     bindSingleton<UsbInteractor> { UsbInteractorImpl(instance()) }
     bindSingleton<UsbSerialInteractor> { UsbSerialInteractorImpl(instance()) }
 

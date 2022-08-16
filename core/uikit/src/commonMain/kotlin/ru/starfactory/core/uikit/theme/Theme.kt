@@ -1,4 +1,4 @@
-package ru.starfactory.pixel.ui.theme
+package ru.starfactory.core.uikit.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

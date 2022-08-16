@@ -33,7 +33,13 @@ include(
     ":core:coroutines",
     ":core:decompose",
     ":core:di",
+    ":core:key-value-storage",
     ":core:navigation",
+    ":core:uikit",
+)
+
+include(
+    ":feature:theming",
 )
 
 include(":client:android")

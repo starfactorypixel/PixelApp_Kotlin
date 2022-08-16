@@ -29,7 +29,7 @@ private fun MainContent() {
             //TODO Sumin - вынести цвета в тему
             .background(Brush.linearGradient(colors = listOf(Color(0xFF435159), Color(0xFF1F292E))))
     ) {
-        var selectedItemIndex by remember { mutableStateOf(1) }
+        var selectedItemIndex by remember { mutableStateOf(0) }
         Row(modifier = Modifier.fillMaxHeight()) {
             PVerticalMainMenu(
                 items = listOf(

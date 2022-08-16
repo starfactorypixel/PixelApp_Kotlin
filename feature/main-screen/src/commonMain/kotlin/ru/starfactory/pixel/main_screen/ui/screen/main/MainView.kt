@@ -19,6 +19,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.navigate
 import com.arkivanov.decompose.value.Value
 import kotlinx.coroutines.flow.receiveAsFlow
+import ru.starfactory.core.compose.LocalConfiguration
 import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.decompose.LocalComponentContext
 import ru.starfactory.core.decompose.view_model.decomposeViewModel
@@ -70,6 +71,7 @@ private fun MainMenuContent(
     items: List<MainViewState.MenuItem>,
     onSelectMenuItem: (MainViewState.MenuItem) -> Unit
 ) {
+    val isShowTitle = LocalConfiguration.current.screenWidth > 600.dp
     var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
     Row(modifier = Modifier.fillMaxHeight()) {
         PVerticalMainMenu(
@@ -82,7 +84,7 @@ private fun MainMenuContent(
                 selectedItemIndex = it
                 onSelectMenuItem(items[it])
             },
-            isShowTitle = true
+            isShowTitle = isShowTitle
         )
     }
 }

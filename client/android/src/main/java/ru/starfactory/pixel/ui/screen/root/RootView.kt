@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
+import ru.starfactory.core.compose.LocalConfigurationHolder
 import ru.starfactory.core.decompose.LocalComponentContextHolder
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.LocalRootNavigationHolder
@@ -23,16 +24,18 @@ fun RootView(componentContext: ComponentContext) {
     val childStack = componentContext.defaultChildStack(navigation, MainScreen)
 
     LocalComponentContextHolder(componentContext) {
+        LocalConfigurationHolder {
 
-        PermissionView()
+            PermissionView()
 
-        LocalRootNavigationHolder(navigation) {
-            ThemeView {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    NavigationContentView(childStack)
+            LocalRootNavigationHolder(navigation) {
+                ThemeView {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colors.background
+                    ) {
+                        NavigationContentView(childStack)
+                    }
                 }
             }
         }

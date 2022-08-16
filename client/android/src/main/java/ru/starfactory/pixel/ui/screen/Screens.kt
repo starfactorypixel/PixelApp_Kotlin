@@ -12,17 +12,8 @@ import ru.starfactory.pixel.ui.screen.debug.usb.UsbView
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.UsbSerialView
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.select_params.SelectSerialParamsView
 import ru.starfactory.pixel.ui.screen.debug.usb_serial.terminal.UsbSerialTerminalView
-import ru.starfactory.pixel.ui.screen.main.MainView
 import ru.starfactory.pixel.ui.screen.request_permission.RequestPermissionView
 import ru.starfactory.pixel.ui.screen.settings.SettingsView
-
-@Parcelize
-object MainScreen : Screen {
-    @Composable
-    override fun ScreenView() {
-        MainView()
-    }
-}
 
 @Parcelize
 object DebugScreen : Screen {

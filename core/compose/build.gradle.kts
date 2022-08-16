@@ -11,6 +11,7 @@ kotlin {
                 api(compose.foundation)
                 api(compose.material)
                 api(compose.ui)
+                api(compose.materialIconsExtended)
 
                 // api(compose.uiTooling)
                 // api(compose.preview)
@@ -24,6 +25,7 @@ kotlin {
         named("androidMain") {
             dependencies {
                 api(libs.android.activity.compose)
+                api(libs.android.compose.foundation)
             }
         }
     }

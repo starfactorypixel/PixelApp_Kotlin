@@ -14,29 +14,30 @@ import kotlinx.coroutines.launch
 import ru.starfactory.pixel.ui.screen.dashboard.DashboardScreen
 import ru.starfactory.pixel.ui.screen.main_menu.MainMenuView
 
-@Composable
-fun MainView() {
-    val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
-
-    val closeDrawer: () -> Unit = {
-        scope.launch { scaffoldState.drawerState.close() }
-    }
-
-    BackHandler(onBack = closeDrawer, enabled = scaffoldState.drawerState.isOpen)
-
-    Scaffold(
-        scaffoldState = scaffoldState,
-        drawerContent = { MainMenuView(onCloseRequest = closeDrawer) }
-    ) {
-        Box(Modifier.padding(it)) {
-            IconButton(
-                onClick = { scope.launch { scaffoldState.drawerState.open() } },
-                modifier = Modifier.padding(4.dp),
-            ) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
-            }
-            DashboardScreen()
-        }
-    }
-}
+//TODO удалить
+//@Composable
+//fun MainView() {
+//    val scaffoldState = rememberScaffoldState()
+//    val scope = rememberCoroutineScope()
+//
+//    val closeDrawer: () -> Unit = {
+//        scope.launch { scaffoldState.drawerState.close() }
+//    }
+//
+//    BackHandler(onBack = closeDrawer, enabled = scaffoldState.drawerState.isOpen)
+//
+//    Scaffold(
+//        scaffoldState = scaffoldState,
+//        drawerContent = { MainMenuView(onCloseRequest = closeDrawer) }
+//    ) {
+//        Box(Modifier.padding(it)) {
+//            IconButton(
+//                onClick = { scope.launch { scaffoldState.drawerState.open() } },
+//                modifier = Modifier.padding(4.dp),
+//            ) {
+//                Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+//            }
+//            DashboardScreen()
+//        }
+//    }
+//}

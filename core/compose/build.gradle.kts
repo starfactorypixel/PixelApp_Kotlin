@@ -25,6 +25,7 @@ kotlin {
         named("androidMain") {
             dependencies {
                 api(libs.android.activity.compose)
+                api(libs.android.compose.foundation)
             }
         }
     }

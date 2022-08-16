@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMainMenu
 import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMenuItem
 
@@ -28,23 +29,29 @@ private fun MainContent() {
             .fillMaxSize()
             //TODO Sumin - вынести цвета в тему
             .background(Brush.linearGradient(colors = listOf(Color(0xFF435159), Color(0xFF1F292E))))
+            .paddingSystemWindowInsets()
     ) {
-        var selectedItemIndex by remember { mutableStateOf(0) }
-        Row(modifier = Modifier.fillMaxHeight()) {
-            PVerticalMainMenu(
-                items = listOf(
-                    PVerticalMenuItem(Icons.Default.DirectionsCar, "General"),
-                    PVerticalMenuItem(Icons.Default.Navigation, "Navigation"),
-                    PVerticalMenuItem(Icons.Default.Apps, "Apps"),
-                    PVerticalMenuItem(Icons.Default.BatteryChargingFull, "Charging"),
-                ),
-                Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(16.dp),
-                selectedItemIndex = selectedItemIndex,
-                onClickItem = { selectedItemIndex = it },
-                isShowTitle = true
-            )
-        }
+        MainMenuContent()
+    }
+}
+
+@Composable
+private fun MainMenuContent() {
+    var selectedItemIndex by remember { mutableStateOf(0) }
+    Row(modifier = Modifier.fillMaxHeight()) {
+        PVerticalMainMenu(
+            items = listOf(
+                PVerticalMenuItem(Icons.Default.DirectionsCar, "General"),
+                PVerticalMenuItem(Icons.Default.Navigation, "Navigation"),
+                PVerticalMenuItem(Icons.Default.Apps, "Apps"),
+                PVerticalMenuItem(Icons.Default.BatteryChargingFull, "Charging"),
+            ),
+            Modifier
+                .align(Alignment.CenterVertically)
+                .padding(16.dp),
+            selectedItemIndex = selectedItemIndex,
+            onClickItem = { selectedItemIndex = it },
+            isShowTitle = true
+        )
     }
 }

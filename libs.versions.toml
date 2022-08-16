@@ -39,6 +39,7 @@ android-activity-core = { module = "androidx.activity:activity-ktx", version.ref
 android-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "android-activity" }
 android-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "android-compose-core" }
 android-compose-material = { module = "androidx.compose.material:material", version.ref = "android-compose-core" }
+android-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "android-compose-core" }
 android-compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "android-compose-core" }
 
 # Kodein

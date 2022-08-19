@@ -39,6 +39,7 @@ include(
 )
 
 include(
+    ":feature:dashboard-screen",
     ":feature:main-screen",
     ":feature:theming",
 )

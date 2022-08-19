@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":core:navigation"))
     implementation(project(":core:uikit"))
 
+    implementation(project(":feature:dashboard-screen"))
     implementation(project(":feature:main-screen"))
     implementation(project(":feature:theming"))
 

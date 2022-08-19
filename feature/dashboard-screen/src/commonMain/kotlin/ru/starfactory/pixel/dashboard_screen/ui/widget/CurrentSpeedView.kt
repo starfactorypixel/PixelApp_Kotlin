@@ -6,6 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
@@ -15,7 +16,11 @@ internal fun CurrentSpeedView(
     modifier: Modifier = Modifier
 ) {
     Column(modifier) {
-        Text("Speed", style = MaterialTheme.typography.h5)
+        Text(
+            "Speed",
+            style = MaterialTheme.typography.h5,
+            fontWeight = FontWeight.W600,
+        )
         Row {
             Box(
                 Modifier
@@ -28,18 +33,22 @@ internal fun CurrentSpeedView(
                 Text(
                     "00",
                     style = MaterialTheme.typography.h1,
+                    fontWeight = FontWeight.W600,
                     color = Color.Transparent,
                 )
                 Text(
                     speed.toString(),
                     Modifier.fillMaxWidth(),
                     style = MaterialTheme.typography.h1,
+                    fontWeight = FontWeight.W600,
                     textAlign = TextAlign.End
                 )
             }
             Text(
                 "km/h",
-                Modifier.alignByBaseline().padding(start = 8.dp)
+                Modifier.alignByBaseline().padding(start = 8.dp),
+                style = MaterialTheme.typography.h6,
+                fontWeight = FontWeight.W600,
             )
         }
     }

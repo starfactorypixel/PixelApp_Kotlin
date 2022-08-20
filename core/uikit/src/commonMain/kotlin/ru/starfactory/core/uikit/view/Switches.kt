@@ -1,4 +1,4 @@
-package ru.starfactory.core.uikit.view.switch
+package ru.starfactory.core.uikit.view
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
+//TODO Sumin: вынести все параметры в конструктор
 fun POutlinedSwitch(
     isSelected: Boolean,
     onClick: () -> Unit,

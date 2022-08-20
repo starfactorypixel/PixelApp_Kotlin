@@ -14,7 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ru.starfactory.core.uikit.view.switch.POutlinedSwitch
+import ru.starfactory.core.uikit.view.POutlinedSwitch
 
 @Composable
 internal fun FastActionsView(modifier: Modifier = Modifier) {

@@ -13,6 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -26,6 +31,8 @@ import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.*
 import ru.starfactory.pixel.dashboard_screen.ui.screen.DashboardScreen
+import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsetsHolder
+import ru.starfactory.pixel.main_screen.ui.main_menu_insets.MainMenuInsets
 import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMainMenu
 import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMenuItem
 
@@ -61,32 +68,55 @@ private fun MainContent(
             .background(Brush.linearGradient(colors = listOf(Color(0xFF435159), Color(0xFF1F292E))))
             .paddingSystemWindowInsets()
     ) {
-        NavigationContentView(childStack)
-        MainMenuContent(state.menuItems, onSelectMenuItem)
+        var mainMenuInsets by remember { mutableStateOf(MainMenuInsets()) }
+        val localDensity = LocalDensity.current
+
+        LocalMainMenuInsetsHolder(mainMenuInsets) {
+            NavigationContentView(childStack)
+        }
+
+        Row(modifier = Modifier.fillMaxHeight()) {
+            MainMenuContent(
+                state.menuItems,
+                onSelectMenuItem,
+                Modifier
+                    .onGloballyPositioned { coordinates ->
+                        with(localDensity) {
+                            val offset = coordinates.positionInRoot()
+                            val size = coordinates.size
+                            mainMenuInsets = MainMenuInsets(
+                                DpOffset(offset.x.toDp(), offset.y.toDp()),
+                                DpSize(size.width.toDp(), size.height.toDp()),
+                                isPositioned = true
+                            )
+                        }
+                    }
+                    .align(Alignment.CenterVertically)
+                    .padding(16.dp)
+            )
+        }
     }
 }
 
 @Composable
 private fun MainMenuContent(
     items: List<MainViewState.MenuItem>,
-    onSelectMenuItem: (MainViewState.MenuItem) -> Unit
+    onSelectMenuItem: (MainViewState.MenuItem) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val isShowTitle = LocalConfiguration.current.screenWidth > 600.dp
     var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
-    Row(modifier = Modifier.fillMaxHeight()) {
-        PVerticalMainMenu(
-            items = items.toPMenuItem(),
-            Modifier
-                .align(Alignment.CenterVertically)
-                .padding(16.dp),
-            selectedItemIndex = selectedItemIndex,
-            onClickItem = {
-                selectedItemIndex = it
-                onSelectMenuItem(items[it])
-            },
-            isShowTitle = isShowTitle
-        )
-    }
+
+    PVerticalMainMenu(
+        items = items.toPMenuItem(),
+        modifier,
+        selectedItemIndex = selectedItemIndex,
+        onClickItem = {
+            selectedItemIndex = it
+            onSelectMenuItem(items[it])
+        },
+        isShowTitle = isShowTitle
+    )
 }
 
 private fun List<MainViewState.MenuItem>.toPMenuItem(): List<PVerticalMenuItem> = this.map { it.toPMenuItem() }

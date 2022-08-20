@@ -49,7 +49,7 @@ dependencies {
     implementation(project(":core:uikit"))
 
     implementation(project(":feature:dashboard-screen"))
-    implementation(project(":feature:main-screen"))
+    implementation(project(":feature:main-screen:impl"))
     implementation(project(":feature:theming"))
 
     implementation(libs.decompose.jetpack)

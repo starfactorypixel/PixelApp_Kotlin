@@ -40,7 +40,8 @@ include(
 
 include(
     ":feature:dashboard-screen",
-    ":feature:main-screen",
+    ":feature:main-screen:api",
+    ":feature:main-screen:impl",
     ":feature:theming",
 )
 

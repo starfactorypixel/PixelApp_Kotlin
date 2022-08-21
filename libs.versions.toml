@@ -31,6 +31,7 @@ gradlePlugins-checkUpdates = { module = "com.github.ben-manes:gradle-versions-pl
 
 # Kotlin
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+kotlin-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlin-coroutines" }
 
 # Android
 android-core = { module = "androidx.core:core-ktx", version.ref = "android-core" }

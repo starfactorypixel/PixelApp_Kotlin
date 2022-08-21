@@ -45,6 +45,10 @@ include(
     ":feature:theming",
 )
 
-include(":client:android")
+include(
+    ":client:common",
+    ":client:android",
+    ":client:jvm",
+)
 
 include(":client-wv:android")

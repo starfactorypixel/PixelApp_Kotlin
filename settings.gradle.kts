@@ -39,6 +39,7 @@ include(
 )
 
 include(
+    ":feature:apps",
     ":feature:dashboard-screen",
     ":feature:main-screen:api",
     ":feature:main-screen:impl",

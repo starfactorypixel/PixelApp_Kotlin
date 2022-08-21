@@ -9,10 +9,7 @@ kotlin {
         named("commonMain") {
             dependencies {
                 api(project(":feature:main-screen:api"))
-                implementation(project(":feature:apps"))
-                implementation(project(":feature:dashboard-screen"))
             }
         }
     }
 }
-

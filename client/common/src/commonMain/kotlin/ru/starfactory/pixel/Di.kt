@@ -3,6 +3,7 @@ package ru.starfactory.pixel
 import org.kodein.di.*
 import ru.starfactory.core.di.Modules
 import ru.starfactory.core.key_value_storage.coreKeyValueStorage
+import ru.starfactory.feature.apps.featureApps
 import ru.starfactory.pixel.main_screen.featureMainScreen
 import ru.starfactory.pixel.theming.featureTheming
 
@@ -12,6 +13,7 @@ fun Modules.mainCommonModule() = DI.Module("main-common-module") {
     importOnce(Modules.coreKeyValueStorage())
 
     // Feature
+    importOnce(Modules.featureApps())
     importOnce(Modules.featureMainScreen())
     importOnce(Modules.featureTheming())
 

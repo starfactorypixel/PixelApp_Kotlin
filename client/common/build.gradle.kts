@@ -15,6 +15,7 @@ kotlin {
                 api(project(":core:navigation"))
                 api(project(":core:uikit"))
 
+                api(project(":feature:apps"))
                 api(project(":feature:dashboard-screen"))
                 api(project(":feature:main-screen:impl"))
                 api(project(":feature:theming"))

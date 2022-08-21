@@ -40,17 +40,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:compose"))
-    implementation(project(":core:coroutines"))
-    implementation(project(":core:decompose"))
-    implementation(project(":core:di"))
-    implementation(project(":core:key-value-storage"))
-    implementation(project(":core:navigation"))
-    implementation(project(":core:uikit"))
-
-    implementation(project(":feature:dashboard-screen"))
-    implementation(project(":feature:main-screen:impl"))
-    implementation(project(":feature:theming"))
+    implementation(project(":client:common"))
 
     implementation(libs.decompose.jetpack)
     implementation(libs.decompose.android)

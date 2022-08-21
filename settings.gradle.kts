@@ -29,6 +29,7 @@ dependencyResolutionManagement {
 rootProject.name = "pixel"
 
 include(
+    ":core:apps",
     ":core:compose",
     ":core:coroutines",
     ":core:decompose",

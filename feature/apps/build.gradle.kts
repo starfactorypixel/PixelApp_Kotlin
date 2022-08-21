@@ -8,7 +8,8 @@ kotlin {
     sourceSets {
         named("commonMain") {
             dependencies {
-                api(project(":feature:main-screen:api"))
+                implementation(project(":core:apps"))
+                implementation(project(":feature:main-screen:api"))
             }
         }
     }

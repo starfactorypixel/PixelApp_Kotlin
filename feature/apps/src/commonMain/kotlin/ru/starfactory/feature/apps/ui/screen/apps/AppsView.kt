@@ -10,10 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ru.starfactory.core.apps.domain.AppInfo
+import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsets
 
 @Composable
 internal fun AppsView() {
+    val viewModel: AppsViewModel = decomposeViewModel()
     AppsContent()
 }
 
@@ -23,7 +26,7 @@ private fun AppsContent() {
     if (!mainMenuInsets.isPositioned) return
 
     val apps = (0..30).map {
-        AppState("App #$it")
+        AppInfo("App #$it", "App #$it")
     }
     LazyVerticalGrid(
         GridCells.Adaptive(minSize = 200.dp),
@@ -34,19 +37,17 @@ private fun AppsContent() {
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(24.dp)
     ) {
-        items(apps, key = { it.name }) {
+        items(apps, key = { it.id }) {
             AppContent(it)
         }
     }
 }
 
 @Composable
-private fun AppContent(app: AppState) {
+private fun AppContent(app: AppInfo) {
     Card(Modifier.height(100.dp)) {
         Box(Modifier.fillMaxSize()) {
             Text(app.name, Modifier.align(Alignment.Center))
         }
     }
 }
-
-private data class AppState(val name: String)

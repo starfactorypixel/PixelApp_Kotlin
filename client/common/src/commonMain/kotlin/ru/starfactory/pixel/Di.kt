@@ -1,6 +1,7 @@
 package ru.starfactory.pixel
 
 import org.kodein.di.*
+import ru.starfactory.core.apps.coreApps
 import ru.starfactory.core.di.Modules
 import ru.starfactory.core.key_value_storage.coreKeyValueStorage
 import ru.starfactory.feature.apps.featureApps
@@ -10,6 +11,7 @@ import ru.starfactory.pixel.theming.featureTheming
 @Suppress("UnusedReceiverParameter")
 fun Modules.mainCommonModule() = DI.Module("main-common-module") {
     // Core
+    importOnce(Modules.coreApps())
     importOnce(Modules.coreKeyValueStorage())
 
     // Feature

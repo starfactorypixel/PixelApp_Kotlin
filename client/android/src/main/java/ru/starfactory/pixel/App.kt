@@ -14,6 +14,6 @@ class App : Application(), DIAware {
     override val di: DI by DI.lazy {
         bindSingleton<Context> { this@App }
         bindSingleton { applicationScope }
-        importOnce(Modules.mainAndroidModule())
+        importOnce(Modules.mainCommonModule())
     }
 }

@@ -15,7 +15,6 @@ import ru.starfactory.core.navigation.ui.LocalRootNavigationHolder
 import ru.starfactory.core.navigation.ui.NavigationContentView
 import ru.starfactory.core.navigation.ui.defaultChildStack
 import ru.starfactory.pixel.main_screen.ui.screen.MainScreen
-import ru.starfactory.pixel.ui.screen.permission.PermissionView
 import ru.starfactory.pixel.theming.ui.theme.ThemeView
 
 @Composable
@@ -26,7 +25,7 @@ fun RootView(componentContext: ComponentContext) {
     LocalComponentContextHolder(componentContext) {
         LocalConfigurationHolder {
 
-            PermissionView()
+            // PermissionView()
 
             LocalRootNavigationHolder(navigation) {
                 ThemeView {

@@ -8,6 +8,7 @@ kotlin {
         named("commonMain") {
             dependencies {
                 implementation(project(":core:di"))
+                implementation(project(":core:compose"))
             }
         }
     }

@@ -8,14 +8,14 @@ import kotlinx.coroutines.flow.stateIn
 import ru.starfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.core.navigation.NavigationType
 import ru.starfactory.core.navigation.getNavigation
-import ru.starfactory.pixel.ecu_connection.domain.connection.EcuConnectionInteractor
+import ru.starfactory.pixel.ecu_connection.domain.connection.EcuDefaultSourceConnectionInteractor
 import ru.starfactory.pixel.ecu_connection.ui.screen.SelectSourceScreen
 
 internal class DashboardViewModel(
-    ecuConnectionInteractor: EcuConnectionInteractor,
+    ecuDefaultSourceConnectionInteractor: EcuDefaultSourceConnectionInteractor,
     context: ComponentContext,
 ) : ViewModel() {
-    val state = ecuConnectionInteractor.observePrimaryState()
+    val state = ecuDefaultSourceConnectionInteractor.observePrimaryState()
         .map { DashboardViewState.ShowData(it) }
         .stateIn(viewModelScope, SharingStarted.Eagerly, DashboardViewState.Loading)
 

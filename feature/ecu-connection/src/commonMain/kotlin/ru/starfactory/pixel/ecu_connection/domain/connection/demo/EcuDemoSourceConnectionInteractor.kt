@@ -1,14 +1,14 @@
-package ru.starfactory.pixel.ecu_connection.domain.connection
+package ru.starfactory.pixel.ecu_connection.domain.connection.demo
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import ru.starfactory.pixel.ecu_connection.domain.connection.EcuPrimaryState
+import ru.starfactory.pixel.ecu_connection.domain.connection.EcuSourceConnectionInteractor
 
-interface EcuConnectionInteractor {
-    fun observePrimaryState(): Flow<EcuPrimaryState>
-}
+internal interface EcuDemoSourceConnectionInteractor : EcuSourceConnectionInteractor
 
-internal class EcuConnectionInteractorImpl : EcuConnectionInteractor {
+internal class EcuDemoSourceConnectionInteractorImpl : EcuDemoSourceConnectionInteractor {
     override fun observePrimaryState(): Flow<EcuPrimaryState> {
         return flow {
 

@@ -42,6 +42,7 @@ include(
 include(
     ":feature:apps",
     ":feature:dashboard-screen",
+    ":feature:ecu-connection",
     ":feature:main-screen:api",
     ":feature:main-screen:impl",
     ":feature:theming",

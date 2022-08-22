@@ -29,6 +29,7 @@ dependencyResolutionManagement {
 rootProject.name = "pixel"
 
 include(
+    ":core:apps",
     ":core:compose",
     ":core:coroutines",
     ":core:decompose",
@@ -39,6 +40,7 @@ include(
 )
 
 include(
+    ":feature:apps",
     ":feature:dashboard-screen",
     ":feature:main-screen:api",
     ":feature:main-screen:impl",

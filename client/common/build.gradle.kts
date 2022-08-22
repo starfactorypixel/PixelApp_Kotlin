@@ -7,6 +7,7 @@ kotlin {
     sourceSets {
         named("commonMain") {
             dependencies {
+                api(project(":core:apps"))
                 api(project(":core:compose"))
                 api(project(":core:coroutines"))
                 api(project(":core:decompose"))
@@ -15,6 +16,7 @@ kotlin {
                 api(project(":core:navigation"))
                 api(project(":core:uikit"))
 
+                api(project(":feature:apps"))
                 api(project(":feature:dashboard-screen"))
                 api(project(":feature:main-screen:impl"))
                 api(project(":feature:theming"))

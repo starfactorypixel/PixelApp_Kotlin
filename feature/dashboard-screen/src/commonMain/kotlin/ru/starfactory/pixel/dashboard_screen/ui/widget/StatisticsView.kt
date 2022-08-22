@@ -16,7 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun StatisticsView(modifier: Modifier = Modifier) {
+internal fun StatisticsView(
+    batteryCharge: Int,
+    modifier: Modifier = Modifier
+) {
     Column(modifier) {
         Text(
             "Statistics",
@@ -24,8 +27,8 @@ internal fun StatisticsView(modifier: Modifier = Modifier) {
             fontWeight = FontWeight.W600,
         )
         Spacer(Modifier.padding(top = 8.dp))
-        StatisticsRow(Icons.Default.BatteryFull, "80%")
-        StatisticsRow(Icons.Default.WbSunny, "340w/h")
+        StatisticsRow(Icons.Default.BatteryFull, "$batteryCharge %")
+        StatisticsRow(Icons.Default.WbSunny, "340 w/h")
         StatisticsRow(Icons.Default.Speed, "128 001 km")
     }
 }

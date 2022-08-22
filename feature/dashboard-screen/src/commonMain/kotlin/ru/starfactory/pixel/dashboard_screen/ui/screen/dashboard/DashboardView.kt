@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.pixel.dashboard_screen.ui.dashboardiconpack.DashboardCar
 import ru.starfactory.pixel.dashboard_screen.ui.widget.BottomActionsView
 import ru.starfactory.pixel.dashboard_screen.ui.widget.CurrentSpeedView
@@ -18,21 +20,21 @@ import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsets
 
 @Composable
 internal fun DashboardView() {
-    DashboardContent()
+    val viewModel: DashboardViewModel = decomposeViewModel()
+    val state by viewModel.state.collectAsState()
+    DashboardContent(state)
 }
 
 @Composable
-private fun DashboardContent() {
-    val transition = rememberInfiniteTransition()
-    val speed by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 40f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(5000),
-            repeatMode = RepeatMode.Reverse
-        )
-    )
+private fun DashboardContent(state: DashboardViewState) {
+    return when (state) {
+        DashboardViewState.Loading -> Unit // Loading is very fast
+        is DashboardViewState.ShowData -> ShowDataContent(state)
+    }
+}
 
+@Composable
+private fun ShowDataContent(state: DashboardViewState.ShowData) {
     val mainMenuInsets = LocalMainMenuInsets.current
 
     Column(
@@ -42,11 +44,14 @@ private fun DashboardContent() {
     ) {
         Row {
             CurrentSpeedView(
-                speed.toInt(),
+                state.primaryState.speed,
                 Modifier.padding(horizontal = 32.dp)
             )
             Spacer(Modifier.weight(1f))
-            StatisticsView(Modifier.padding(horizontal = 16.dp))
+            StatisticsView(
+                batteryCharge = state.primaryState.batteryCharge.toInt(),
+                Modifier.padding(horizontal = 16.dp)
+            )
             Spacer(Modifier.weight(1f))
             FastActionsView(Modifier.padding(horizontal = 16.dp))
         }

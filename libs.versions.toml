@@ -12,7 +12,7 @@ android-compose-compiler = "1.2.0"
 
 # Other
 kodein = "7.14.0"
-decompose = "0.8.0"
+decompose = "1.0.0-alpha-03"
 serial-usb = "3.4.6"
 multiplatformSettings = "0.9"
 

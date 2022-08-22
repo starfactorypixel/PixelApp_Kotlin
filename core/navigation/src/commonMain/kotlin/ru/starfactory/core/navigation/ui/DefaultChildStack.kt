@@ -7,7 +7,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import ru.starfactory.core.navigation.Screen
 
-fun ComponentContext.defaultChildStack(
+internal fun ComponentContext.defaultChildStack(
     navigation: StackNavigation<Screen>,
     initialScreen: Screen,
     key: String = "DefaultRouter"

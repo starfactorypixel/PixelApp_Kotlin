@@ -20,17 +20,12 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.ChildStack
-import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.navigate
 import com.arkivanov.decompose.value.Value
-import kotlinx.coroutines.flow.receiveAsFlow
 import ru.starfactory.core.compose.LocalConfiguration
 import ru.starfactory.core.compose.paddingSystemWindowInsets
-import ru.starfactory.core.decompose.LocalComponentContext
 import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.*
-import ru.starfactory.pixel.dashboard_screen.ui.screen.DashboardScreen
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsetsHolder
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.MainMenuInsets
 import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMainMenu
@@ -40,19 +35,9 @@ import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMenuItem
 fun MainView() {
     val viewModel = decomposeViewModel<MainViewModel>()
 
-    val componentContext = LocalComponentContext.current
-    val navigation = remember { StackNavigation<Screen>() }
-    val childStack = componentContext.defaultChildStack(navigation, DashboardScreen, "main-screen-router")
-
-    LaunchedEffect(viewModel, navigation) {
-        viewModel.setCurrentScreen.receiveAsFlow().collect { newScreen -> navigation.navigate { listOf(newScreen) } }
-    }
-
     val state by viewModel.state.collectAsState()
 
-    LocalNavigationHolder(navigation) {
-        MainContent(state, viewModel::onSelectMenuItem, childStack)
-    }
+    MainContent(state, viewModel::onSelectMenuItem, viewModel.childStack)
 }
 
 @Composable

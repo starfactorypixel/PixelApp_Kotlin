@@ -1,10 +1,8 @@
 package ru.starfactory.pixel.dashboard_screen.ui.widget
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
@@ -15,9 +13,12 @@ import ru.starfactory.core.uikit.view.POutlinedFloatingActionButton
 import ru.starfactory.core.uikit.view.PTextFloatingActionButton
 
 @Composable
-internal fun BottomActionsView(modifier: Modifier) {
+internal fun BottomActionsView(
+    onClickSettings: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Row(modifier.padding(horizontal = 8.dp)) {
-        BottomAction("Settings")
+        BottomAction("Settings", onClickSettings)
         Spacer(Modifier.weight(1f))
         BottomActionFlat("Left belt")
         BottomActionFlat("Front")
@@ -25,15 +26,14 @@ internal fun BottomActionsView(modifier: Modifier) {
         BottomActionFlat("*****")
         BottomActionFlat("Right belt")
         Spacer(Modifier.weight(1f))
-        BottomAction("Power off")
-
+        BottomAction("Power off") {}
     }
 }
 
 @Composable
-private fun BottomAction(text: String) {
+private fun BottomAction(text: String, onClick: () -> Unit) {
     Column(Modifier.padding(horizontal = 16.dp)) {
-        POutlinedFloatingActionButton(onClick = {}) {
+        POutlinedFloatingActionButton(onClick = onClick) {
             Icon(Icons.Default.Settings, null, Modifier.size(32.dp))
         }
         Text(

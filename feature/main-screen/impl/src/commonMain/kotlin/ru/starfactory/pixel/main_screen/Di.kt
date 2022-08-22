@@ -7,5 +7,5 @@ import ru.starfactory.core.di.i
 import ru.starfactory.pixel.main_screen.ui.screen.main.MainViewModel
 
 fun Modules.featureMainScreen() = DI.Module("feature-main-screen") {
-    bindProvider { MainViewModel(i()) }
+    bindProvider { MainViewModel(i(), i()) }
 }

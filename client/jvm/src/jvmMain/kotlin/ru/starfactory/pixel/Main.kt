@@ -27,6 +27,8 @@ fun main() {
         importOnce(Modules.mainCommonModule())
     }
 
+    initApp(di)
+
     val lifecycle = LifecycleRegistry()
     val backPressedDispatcher = BackPressedDispatcher()
     val defaultComponentContext = DefaultComponentContext(lifecycle, backPressedHandler = backPressedDispatcher)

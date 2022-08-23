@@ -35,6 +35,7 @@ include(
     ":core:decompose",
     ":core:di",
     ":core:key-value-storage",
+    ":core:logger",
     ":core:navigation",
     ":core:uikit",
 )

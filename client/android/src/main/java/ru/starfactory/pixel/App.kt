@@ -16,4 +16,9 @@ class App : Application(), DIAware {
         bindSingleton { applicationScope }
         importOnce(Modules.mainCommonModule())
     }
+
+    override fun onCreate() {
+        super.onCreate()
+        initApp(di)
+    }
 }

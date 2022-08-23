@@ -5,6 +5,7 @@ import ru.starfactory.core.apps.coreApps
 import ru.starfactory.core.di.Modules
 import ru.starfactory.core.di.i
 import ru.starfactory.core.key_value_storage.coreKeyValueStorage
+import ru.starfactory.core.usb.coreUsb
 import ru.starfactory.feature.apps.featureApps
 import ru.starfactory.pixel.dashboard_screen.featureDashboardScreen
 import ru.starfactory.pixel.ecu_connection.featureEcuConnection
@@ -17,6 +18,7 @@ fun Modules.mainCommonModule() = DI.Module("main-common-module") {
     // Core
     importOnce(Modules.coreApps())
     importOnce(Modules.coreKeyValueStorage())
+    importOnce(Modules.coreUsb())
 
     // Feature
     importOnce(Modules.featureApps())

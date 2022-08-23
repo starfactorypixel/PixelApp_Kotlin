@@ -11,8 +11,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
-import ru.starfactory.core.utils.observeBroadcastIntents
 import ru.starfactory.core.coroutines.shareDefault
+import ru.starfactory.core.coroutines.utils.observeBroadcastIntents
 import ru.starfactory.pixel.Tag
 
 interface UsbService {

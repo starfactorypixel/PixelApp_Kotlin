@@ -23,7 +23,6 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
 import ru.starfactory.core.compose.LocalConfiguration
 import ru.starfactory.core.compose.paddingSystemWindowInsets
-import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.*
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsetsHolder
@@ -32,8 +31,7 @@ import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMainMenu
 import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMenuItem
 
 @Composable
-fun MainView() {
-    val viewModel = decomposeViewModel<MainViewModel>()
+internal fun MainView(viewModel: MainViewModel) {
 
     val state by viewModel.state.collectAsState()
 

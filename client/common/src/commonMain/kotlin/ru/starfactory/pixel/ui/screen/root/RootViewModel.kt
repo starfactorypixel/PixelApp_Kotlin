@@ -1,11 +1,9 @@
 package ru.starfactory.pixel.ui.screen.root
 
-import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.value.Value
 import ru.starfactory.core.decompose.view_model.ViewModel
-import ru.starfactory.core.navigation.NavigationType
-import ru.starfactory.core.navigation.createNavigation
-import ru.starfactory.pixel.main_screen.ui.screen.MainScreen
+import ru.starfactory.core.navigation.Screen
+import ru.starfactory.core.navigation.ui.ScreenInstance
 
-class RootViewModel(componentContext: ComponentContext) : ViewModel() {
-    val childStack = componentContext.createNavigation(MainScreen, NavigationType.ROOT)
-}
+class RootViewModel(val childStack: Value<ChildStack<Screen, ScreenInstance>>) : ViewModel()

@@ -5,32 +5,23 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.arkivanov.decompose.ComponentContext
-import org.kodein.di.bindSingleton
-import org.kodein.di.compose.subDI
 import ru.starfactory.core.compose.LocalConfigurationHolder
-import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.navigation.ui.NavigationContentView
 import ru.starfactory.pixel.theming.ui.theme.ThemeView
 
 @Composable
-fun RootView(componentContext: ComponentContext) {
+fun RootView(rootComponent: RootComponent) {
 
-    subDI(diBuilder = {
-        bindSingleton { componentContext }
-    }) {
-        val viewModel: RootViewModel = decomposeViewModel()
-        LocalConfigurationHolder {
+    LocalConfigurationHolder {
 
-            // PermissionView()
+        // PermissionView()
 
-            ThemeView {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    NavigationContentView(viewModel.childStack)
-                }
+        ThemeView(rootComponent.themeViewModel) {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colors.background
+            ) {
+                NavigationContentView(rootComponent.rootViewModel.childStack)
             }
         }
     }

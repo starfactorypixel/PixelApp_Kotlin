@@ -13,7 +13,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.decompose.extensions.compose.jetbrains.lifecycle.LifecycleController
-import com.arkivanov.essenty.backpressed.BackPressedDispatcher
+import com.arkivanov.essenty.backhandler.BackDispatcher
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.kodein.di.DI
 import org.kodein.di.compose.withDI
@@ -27,9 +27,11 @@ fun main() {
         importOnce(Modules.mainCommonModule())
     }
 
+    initApp(di)
+
     val lifecycle = LifecycleRegistry()
-    val backPressedDispatcher = BackPressedDispatcher()
-    val defaultComponentContext = DefaultComponentContext(lifecycle, backPressedHandler = backPressedDispatcher)
+    val backDispatcher = BackDispatcher()
+    val defaultComponentContext = DefaultComponentContext(lifecycle, backHandler = backDispatcher)
 
     application {
         val windowState = rememberWindowState()
@@ -41,7 +43,7 @@ fun main() {
             title = "Pixel App",
             onKeyEvent = {
                 if (it.key == Key.Escape) {
-                    backPressedDispatcher.onBackPressed()
+                    backDispatcher.back()
                 } else {
                     false
                 }

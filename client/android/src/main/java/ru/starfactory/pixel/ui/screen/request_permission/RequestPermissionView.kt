@@ -15,40 +15,39 @@ import com.arkivanov.decompose.router.stack.replaceCurrent
 import kotlinx.coroutines.flow.receiveAsFlow
 import ru.starfactory.core.decompose.view_model.decomposeViewModelFactory
 import ru.starfactory.core.navigation.Screen
-import ru.starfactory.core.navigation.ui.LocalNavigation
 import ru.starfactory.pixel.service.permission.Permission
-
-@Composable
-fun RequestPermissionView(permission: Permission, nextScreen: Screen) {
-    val viewModel: RequestPermissionViewModel = decomposeViewModelFactory(permission)
-    val navigation = LocalNavigation.current
-
-    LaunchedEffect(viewModel, navigation) {
-        viewModel.navigateNext.receiveAsFlow().collect { navigation.replaceCurrent(nextScreen) }
-    }
-
-    RequestPermissionContent(
-        onClickRequestPermission = viewModel::onClickRequestPermission
-    )
-}
-
-@Composable
-private fun RequestPermissionContent(onClickRequestPermission: () -> Unit = {}) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(Modifier.align(Alignment.Center)) {
-            Text(
-                text = "Для достуа к данной функции необходимо предоставить разрешения",
-                Modifier.padding(horizontal = 16.dp)
-            )
-            Button(
-                onClick = onClickRequestPermission,
-                Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 8.dp)
-            ) {
-                Text(text = "Предоставить")
-            }
-        }
-    }
-}
+//
+//@Composable
+//fun RequestPermissionView(permission: Permission, nextScreen: Screen) {
+//    val viewModel: RequestPermissionViewModel = decomposeViewModelFactory(permission)
+//    val navigation = LocalNavigation.current
+//
+//    LaunchedEffect(viewModel, navigation) {
+//        viewModel.navigateNext.receiveAsFlow().collect { navigation.replaceCurrent(nextScreen) }
+//    }
+//
+//    RequestPermissionContent(
+//        onClickRequestPermission = viewModel::onClickRequestPermission
+//    )
+//}
+//
+//@Composable
+//private fun RequestPermissionContent(onClickRequestPermission: () -> Unit = {}) {
+//    Box(modifier = Modifier.fillMaxSize()) {
+//        Column(Modifier.align(Alignment.Center)) {
+//            Text(
+//                text = "Для достуа к данной функции необходимо предоставить разрешения",
+//                Modifier.padding(horizontal = 16.dp)
+//            )
+//            Button(
+//                onClick = onClickRequestPermission,
+//                Modifier
+//                    .align(Alignment.CenterHorizontally)
+//                    .padding(horizontal = 16.dp)
+//                    .padding(top = 8.dp)
+//            ) {
+//                Text(text = "Предоставить")
+//            }
+//        }
+//    }
+//}

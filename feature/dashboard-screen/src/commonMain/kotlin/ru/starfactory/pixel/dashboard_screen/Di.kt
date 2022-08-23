@@ -7,5 +7,5 @@ import ru.starfactory.core.di.i
 import ru.starfactory.pixel.dashboard_screen.ui.screen.dashboard.DashboardViewModel
 
 fun Modules.featureDashboardScreen() = DI.Module("feature-dashboard-screen") {
-    bindProvider { DashboardViewModel(i()) }
+    bindProvider { DashboardViewModel(i(), i()) }
 }

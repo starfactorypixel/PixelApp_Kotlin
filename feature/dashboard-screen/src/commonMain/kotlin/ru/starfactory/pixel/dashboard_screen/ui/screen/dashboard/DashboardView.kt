@@ -1,6 +1,5 @@
 package ru.starfactory.pixel.dashboard_screen.ui.screen.dashboard
 
-import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
@@ -22,19 +21,25 @@ import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsets
 internal fun DashboardView() {
     val viewModel: DashboardViewModel = decomposeViewModel()
     val state by viewModel.state.collectAsState()
-    DashboardContent(state)
+    DashboardContent(state, viewModel::onClickSettings)
 }
 
 @Composable
-private fun DashboardContent(state: DashboardViewState) {
+private fun DashboardContent(
+    state: DashboardViewState,
+    onClickSettings: () -> Unit,
+) {
     return when (state) {
         DashboardViewState.Loading -> Unit // Loading is very fast
-        is DashboardViewState.ShowData -> ShowDataContent(state)
+        is DashboardViewState.ShowData -> ShowDataContent(state, onClickSettings)
     }
 }
 
 @Composable
-private fun ShowDataContent(state: DashboardViewState.ShowData) {
+private fun ShowDataContent(
+    state: DashboardViewState.ShowData,
+    onClickSettings: () -> Unit
+) {
     val mainMenuInsets = LocalMainMenuInsets.current
 
     Column(
@@ -69,6 +74,6 @@ private fun ShowDataContent(state: DashboardViewState.ShowData) {
                 )
             }
         }
-        BottomActionsView(Modifier.fillMaxWidth())
+        BottomActionsView(onClickSettings, Modifier.fillMaxWidth())
     }
 }

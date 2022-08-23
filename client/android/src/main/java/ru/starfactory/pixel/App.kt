@@ -8,6 +8,8 @@ import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.bindSingleton
 import ru.starfactory.core.di.Modules
+import ru.starfactory.core.logger.LogConfig
+import ru.starfactory.core.logger.setupDefault
 
 class App : Application(), DIAware {
     private val applicationScope = CoroutineScope(SupervisorJob())
@@ -15,5 +17,10 @@ class App : Application(), DIAware {
         bindSingleton<Context> { this@App }
         bindSingleton { applicationScope }
         importOnce(Modules.mainCommonModule())
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        LogConfig.setupDefault()
     }
 }

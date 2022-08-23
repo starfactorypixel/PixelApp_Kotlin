@@ -13,6 +13,7 @@ kotlin {
                 api(libs.kodein.compose)
 
                 implementation(project(":core:compose"))
+                implementation(project(":core:logger"))
             }
         }
     }

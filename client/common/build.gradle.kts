@@ -13,6 +13,7 @@ kotlin {
                 api(project(":core:decompose"))
                 api(project(":core:di"))
                 api(project(":core:key-value-storage"))
+                api(project(":core:logger"))
                 api(project(":core:navigation"))
                 api(project(":core:uikit"))
                 api(project(":core:usb"))

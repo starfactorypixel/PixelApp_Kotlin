@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -201,6 +202,7 @@ private fun CarStatusIndicatorContent(
                     indicator.text,
                     Modifier
                         .padding(end = 16.dp)
+                        .defaultMinSize(minWidth = 80.dp)
                         .align(Alignment.CenterVertically),
                     textAlign = TextAlign.End,
                 )
@@ -225,6 +227,7 @@ private fun CarStatusIndicatorContent(
                     indicator.text,
                     Modifier
                         .padding(start = 16.dp)
+                        .defaultMinSize(minWidth = 80.dp)
                         .align(Alignment.CenterVertically),
                     textAlign = TextAlign.Start,
                 )

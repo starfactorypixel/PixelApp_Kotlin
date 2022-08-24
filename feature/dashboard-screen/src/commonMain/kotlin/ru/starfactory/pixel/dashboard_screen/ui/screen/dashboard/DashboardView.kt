@@ -73,7 +73,7 @@ private fun ShowDataContent(
                 Modifier
                     .fillMaxWidth()
                     .padding(start = mainMenuInsets.positionInRoot.x + mainMenuInsets.size.width)
-                    .padding(24.dp)
+                    .padding(horizontal = 16.dp, vertical = 48.dp)
                     .weight(1f),
             )
         }

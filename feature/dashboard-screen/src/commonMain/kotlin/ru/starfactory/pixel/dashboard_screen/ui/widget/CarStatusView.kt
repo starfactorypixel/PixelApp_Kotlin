@@ -3,27 +3,30 @@ package ru.starfactory.pixel.dashboard_screen.ui.widget
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
-import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.*
 import ru.starfactory.core.uikit.view.POutlinedFloatingActionButton
 import ru.starfactory.pixel.dashboard_screen.ui.dashboardiconpack.DashboardCar
+import kotlin.math.max
+import kotlin.math.min
 
 @Composable
 fun CarStatusView(
     indicators: List<CarStatusIndicator>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    maxLineWidth: Dp = 200.dp,
 ) {
+
+    val density = LocalDensity.current
+    val maxLineWidthPx = with(density) { maxLineWidth.toPx().toInt() }
 
     val groupedIndicators = indicators.groupBy {
         it.position
@@ -117,12 +120,18 @@ fun CarStatusView(
 
             startIndicatorsPlaceable.forEachIndexed { i, it ->
                 val indicator = groupedIndicators[IndicatorPosition.START]!![i]
-                it.place(0, (carOffset.y + indicator.y * carPlaceable.width).toInt())
+                it.place(
+                    x = max(0, carOffset.x - maxLineWidthPx),
+                    y = (carOffset.y + indicator.y * carPlaceable.width).toInt()
+                )
             }
 
             endIndicatorsPlaceable.forEachIndexed { i, it ->
                 val indicator = groupedIndicators[IndicatorPosition.END]!![i]
-                it.place(containerSize.width - it.width, (carOffset.y + indicator.y * carPlaceable.width).toInt())
+                it.place(
+                    x = min(containerSize.width - it.width, carOffset.x + carPlaceable.width + maxLineWidthPx),
+                    y = (carOffset.y + indicator.y * carPlaceable.width).toInt()
+                )
             }
 
             centerIndicatorsPlaceable.forEachIndexed { i, it ->

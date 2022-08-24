@@ -4,13 +4,18 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -20,6 +25,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import ru.starfactory.core.uikit.view.POutlinedFloatingActionButton
 import ru.starfactory.pixel.dashboard_screen.ui.dashboardiconpack.DashboardCar
@@ -46,7 +52,7 @@ fun CarStatusView(
     val carAspect = carIcon.viewportWidth / carIcon.viewportHeight
 
     val carIconContent = @Composable {
-        Image(carIcon, null,)
+        Image(carIcon, null)
     }
 
     val content = @Composable {
@@ -123,7 +129,7 @@ fun CarStatusView(
             startIndicatorsPlaceable.forEachIndexed { i, it ->
                 val indicator = groupedIndicators[IndicatorPosition.START]!![i]
 
-                val x = max(0, carOffset.x - maxLineWidthPx - it.height)
+                val x = max(0, carOffset.x - maxLineWidthPx - it.width)
                 val y = (carOffset.y + carPlaceable.height * indicator.y - it.height / 2f).toInt()
 
                 canvasDraws += CanvasDrawInfo(
@@ -145,7 +151,7 @@ fun CarStatusView(
                 val indicator = groupedIndicators[IndicatorPosition.END]!![i]
 
                 val x = min(containerSize.width - it.width, carOffset.x + carPlaceable.width + maxLineWidthPx)
-                val y = (carOffset.y + carPlaceable.height * indicator.y - it.width / 2f).toInt()
+                val y = (carOffset.y + carPlaceable.height * indicator.y - it.height / 2f).toInt()
 
                 canvasDraws += CanvasDrawInfo(
                     lineStart = Offset(
@@ -174,14 +180,58 @@ fun CarStatusView(
 }
 
 @Composable
-private fun CarStatusIndicatorContent(indicator: CarStatusIndicator) {
-    POutlinedFloatingActionButton(
-        onClick = {},
-        backgroundColor = indicator.color.copy(alpha = .3f),
-        borderStroke = BorderStroke(2.dp, indicator.color)
-    ) {
-        Icon(indicator.icon, null)
+private fun CarStatusIndicatorContent(
+    indicator: CarStatusIndicator,
+) {
+    @Composable
+    fun icon(modifier: Modifier = Modifier) {
+        POutlinedFloatingActionButton(
+            onClick = {},
+            backgroundColor = indicator.color.copy(alpha = .3f),
+            borderStroke = BorderStroke(2.dp, indicator.color)
+        ) {
+            Icon(indicator.icon, null)
+        }
     }
+
+    when (indicator.position) {
+        IndicatorPosition.START -> {
+            Row {
+                Text(
+                    indicator.text,
+                    Modifier
+                        .padding(end = 16.dp)
+                        .align(Alignment.CenterVertically),
+                    textAlign = TextAlign.End,
+                )
+                icon()
+            }
+        }
+        IndicatorPosition.CENTER -> {
+            Column {
+                icon(
+                    Modifier.align(Alignment.CenterHorizontally)
+                )
+                Text(
+                    indicator.text,
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+        IndicatorPosition.END -> {
+            Row {
+                icon()
+                Text(
+                    indicator.text,
+                    Modifier
+                        .padding(start = 16.dp)
+                        .align(Alignment.CenterVertically),
+                    textAlign = TextAlign.Start,
+                )
+            }
+        }
+    }
+
 }
 
 @Composable
@@ -220,10 +270,11 @@ data class CanvasDrawInfo(
 )
 
 data class CarStatusIndicator(
-    val x: Float, // %
-    val y: Float, // %
+    val x: Float, // % 0f..1f
+    val y: Float, // % 0f..1f
     val icon: ImageVector,
-    val color: Color
+    val text: String,
+    val color: Color,
 )
 
 private val CarStatusIndicator.position: IndicatorPosition

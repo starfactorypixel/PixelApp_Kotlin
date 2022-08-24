@@ -13,7 +13,7 @@ import ru.starfactory.feature.apps.ui.screen.apps.AppsViewModel
 @Parcelize
 object AppsScreen : Screen {
     override fun createScreenInstance(di: DI, componentContext: ComponentContext): ScreenInstance {
-        val viewModel = decomposeViewModel<AppsViewModel>(di, componentContext)
+        val viewModel = decomposeViewModel<AppsViewModel>(di, componentContext.instanceKeeper)
         return object : ScreenInstance {
             @Composable
             override fun ScreenInstanceView() {

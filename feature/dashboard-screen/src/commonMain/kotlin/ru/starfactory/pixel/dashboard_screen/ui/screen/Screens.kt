@@ -13,7 +13,7 @@ import ru.starfactory.pixel.dashboard_screen.ui.screen.dashboard.DashboardViewMo
 @Parcelize
 object DashboardScreen : Screen {
     override fun createScreenInstance(di: DI, componentContext: ComponentContext): ScreenInstance {
-        val viewModel: DashboardViewModel = decomposeViewModel(di, componentContext)
+        val viewModel: DashboardViewModel = decomposeViewModel(di, componentContext.instanceKeeper)
         return object : ScreenInstance {
             @Composable
             override fun ScreenInstanceView() {

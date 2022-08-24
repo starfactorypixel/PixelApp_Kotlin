@@ -25,29 +25,6 @@ fun Modules.mainCommonModule() = DI.Module("main-common-module") {
     importOnce(Modules.featureMainScreen())
     importOnce(Modules.featureTheming())
 
-    // Service
-//    bindSingleton<BluetoothService> { BluetoothServiceImpl(instance()) }
-//    bindSingleton<PermissionService> { PermissionServiceImpl(instance()) }
-//    bindSingleton<UsbService> { UsbServiceImpl(instance(), instance()) }
-//    bindSingleton<UsbSerialService> { UsbSerialServiceImpl(instance(), instance()) }
-
-    // Repository
-
-    // Domain
-//    bindSingleton<BluetoothInteractor> { BluetoothInteractorImpl(instance()) }
-//    bindSingleton<PermissionInteractor> { PermissionInteractorImpl(instance()) }
-//    bindSingleton<UsbInteractor> { UsbInteractorImpl(instance()) }
-//    bindSingleton<UsbSerialInteractor> { UsbSerialInteractorImpl(instance()) }
-
     // View Models
-    bindProvider { RootViewModel(i()) }
-//    bindProvider { SettingsViewModel(instance()) }
-//    bindProvider { UsbViewModel(instance()) }
-//    bindProvider { UsbSerialViewModel(instance(), instance()) }
-//    bindProvider { PermissionViewModel(instance()) }
-//    bindProvider { DebugViewModel(instance()) }
-//    bindProvider { BluetoothSerialViewModel(instance()) }
-//    bindFactory<Permission, RequestPermissionViewModel> { RequestPermissionViewModel(instance(), it) }
-//    bindFactory<String, UsbSerialTerminalViewModel> { UsbSerialTerminalViewModel(instance(), it) }
-//    bindFactory<BluetoothDevice, BluetoothSerialTerminalViewModel> { BluetoothSerialTerminalViewModel(instance(), it) }
+    bindProvider { RootViewModel() }
 }

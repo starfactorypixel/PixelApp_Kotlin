@@ -31,11 +31,11 @@ import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMainMenu
 import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMenuItem
 
 @Composable
-internal fun MainView(viewModel: MainViewModel) {
+internal fun MainView(viewModel: MainViewModel, childStack: Value<ChildStack<Screen, ScreenInstance>>) {
 
     val state by viewModel.state.collectAsState()
 
-    MainContent(state, viewModel::onSelectMenuItem, viewModel.childStack)
+    MainContent(state, viewModel::onSelectMenuItem, childStack)
 }
 
 @Composable

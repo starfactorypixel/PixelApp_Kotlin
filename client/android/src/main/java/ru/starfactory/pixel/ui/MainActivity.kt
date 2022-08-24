@@ -12,7 +12,7 @@ class MainActivity : AbstractActivity() {
         super.onCreate(savedInstanceState)
 
         val defaultComponentContext = defaultComponentContext()
-        val rootComponent = defaultComponentContext.instanceKeeper.getOrCreate { RootComponent(di, defaultComponentContext) }
+        val rootComponent = RootComponent(di, defaultComponentContext)
 
         setContent {
             RootView(rootComponent)

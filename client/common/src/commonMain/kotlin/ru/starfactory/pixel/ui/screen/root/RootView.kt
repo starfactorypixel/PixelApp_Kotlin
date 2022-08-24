@@ -21,7 +21,7 @@ fun RootView(rootComponent: RootComponent) {
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colors.background
             ) {
-                NavigationContentView(rootComponent.rootViewModel.childStack)
+                NavigationContentView(rootComponent.childStack)
             }
         }
     }

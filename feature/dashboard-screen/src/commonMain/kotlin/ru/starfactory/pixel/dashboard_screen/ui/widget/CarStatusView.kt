@@ -29,7 +29,10 @@ import kotlin.math.min
 fun CarStatusView(
     indicators: List<CarStatusIndicator>,
     modifier: Modifier = Modifier,
-    maxLineWidth: Dp = 200.dp,
+    carIcon: ImageVector = Icons.DashboardCar,
+    maxLineWidth: Dp = 150.dp,
+    dotSize: Dp = 4.dp,
+    lineWidth: Dp = 2.dp,
 ) {
 
     val density = LocalDensity.current
@@ -42,7 +45,6 @@ fun CarStatusView(
     }
 
 
-    val carIcon = Icons.DashboardCar
     val carAspect = carIcon.viewportWidth / carIcon.viewportHeight
 
 
@@ -55,24 +57,14 @@ fun CarStatusView(
         )
     }
 
-    val canvas = @Composable {
-        Canvas(Modifier.background(color = Color.Yellow.copy(alpha = .2f))) {
-            drawPoints(
-                canvasDraws.map { it.dot },
-                pointMode = PointMode.Points,
-                color = Color.White,
-                strokeWidth = 30f,
-                cap = StrokeCap.Round
-            )
-            canvasDraws.forEach { info ->
-                drawLine(Color.White, info.lineStart, info.dot, strokeWidth = 5f)
-            }
-        }
-    }
 
     val content = @Composable {
         carIconContent()
-        canvas()
+        CanvasContent(
+            drawInfo = canvasDraws,
+            dotSize = dotSize,
+            lineWidth = lineWidth,
+        )
 
         groupedIndicators[IndicatorPosition.START]?.forEach { indicator ->
             CarStatusIndicatorContent(indicator.icon)
@@ -152,7 +144,8 @@ fun CarStatusView(
                     dot = Offset(
                         x = carOffset.x + carPlaceable.width * indicator.x,
                         y = carOffset.y + carPlaceable.height * indicator.y,
-                    )
+                    ),
+                    color = Color.White
                 )
 
                 it.place(x, y)
@@ -172,7 +165,8 @@ fun CarStatusView(
                     dot = Offset(
                         x = carOffset.x + carPlaceable.width * indicator.x,
                         y = carOffset.y + carPlaceable.height * indicator.y,
-                    )
+                    ),
+                    color = Color.White
                 )
 
                 it.place(x, y)
@@ -189,9 +183,46 @@ fun CarStatusView(
     }
 }
 
+@Composable
+private fun CarStatusIndicatorContent(icon: ImageVector) {
+    POutlinedFloatingActionButton(onClick = {}) {
+        Icon(icon, null)
+    }
+}
+
+@Composable
+private fun CanvasContent(
+    drawInfo: List<CanvasDrawInfo>,
+    dotSize: Dp,
+    lineWidth: Dp,
+    modifier: Modifier = Modifier
+) {
+    Canvas(modifier) {
+
+        drawInfo.forEach { info ->
+
+            drawPoints(
+                listOf(info.dot),
+                pointMode = PointMode.Points,
+                color = info.color,
+                strokeWidth = dotSize.toPx(),
+                cap = StrokeCap.Round
+            )
+
+            drawLine(
+                color = info.color,
+                start = info.lineStart,
+                end = info.dot,
+                strokeWidth = lineWidth.toPx()
+            )
+        }
+    }
+}
+
 data class CanvasDrawInfo(
     val lineStart: Offset,
-    val dot: Offset
+    val dot: Offset,
+    val color: Color,
 )
 
 data class CarStatusIndicator(
@@ -207,13 +238,6 @@ private val CarStatusIndicator.position: IndicatorPosition
         in 0.55f..1f -> IndicatorPosition.END
         else -> throw IllegalStateException("x coordinate must be in range 0..1, x=$x")
     }
-
-@Composable
-private fun CarStatusIndicatorContent(icon: ImageVector) {
-    POutlinedFloatingActionButton(onClick = {}) {
-        Icon(icon, null)
-    }
-}
 
 private enum class IndicatorPosition {
     START, CENTER, END

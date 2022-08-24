@@ -6,8 +6,15 @@ import androidx.compose.foundation.background
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PointMode
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
@@ -28,6 +35,8 @@ fun CarStatusView(
     val density = LocalDensity.current
     val maxLineWidthPx = with(density) { maxLineWidth.toPx().toInt() }
 
+    var canvasDraws by remember { mutableStateOf(mutableListOf<CanvasDrawInfo>()) }
+
     val groupedIndicators = indicators.groupBy {
         it.position
     }
@@ -47,8 +56,17 @@ fun CarStatusView(
     }
 
     val canvas = @Composable {
-        Canvas(Modifier) {
-
+        Canvas(Modifier.background(color = Color.Yellow.copy(alpha = .2f))) {
+            drawPoints(
+                canvasDraws.map { it.dot },
+                pointMode = PointMode.Points,
+                color = Color.White,
+                strokeWidth = 30f,
+                cap = StrokeCap.Round
+            )
+            canvasDraws.forEach { info ->
+                drawLine(Color.White, info.lineStart, info.dot, strokeWidth = 5f)
+            }
         }
     }
 
@@ -113,6 +131,8 @@ fun CarStatusView(
 
 
         layout(containerSize.width, containerSize.height) {
+            canvasDraws.clear()
+
             val carOffset = IntOffset((containerSize.width - carPlaceable.width) / 2, (containerSize.height - carPlaceable.height) / 2)
             carPlaceable.place(carOffset)
 
@@ -120,18 +140,42 @@ fun CarStatusView(
 
             startIndicatorsPlaceable.forEachIndexed { i, it ->
                 val indicator = groupedIndicators[IndicatorPosition.START]!![i]
-                it.place(
-                    x = max(0, carOffset.x - maxLineWidthPx),
-                    y = (carOffset.y + indicator.y * carPlaceable.width).toInt()
+
+                val x = max(0, carOffset.x - maxLineWidthPx - it.height)
+                val y = (carOffset.y + carPlaceable.height * indicator.y - it.height / 2f).toInt()
+
+                canvasDraws += CanvasDrawInfo(
+                    lineStart = Offset(
+                        x = x.toFloat() + it.width,
+                        y = y + it.height / 2f,
+                    ),
+                    dot = Offset(
+                        x = carOffset.x + carPlaceable.width * indicator.x,
+                        y = carOffset.y + carPlaceable.height * indicator.y,
+                    )
                 )
+
+                it.place(x, y)
             }
 
             endIndicatorsPlaceable.forEachIndexed { i, it ->
                 val indicator = groupedIndicators[IndicatorPosition.END]!![i]
-                it.place(
-                    x = min(containerSize.width - it.width, carOffset.x + carPlaceable.width + maxLineWidthPx),
-                    y = (carOffset.y + indicator.y * carPlaceable.width).toInt()
+
+                val x = min(containerSize.width - it.width, carOffset.x + carPlaceable.width + maxLineWidthPx)
+                val y = (carOffset.y + carPlaceable.height * indicator.y - it.width / 2f).toInt()
+
+                canvasDraws += CanvasDrawInfo(
+                    lineStart = Offset(
+                        x = x.toFloat(),
+                        y = y + it.height / 2f,
+                    ),
+                    dot = Offset(
+                        x = carOffset.x + carPlaceable.width * indicator.x,
+                        y = carOffset.y + carPlaceable.height * indicator.y,
+                    )
                 )
+
+                it.place(x, y)
             }
 
             centerIndicatorsPlaceable.forEachIndexed { i, it ->
@@ -144,6 +188,11 @@ fun CarStatusView(
         }
     }
 }
+
+data class CanvasDrawInfo(
+    val lineStart: Offset,
+    val dot: Offset
+)
 
 data class CarStatusIndicator(
     val x: Float, // %

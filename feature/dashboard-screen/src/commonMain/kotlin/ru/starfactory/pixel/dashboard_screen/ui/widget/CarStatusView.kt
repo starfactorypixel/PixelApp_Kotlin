@@ -1,5 +1,6 @@
 package ru.starfactory.pixel.dashboard_screen.ui.widget
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,23 +41,13 @@ fun CarStatusView(
 
     var canvasDraws by remember { mutableStateOf(mutableListOf<CanvasDrawInfo>()) }
 
-    val groupedIndicators = indicators.groupBy {
-        it.position
-    }
-
+    val groupedIndicators = indicators.groupBy { it.position }
 
     val carAspect = carIcon.viewportWidth / carIcon.viewportHeight
 
-
     val carIconContent = @Composable {
-        Image(
-            carIcon,
-            null,
-            Modifier
-                .background(Color.Green.copy(alpha = .2f)),
-        )
+        Image(carIcon, null,)
     }
-
 
     val content = @Composable {
         carIconContent()
@@ -67,13 +58,13 @@ fun CarStatusView(
         )
 
         groupedIndicators[IndicatorPosition.START]?.forEach { indicator ->
-            CarStatusIndicatorContent(indicator.icon)
+            CarStatusIndicatorContent(indicator)
         }
         groupedIndicators[IndicatorPosition.CENTER]?.forEach { indicator ->
-            CarStatusIndicatorContent(indicator.icon)
+            CarStatusIndicatorContent(indicator)
         }
         groupedIndicators[IndicatorPosition.END]?.forEach { indicator ->
-            CarStatusIndicatorContent(indicator.icon)
+            CarStatusIndicatorContent(indicator)
         }
 
         Unit
@@ -116,7 +107,6 @@ fun CarStatusView(
 
         // Step 4: measure CENTER indicators
         val centerIndicatorsPlaceable = centerIndicatorsMeasurables.map { it.measure(zeroMinSizeConstraints) }
-        val centerIndicatorsWidth = centerIndicatorsPlaceable.maxOfOrNull { it.measuredWidth } ?: 0
 
         // measure canvas
         val canvasPlaceable = canvasMeasurable.measure(constraints)
@@ -145,7 +135,7 @@ fun CarStatusView(
                         x = carOffset.x + carPlaceable.width * indicator.x,
                         y = carOffset.y + carPlaceable.height * indicator.y,
                     ),
-                    color = Color.White
+                    color = indicator.color
                 )
 
                 it.place(x, y)
@@ -166,7 +156,7 @@ fun CarStatusView(
                         x = carOffset.x + carPlaceable.width * indicator.x,
                         y = carOffset.y + carPlaceable.height * indicator.y,
                     ),
-                    color = Color.White
+                    color = indicator.color
                 )
 
                 it.place(x, y)
@@ -184,9 +174,13 @@ fun CarStatusView(
 }
 
 @Composable
-private fun CarStatusIndicatorContent(icon: ImageVector) {
-    POutlinedFloatingActionButton(onClick = {}) {
-        Icon(icon, null)
+private fun CarStatusIndicatorContent(indicator: CarStatusIndicator) {
+    POutlinedFloatingActionButton(
+        onClick = {},
+        backgroundColor = indicator.color.copy(alpha = .3f),
+        borderStroke = BorderStroke(2.dp, indicator.color)
+    ) {
+        Icon(indicator.icon, null)
     }
 }
 
@@ -229,6 +223,7 @@ data class CarStatusIndicator(
     val x: Float, // %
     val y: Float, // %
     val icon: ImageVector,
+    val color: Color
 )
 
 private val CarStatusIndicator.position: IndicatorPosition

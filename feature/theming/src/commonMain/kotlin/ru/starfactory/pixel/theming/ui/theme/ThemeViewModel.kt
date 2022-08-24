@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.stateIn
 import ru.starfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.pixel.theming.domain.ThemeInteractor
 
-internal class ThemeViewModel(
+class ThemeViewModel(
     themeInteractor: ThemeInteractor
 ) : ViewModel() {
     val state = themeInteractor.observeCurrentTheme()

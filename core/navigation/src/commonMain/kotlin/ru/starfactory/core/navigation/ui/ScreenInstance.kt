@@ -5,11 +5,10 @@ import com.arkivanov.decompose.ComponentContext
 import org.kodein.di.compose.subDI
 import ru.starfactory.core.navigation.Screen
 
-class ScreenInstance(private val screen: Screen, private val componentContext: ComponentContext) {
+interface ScreenInstance {
     @Composable
-    internal fun ScreenInstanceView() {
-        subDI(diBuilder = {}) {
-            screen.ScreenView()
-        }
-    }
+    fun ScreenInstanceView()
+//        subDI(diBuilder = {}) {
+//            screen.ScreenView()
+//        }
 }

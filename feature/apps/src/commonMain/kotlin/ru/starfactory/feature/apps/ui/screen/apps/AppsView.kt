@@ -22,8 +22,7 @@ import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsets
 
 @Composable
-internal fun AppsView() {
-    val viewModel: AppsViewModel = decomposeViewModel()
+internal fun AppsView(viewModel: AppsViewModel) {
     val state by viewModel.state.collectAsState()
     AppsContent(state)
 }

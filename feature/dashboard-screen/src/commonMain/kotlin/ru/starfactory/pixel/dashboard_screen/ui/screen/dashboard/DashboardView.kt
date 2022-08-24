@@ -18,8 +18,7 @@ import ru.starfactory.pixel.dashboard_screen.ui.widget.StatisticsView
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsets
 
 @Composable
-internal fun DashboardView() {
-    val viewModel: DashboardViewModel = decomposeViewModel()
+internal fun DashboardView(viewModel: DashboardViewModel) {
     val state by viewModel.state.collectAsState()
     DashboardContent(state, viewModel::onClickSettings)
 }

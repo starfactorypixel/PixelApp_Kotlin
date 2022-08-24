@@ -19,6 +19,7 @@ import org.kodein.di.DI
 import org.kodein.di.compose.withDI
 import ru.starfactory.core.compose.LocalComposeWindowHolder
 import ru.starfactory.core.di.Modules
+import ru.starfactory.pixel.ui.screen.root.RootComponent
 import ru.starfactory.pixel.ui.screen.root.RootView
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -32,6 +33,8 @@ fun main() {
     val lifecycle = LifecycleRegistry()
     val backDispatcher = BackDispatcher()
     val defaultComponentContext = DefaultComponentContext(lifecycle, backHandler = backDispatcher)
+
+    val rootComponent = RootComponent(di, defaultComponentContext)
 
     application {
         val windowState = rememberWindowState()
@@ -52,7 +55,7 @@ fun main() {
             LocalComposeWindowHolder {
                 withDI(di) {
                     DesktopScrollbarStyle {
-                        RootView(defaultComponentContext)
+                        RootView(rootComponent)
                     }
                 }
             }

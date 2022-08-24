@@ -1,16 +1,20 @@
 package ru.starfactory.pixel.dashboard_screen.ui.screen.dashboard
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.pixel.dashboard_screen.ui.dashboardiconpack.DashboardCar
+import ru.starfactory.pixel.dashboard_screen.ui.widget.*
 import ru.starfactory.pixel.dashboard_screen.ui.widget.BottomActionsView
 import ru.starfactory.pixel.dashboard_screen.ui.widget.CurrentSpeedView
 import ru.starfactory.pixel.dashboard_screen.ui.widget.FastActionsView
@@ -59,20 +63,31 @@ private fun ShowDataContent(
             Spacer(Modifier.weight(1f))
             FastActionsView(Modifier.padding(horizontal = 16.dp))
         }
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .padding(start = mainMenuInsets.positionInRoot.x + mainMenuInsets.size.width)
-                .weight(1f)
-        ) {
-            if (mainMenuInsets.isPositioned) {
-                Icon(
-                    Icons.DashboardCar,
-                    null,
-                    Modifier.align(Alignment.Center)
-                )
-            }
+        if (mainMenuInsets.isPositioned) {
+            CarStatusView(
+
+                listOf(
+                    CarStatusIndicator(
+                        .2f, .2f, Icons.Default.Lock
+                    ),
+                    CarStatusIndicator(
+                        .5f, .5f, Icons.Default.Lock
+                    ),
+                    CarStatusIndicator(
+                        .8f, .2f, Icons.Default.Lock
+                    ),
+                ),
+
+
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = mainMenuInsets.positionInRoot.x + mainMenuInsets.size.width)
+                    .padding(24.dp)
+                    .weight(1f)
+                    .background(Color.Red.copy(alpha = .2f))
+            )
         }
         BottomActionsView(onClickSettings, Modifier.fillMaxWidth())
     }
 }
+

@@ -14,6 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import ru.starfactory.core.uikit.view.POutlinedFloatingActionButton
 import ru.starfactory.pixel.dashboard_screen.ui.dashboardiconpack.DashboardCar
@@ -100,31 +101,39 @@ fun CarStatusView(
         }
         val carPlaceable = carMeasurable.measure(carConstraints)
 
+        // Step 4: measure CENTER indicators
+        val centerIndicatorsPlaceable = centerIndicatorsMeasurables.map { it.measure(zeroMinSizeConstraints) }
+        val centerIndicatorsWidth = centerIndicatorsPlaceable.maxOfOrNull { it.measuredWidth } ?: 0
 
-        //val canvasPlaceable = canvasMeasurable.measure(constraints)
+        // measure canvas
+        val canvasPlaceable = canvasMeasurable.measure(constraints)
 
 
         layout(containerSize.width, containerSize.height) {
-            carPlaceable.place((containerSize.width - carPlaceable.width) / 2, (containerSize.height - carPlaceable.height) / 2)
+            val carOffset = IntOffset((containerSize.width - carPlaceable.width) / 2, (containerSize.height - carPlaceable.height) / 2)
+            carPlaceable.place(carOffset)
 
-            //  canvasPlaceable.place(0, 0)
+            canvasPlaceable.place(0, 0)
 
+            startIndicatorsPlaceable.forEachIndexed { i, it ->
+                val indicator = groupedIndicators[IndicatorPosition.START]!![i]
+                it.place(0, (carOffset.y + indicator.y * carPlaceable.width).toInt())
+            }
 
+            endIndicatorsPlaceable.forEachIndexed { i, it ->
+                val indicator = groupedIndicators[IndicatorPosition.END]!![i]
+                it.place(containerSize.width - it.width, (carOffset.y + indicator.y * carPlaceable.width).toInt())
+            }
+
+            centerIndicatorsPlaceable.forEachIndexed { i, it ->
+                val indicator = groupedIndicators[IndicatorPosition.CENTER]!![i]
+                it.place(
+                    x = (carOffset.x + carPlaceable.width * indicator.x - it.width / 2f).toInt(),
+                    y = (carOffset.y + carPlaceable.height * indicator.y - it.height / 2f).toInt(),
+                )
+            }
         }
     }
-
-//    Box(
-//        modifier
-//    ) {
-//        CarStatusIcon()
-//        Icon(
-//            Icons.DashboardCar,
-//            null,
-//            Modifier
-//                .fillMaxSize()
-//                .align(Alignment.Center)
-//        )
-//    }
 }
 
 data class CarStatusIndicator(

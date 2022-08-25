@@ -15,6 +15,7 @@ kotlin {
                 api(project(":core:key-value-storage"))
                 api(project(":core:logger"))
                 api(project(":core:navigation"))
+                api(project(":core:serial:impl"))
                 api(project(":core:uikit"))
                 api(project(":core:usb"))
 

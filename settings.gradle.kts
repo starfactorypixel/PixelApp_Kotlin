@@ -37,6 +37,9 @@ include(
     ":core:key-value-storage",
     ":core:logger",
     ":core:navigation",
+    ":core:serial:api",
+    ":core:serial:impl",
+    ":core:serial:usb",
     ":core:uikit",
     ":core:usb",
 )

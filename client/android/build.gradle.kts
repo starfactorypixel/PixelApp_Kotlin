@@ -48,8 +48,6 @@ dependencies {
     implementation(libs.android.datastore.preferences)
     implementation(libs.android.activity.core)
 
-    implementation(libs.serial.usb)
-
     implementation(libs.android.core)
     implementation(libs.android.compose.ui)
     implementation(libs.android.compose.material)

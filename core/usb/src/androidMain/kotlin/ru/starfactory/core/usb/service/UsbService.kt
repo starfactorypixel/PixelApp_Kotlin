@@ -15,7 +15,11 @@ import ru.starfactory.core.coroutines.shareDefault
 import ru.starfactory.core.logger.Log
 import ru.starfactory.core.usb.domain.UsbDevice
 
-internal interface UsbServiceAndroid : UsbService {
+interface UsbServiceAndroid : UsbService {
+
+    fun observeUsbDevicesAndroid(): Flow<Map<String, UsbDeviceAndroid>>
+    fun getUsbDevicesAndroid(): Map<String, UsbDeviceAndroid>
+    fun findUsbDeviceAndroidByName(name: String): UsbDeviceAndroid?
     fun getRawManager(): UsbManager
 }
 
@@ -45,12 +49,14 @@ internal class UsbServiceAndroidImpl(
     private val usbDevicesObservable: SharedFlow<Map<String, UsbDevice>> =
         androidUsbDevicesObservable.map { it.toUsbDevice() }.shareDefault(scope)
 
-    override fun observeUsbDevices(): Flow<Map<String, UsbDevice>> = usbDevicesObservable
+    override fun observeUsbDevicesAndroid(): Flow<Map<String, android.hardware.usb.UsbDevice>> =
+        androidUsbDevicesObservable
 
-    private fun getUsbDevicesAndroid(): Map<String, UsbDeviceAndroid> = usbManager.deviceList
+    override fun observeUsbDevices(): Flow<Map<String, UsbDevice>> = usbDevicesObservable
+    override fun getUsbDevicesAndroid(): Map<String, UsbDeviceAndroid> = usbManager.deviceList
     override fun getUsbDevices(): Map<String, UsbDevice> = getUsbDevicesAndroid().toUsbDevice()
 
-    private fun findUsbDeviceAndroidByName(name: String): UsbDeviceAndroid? =
+    override fun findUsbDeviceAndroidByName(name: String): UsbDeviceAndroid? =
         getUsbDevicesAndroid()[name]
 
     override fun findUsbDeviceByName(name: String): UsbDevice? =
@@ -98,4 +104,4 @@ internal class UsbServiceAndroidImpl(
 private fun Map<String, UsbDeviceAndroid>.toUsbDevice(): Map<String, UsbDevice> =
     mapValues { it.value.toUsbDevice() }
 
-private fun UsbDeviceAndroid.toUsbDevice(): UsbDevice = UsbDevice(this.deviceName)
+fun UsbDeviceAndroid.toUsbDevice(): UsbDevice = UsbDevice(this.deviceName)

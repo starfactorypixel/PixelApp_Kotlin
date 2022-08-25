@@ -16,6 +16,7 @@ kotlin {
                 api(project(":core:logger"))
                 api(project(":core:navigation"))
                 api(project(":core:uikit"))
+                api(project(":core:usb"))
 
                 api(project(":feature:apps"))
                 api(project(":feature:dashboard-screen"))

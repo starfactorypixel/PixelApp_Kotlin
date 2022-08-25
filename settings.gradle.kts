@@ -38,6 +38,7 @@ include(
     ":core:logger",
     ":core:navigation",
     ":core:uikit",
+    ":core:usb",
 )
 
 include(

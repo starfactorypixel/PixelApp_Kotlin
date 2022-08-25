@@ -7,4 +7,7 @@ dependencies {
     implementation(libs.gradlePlugins.android)
     implementation(libs.gradlePlugins.jb.compose)
     implementation(libs.gradlePlugins.checkUpdates)
+
+    implementation(libs.gradlePlugins.google.services)
+    implementation(libs.gradlePlugins.google.firebase.crashlytic)
 }

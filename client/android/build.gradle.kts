@@ -5,6 +5,14 @@ plugins {
     id("kotlin-parcelize")
 }
 
+val pIsGoogleServicesEnabled: String by project
+if (pIsGoogleServicesEnabled.toBoolean()) {
+    apply {
+        plugin("com.google.gms.google-services")
+        plugin("com.google.firebase.crashlytics")
+    }
+}
+
 android {
     defaultConfig {
         applicationId = "ru.starfactory.pixel"
@@ -52,4 +60,8 @@ dependencies {
     implementation(libs.android.compose.ui)
     implementation(libs.android.compose.material)
     implementation(libs.android.compose.preview)
+
+    implementation(platform(libs.google.firebase.bom))
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
 }

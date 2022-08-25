@@ -6,3 +6,5 @@
 /build-script/.gradle
 
 **/build/
+
+client/android/google-services.json

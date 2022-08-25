@@ -21,9 +21,18 @@ jobs:
           java-version: 17
           cache: gradle
 
+      - name: Save google-services.json
+        shell: bash
+        with:
+          GOOGLE_PLAY_SERVICES_JSON: ${{ secrets.GOOGLE_PLAY_SERVICES_JSON }}
+        env:
+          GOOGLE_PLAY_SERVICES_JSON: ${{ secrets.GOOGLE_PLAY_SERVICES_JSON }}
+        run: echo "$GOOGLE_PLAY_SERVICES_JSON" > client/android/google-services.json
+
       - name: Run gradle
         run: >-
           ./gradlew
+          -PpIsGoogleServicesEnabled=true
           -PpIsGithubActions=true
           :ci
 

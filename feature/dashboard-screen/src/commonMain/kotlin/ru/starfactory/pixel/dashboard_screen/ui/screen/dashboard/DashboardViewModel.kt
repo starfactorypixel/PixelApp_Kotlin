@@ -1,6 +1,5 @@
 package ru.starfactory.pixel.dashboard_screen.ui.screen.dashboard
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.push
 import kotlinx.coroutines.flow.SharingStarted
@@ -9,7 +8,7 @@ import kotlinx.coroutines.flow.stateIn
 import ru.starfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.pixel.ecu_connection.domain.connection.EcuDefaultSourceConnectionInteractor
-import ru.starfactory.pixel.ecu_connection.ui.screen.SelectSourceScreen
+import ru.starfactory.pixel.ecu_connection.ui.screen.select_source.SelectSourceScreen
 
 internal class DashboardViewModel(
     ecuDefaultSourceConnectionInteractor: EcuDefaultSourceConnectionInteractor,

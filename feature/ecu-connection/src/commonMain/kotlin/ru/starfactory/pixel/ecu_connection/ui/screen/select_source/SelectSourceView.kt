@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.Usb
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -19,29 +22,18 @@ import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.uikit.layout.FlexVerticalGrid
 import ru.starfactory.core.uikit.view.POutlinedCard
 import ru.starfactory.pixel.ecu_connection.domain.source.Source
+import ru.starfactory.pixel.ecu_connection.domain.source.SourceType
 
 @Composable
-internal fun SelectSourceView() {
-    SelectSourceContent()
+internal fun SelectSourceView(viewModel: SelectSourceViewModel) {
+    val state by viewModel.state.collectAsState()
+    SelectSourceContent(state)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun SelectSourceContent() {
-    val sources: List<Source> = listOf(
-        Source.Demo,
-        Source.Demo,
-        Source.Demo,
-        Source.Demo,
-        Source.Demo,
-        Source.Demo,
-        Source.Demo,
-        Source.Demo,
-        Source.Demo,
-        Source.Demo,
-        Source.Demo,
-        Source.Demo,
-    )
+private fun SelectSourceContent(state: SelectSourceViewState.ShowSources) {
+    val sources: List<SelectSourceViewState.Source> = state.sources
 
     val overscrollEffect = ScrollableDefaults.overscrollEffect()
 
@@ -78,14 +70,14 @@ private fun SelectSourceContent() {
 }
 
 @Composable
-private fun SourceContent(source: Source) {
+private fun SourceContent(source: SelectSourceViewState.Source) {
     POutlinedCard(
         Modifier
             .defaultMinSize(minWidth = 180.dp, minHeight = 100.dp)
             .clickable { }
     ) {
-        when (source) {
-            Source.Demo -> DefaultSourceContent(Icons.Default.Usb, "Arduino Uno")
+        when (source.type) {
+            SourceType.DEMO -> DefaultSourceContent(Icons.Default.BugReport, source.name)
         }
     }
 }

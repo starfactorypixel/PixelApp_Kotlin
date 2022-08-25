@@ -1,8 +1,7 @@
-package ru.starfactory.pixel.domain.usb
+package ru.starfactory.core.usb.domain
 
-import android.hardware.usb.UsbDevice
 import kotlinx.coroutines.flow.Flow
-import ru.starfactory.pixel.service.usb.UsbService
+import ru.starfactory.core.usb.service.UsbService
 
 interface UsbInteractor {
     fun observeUsbDevices(): Flow<Map<String, UsbDevice>>
@@ -11,7 +10,7 @@ interface UsbInteractor {
     suspend fun requestPermission(device: UsbDevice): Boolean
 }
 
-class UsbInteractorImpl(
+internal class UsbInteractorImpl(
     private val usbService: UsbService,
 ) : UsbInteractor {
     override fun observeUsbDevices(): Flow<Map<String, UsbDevice>> = usbService.observeUsbDevices()

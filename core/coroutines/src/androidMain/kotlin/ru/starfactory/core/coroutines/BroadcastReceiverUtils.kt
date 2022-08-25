@@ -1,4 +1,4 @@
-package ru.starfactory.core.utils
+package ru.starfactory.core.coroutines
 
 import android.content.BroadcastReceiver
 import android.content.Context

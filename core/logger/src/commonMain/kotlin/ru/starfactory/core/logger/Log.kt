@@ -2,6 +2,7 @@ package ru.starfactory.core.logger
 
 object Log {
 
+    fun i(tag: String, message: String) = log(LogLevel.INFO, tag) { message }
     fun i(tag: String, message: () -> String) = log(LogLevel.INFO, tag, message)
 
     fun log(level: LogLevel, tag: String, message: () -> String) {

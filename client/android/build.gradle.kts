@@ -3,9 +3,14 @@
 plugins {
     id("ru.starfactory.convention.android.application")
     id("kotlin-parcelize")
+}
 
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
+val pIsGoogleServicesEnabled: String by project
+if (pIsGoogleServicesEnabled.toBoolean()) {
+    apply {
+        plugin("com.google.gms.google-services")
+        plugin("com.google.firebase.crashlytics")
+    }
 }
 
 android {

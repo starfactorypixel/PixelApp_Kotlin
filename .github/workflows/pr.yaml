@@ -23,5 +23,6 @@ jobs:
       - name: Run gradle
         run: >-
           ./gradlew
+          -PpIsGoogleServicesEnabled=false
           -PpIsGithubActions=true
           :pr

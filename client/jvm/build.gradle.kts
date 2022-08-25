@@ -1,6 +1,7 @@
 plugins {
     id("ru.starfactory.convention.multiplatform.jvm")
     id("org.jetbrains.compose")
+    application
 }
 
 kotlin {

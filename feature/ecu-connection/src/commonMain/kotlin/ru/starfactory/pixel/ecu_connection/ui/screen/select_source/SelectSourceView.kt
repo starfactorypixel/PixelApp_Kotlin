@@ -1,19 +1,17 @@
 package ru.starfactory.pixel.ecu_connection.ui.screen.select_source
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.ScrollableDefaults
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
-import androidx.compose.material.icons.filled.Usb
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -21,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.uikit.layout.FlexVerticalGrid
 import ru.starfactory.core.uikit.view.POutlinedCard
-import ru.starfactory.pixel.ecu_connection.domain.source.Source
 import ru.starfactory.pixel.ecu_connection.domain.source.SourceType
 
 @Composable
@@ -34,8 +31,6 @@ internal fun SelectSourceView(viewModel: SelectSourceViewModel) {
 @Composable
 private fun SelectSourceContent(state: SelectSourceViewState.ShowSources) {
     val sources: List<SelectSourceViewState.Source> = state.sources
-
-    val overscrollEffect = ScrollableDefaults.overscrollEffect()
 
     Box(
         Modifier
@@ -50,13 +45,7 @@ private fun SelectSourceContent(state: SelectSourceViewState.ShowSources) {
             FlexVerticalGrid(
                 3,
                 Modifier
-                    .padding(16.dp)
-                    .overscroll(overscrollEffect)
-                    .scrollable(
-                        rememberScrollableState { 0f },
-                        Orientation.Vertical,
-                        overscrollEffect
-                    ),
+                    .padding(16.dp),
                 verticalSpacing = 16.dp,
                 horizontalSpacing = 16.dp
             ) {

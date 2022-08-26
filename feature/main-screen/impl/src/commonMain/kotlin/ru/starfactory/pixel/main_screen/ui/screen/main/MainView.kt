@@ -53,7 +53,6 @@ private fun MainContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(PixelTheme.gradients.main)
             .paddingSystemWindowInsets()
     ) {
         var mainMenuInsets by remember { mutableStateOf(MainMenuInsets()) }

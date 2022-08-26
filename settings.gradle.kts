@@ -50,6 +50,7 @@ include(
     ":feature:ecu-connection",
     ":feature:main-screen:api",
     ":feature:main-screen:impl",
+    ":feature:settings-screen",
     ":feature:theming",
 )
 

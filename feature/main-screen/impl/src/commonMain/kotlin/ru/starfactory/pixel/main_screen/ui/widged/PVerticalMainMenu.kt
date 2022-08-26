@@ -1,4 +1,4 @@
-package ru.starfactory.pixel.main_screen.ui.widged.main_menu
+package ru.starfactory.pixel.main_screen.ui.widged
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background

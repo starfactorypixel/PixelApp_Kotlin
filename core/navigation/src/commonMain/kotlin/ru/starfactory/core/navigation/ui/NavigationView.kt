@@ -1,6 +1,7 @@
 package ru.starfactory.core.navigation.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.*
@@ -10,9 +11,10 @@ import ru.starfactory.core.navigation.Screen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
-fun NavigationContentView(childStack: Value<ChildStack<Screen, ScreenInstance>>) {
+fun NavigationContentView(childStack: Value<ChildStack<Screen, ScreenInstance>>, modifier: Modifier = Modifier) {
     Children(
         childStack,
+        modifier,
         animation = animation()
     ) { childCreated ->
         childCreated.instance.ScreenInstanceView()

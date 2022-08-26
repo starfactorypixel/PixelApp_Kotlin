@@ -11,8 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
@@ -25,38 +23,51 @@ import ru.starfactory.core.compose.LocalConfiguration
 import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.*
-import ru.starfactory.core.uikit.theme.PGradients
 import ru.starfactory.core.uikit.theme.PixelTheme
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsetsHolder
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.MainMenuInsets
-import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMainMenu
-import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMenuItem
+import ru.starfactory.pixel.main_screen.ui.widged.BottomActionsView
+import ru.starfactory.pixel.main_screen.ui.widged.PVerticalMainMenu
+import ru.starfactory.pixel.main_screen.ui.widged.PVerticalMenuItem
 
 @Composable
 internal fun MainView(viewModel: MainViewModel, childStack: Value<ChildStack<Screen, ScreenInstance>>) {
 
     val state by viewModel.state.collectAsState()
 
-    MainContent(state, viewModel::onSelectMenuItem, childStack)
+    MainContent(
+        state,
+        viewModel::onSelectMenuItem,
+        viewModel::onClickSettings,
+        childStack
+    )
 }
 
 @Composable
 private fun MainContent(
     state: MainViewState,
     onSelectMenuItem: (MainViewState.MenuItem) -> Unit,
+    onClickSettings: () -> Unit,
     childStack: Value<ChildStack<Screen, ScreenInstance>>
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(PixelTheme.gradients.main)
             .paddingSystemWindowInsets()
     ) {
         var mainMenuInsets by remember { mutableStateOf(MainMenuInsets()) }
         val localDensity = LocalDensity.current
 
         LocalMainMenuInsetsHolder(mainMenuInsets) {
-            NavigationContentView(childStack)
+            Column {
+                NavigationContentView(childStack, Modifier.weight(1f))
+                BottomActionsView(
+                    Modifier
+                        .padding(bottom = 16.dp)
+                        .padding(horizontal = 16.dp),
+                    onClickSettings = onClickSettings,
+                )
+            }
         }
 
         Row(modifier = Modifier.fillMaxHeight()) {

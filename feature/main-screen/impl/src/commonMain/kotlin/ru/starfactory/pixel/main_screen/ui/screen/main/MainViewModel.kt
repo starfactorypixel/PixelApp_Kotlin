@@ -1,6 +1,7 @@
 package ru.starfactory.pixel.main_screen.ui.screen.main
 
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -11,9 +12,11 @@ import ru.starfactory.feature.apps.ui.screen.AppsScreen
 import ru.starfactory.pixel.dashboard_screen.ui.screen.DashboardScreen
 import ru.starfactory.pixel.main_screen.ui.screen.ChargingScreen
 import ru.starfactory.pixel.main_screen.ui.screen.NavigatorScreen
+import ru.starfactory.pixel.settings.ui.screen.settings.SettingsScreen
 
 internal class MainViewModel(
     private val appsFeatureAvailabilityInteractor: AppsFeatureAvailabilityInteractor,
+    private val rootNavigation: StackNavigation<Screen>
 ) : ViewModel() {
     val navigation = StackNavigation<Screen>()
 
@@ -33,6 +36,9 @@ internal class MainViewModel(
             }
             navigation.replaceCurrent(newScreen)
         }
+    }
+    fun onClickSettings() {
+        rootNavigation.push(SettingsScreen)
     }
 
     private fun isFeatureAvailable(menuItem: MainViewState.MenuItem): Boolean {

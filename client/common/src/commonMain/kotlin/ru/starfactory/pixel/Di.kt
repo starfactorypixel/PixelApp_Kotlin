@@ -10,6 +10,7 @@ import ru.starfactory.feature.apps.featureApps
 import ru.starfactory.pixel.dashboard_screen.featureDashboardScreen
 import ru.starfactory.pixel.ecu_connection.featureEcuConnection
 import ru.starfactory.pixel.main_screen.featureMainScreen
+import ru.starfactory.pixel.settings.featureSettingsScreen
 import ru.starfactory.pixel.theming.featureTheming
 import ru.starfactory.pixel.ui.screen.root.RootViewModel
 
@@ -25,6 +26,7 @@ fun Modules.mainCommonModule() = DI.Module("main-common-module") {
     importOnce(Modules.featureEcuConnection())
     importOnce(Modules.featureDashboardScreen())
     importOnce(Modules.featureMainScreen())
+    importOnce(Modules.featureSettingsScreen())
     importOnce(Modules.featureTheming())
 
     // View Models

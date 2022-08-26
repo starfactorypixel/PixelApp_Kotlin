@@ -8,7 +8,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
+import ru.starfactory.core.compose.LocalConfiguration
 import ru.starfactory.pixel.dashboard_screen.ui.widget.*
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsets
 
@@ -35,6 +37,7 @@ private fun ShowDataContent(
     onClickSettings: () -> Unit
 ) {
     val mainMenuInsets = LocalMainMenuInsets.current
+    val configuration = LocalConfiguration.current
 
     Column(
         Modifier
@@ -52,7 +55,10 @@ private fun ShowDataContent(
                 Modifier.padding(horizontal = 16.dp)
             )
             Spacer(Modifier.weight(1f))
-            FastActionsView(Modifier.padding(horizontal = 16.dp))
+
+            if (configuration.screenWidth > 600.dp) {
+                FastActionsView(Modifier.padding(horizontal = 16.dp))
+            }
         }
         if (mainMenuInsets.isPositioned) {
             CarStatusView(

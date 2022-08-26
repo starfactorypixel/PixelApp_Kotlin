@@ -103,7 +103,10 @@ fun CarStatusView(
         val endIndicatorsWidth = startIndicatorsPlaceable.maxOfOrNull { it.measuredWidth } ?: 0
 
         // Step 3: measure car
-        val carFrame = IntSize(containerSize.width - startIndicatorsWidth - endIndicatorsWidth, containerSize.height)
+        val carFrame = IntSize(
+            width = max(0, containerSize.width - startIndicatorsWidth - endIndicatorsWidth),
+            height = containerSize.height
+        )
         val carFrameAspect = carFrame.width.toFloat() / carFrame.height
         val carConstraints = if (carAspect > carFrameAspect) {
             Constraints.fixed(width = carFrame.width, height = (carFrame.width / carAspect).toInt())

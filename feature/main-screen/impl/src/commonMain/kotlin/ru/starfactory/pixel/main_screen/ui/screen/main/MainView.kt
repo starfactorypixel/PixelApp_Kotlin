@@ -25,12 +25,12 @@ import ru.starfactory.core.compose.LocalConfiguration
 import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.*
-import ru.starfactory.core.uikit.theme.PGradients
 import ru.starfactory.core.uikit.theme.PixelTheme
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsetsHolder
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.MainMenuInsets
-import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMainMenu
-import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMenuItem
+import ru.starfactory.pixel.main_screen.ui.widged.BottomActionsView
+import ru.starfactory.pixel.main_screen.ui.widged.PVerticalMainMenu
+import ru.starfactory.pixel.main_screen.ui.widged.PVerticalMenuItem
 
 @Composable
 internal fun MainView(viewModel: MainViewModel, childStack: Value<ChildStack<Screen, ScreenInstance>>) {
@@ -56,7 +56,14 @@ private fun MainContent(
         val localDensity = LocalDensity.current
 
         LocalMainMenuInsetsHolder(mainMenuInsets) {
-            NavigationContentView(childStack)
+            Column {
+                NavigationContentView(childStack, Modifier.weight(1f))
+                BottomActionsView(
+                    Modifier
+                        .padding(bottom = 16.dp)
+                        .padding(horizontal = 8.dp)
+                )
+            }
         }
 
         Row(modifier = Modifier.fillMaxHeight()) {

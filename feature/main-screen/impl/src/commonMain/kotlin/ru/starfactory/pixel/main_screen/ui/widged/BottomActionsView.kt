@@ -1,4 +1,4 @@
-package ru.starfactory.pixel.dashboard_screen.ui.widget
+package ru.starfactory.pixel.main_screen.ui.widged
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -14,10 +14,10 @@ import ru.starfactory.core.uikit.view.PTextFloatingActionButton
 
 @Composable
 internal fun BottomActionsView(
-    onClickSettings: () -> Unit,
     modifier: Modifier = Modifier,
+    onClickSettings: () -> Unit = {},
 ) {
-    Row(modifier.padding(horizontal = 8.dp)) {
+    Row(modifier) {
         BottomAction("Settings", onClickSettings)
         Spacer(Modifier.weight(1f))
         BottomActionFlat("Left belt")

@@ -11,8 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
@@ -37,13 +35,19 @@ internal fun MainView(viewModel: MainViewModel, childStack: Value<ChildStack<Scr
 
     val state by viewModel.state.collectAsState()
 
-    MainContent(state, viewModel::onSelectMenuItem, childStack)
+    MainContent(
+        state,
+        viewModel::onSelectMenuItem,
+        viewModel::onClickSettings,
+        childStack
+    )
 }
 
 @Composable
 private fun MainContent(
     state: MainViewState,
     onSelectMenuItem: (MainViewState.MenuItem) -> Unit,
+    onClickSettings: () -> Unit,
     childStack: Value<ChildStack<Screen, ScreenInstance>>
 ) {
     Box(
@@ -61,7 +65,8 @@ private fun MainContent(
                 BottomActionsView(
                     Modifier
                         .padding(bottom = 16.dp)
-                        .padding(horizontal = 8.dp)
+                        .padding(horizontal = 8.dp),
+                    onClickSettings = onClickSettings,
                 )
             }
         }

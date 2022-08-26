@@ -64,7 +64,7 @@ private fun MainContent(
                 BottomActionsView(
                     Modifier
                         .padding(bottom = 16.dp)
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = 16.dp),
                     onClickSettings = onClickSettings,
                 )
             }

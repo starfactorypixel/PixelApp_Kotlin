@@ -6,13 +6,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ru.starfactory.core.compose.paddingSystemWindowInsets
-import ru.starfactory.core.uikit.view.POutlinedFloatingActionButton
+import ru.starfactory.core.uikit.theme.PixelTheme
+import ru.starfactory.core.uikit.widget.PWBottomMenuAction
 
 @Composable
 internal fun SettingsView(viewModel: SettingsViewModel) {
@@ -33,27 +35,15 @@ private fun SettingsContent(onClickClose: () -> Unit) {
         ) {
             Text("Settings")
         }
-        BottomAction(
-            "Close",
+        PWBottomMenuAction(
+            text = "Close",
+            icon = Icons.Default.Close,
             Modifier
                 .align(Alignment.BottomStart)
                 .padding(16.dp),
-            onClickClose
+            onClick = onClickClose,
+            borderColor = PixelTheme.colors.error
         )
     }
 }
 
-@Composable
-private fun BottomAction(text: String, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
-    Column(modifier) {
-        POutlinedFloatingActionButton(onClick = onClick) {
-            Icon(Icons.Default.Settings, null, Modifier.size(32.dp))
-        }
-        Text(
-            text,
-            Modifier
-                .padding(top = 8.dp)
-                .align(Alignment.CenterHorizontally)
-        )
-    }
-}

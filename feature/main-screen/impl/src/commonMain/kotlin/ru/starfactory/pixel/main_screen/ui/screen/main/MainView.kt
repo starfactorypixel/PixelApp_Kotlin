@@ -25,6 +25,8 @@ import ru.starfactory.core.compose.LocalConfiguration
 import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.*
+import ru.starfactory.core.uikit.theme.PGradients
+import ru.starfactory.core.uikit.theme.PixelTheme
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsetsHolder
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.MainMenuInsets
 import ru.starfactory.pixel.main_screen.ui.widged.main_menu.PVerticalMainMenu
@@ -47,8 +49,7 @@ private fun MainContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            //TODO Sumin - вынести цвета в тему
-            .background(Brush.linearGradient(colors = listOf(Color(0xFF435159), Color(0xFF1F292E))))
+            .background(PixelTheme.gradients.main)
             .paddingSystemWindowInsets()
     ) {
         var mainMenuInsets by remember { mutableStateOf(MainMenuInsets()) }

@@ -9,7 +9,6 @@ kotlin {
         named("commonMain") {
             dependencies {
                 implementation(project(":feature:main-screen:api"))
-                implementation(project(":feature:ecu-connection"))
             }
         }
     }

@@ -73,7 +73,7 @@ private fun ShowSettingsContent(
             style = PixelTheme.typography.h6,
             fontWeight = FontWeight.W600,
         )
-        PFlexVerticalGrid(maxCount = 3, Modifier.padding(top = 16.dp)) {
+        PFlexVerticalGrid(maxCount = 3, Modifier.padding(16.dp)) {
             state.menuItems.forEach {
                 PWSettingsMenuItem(it.text, it.icon, onClick = { onClickMenuItem(it) })
             }

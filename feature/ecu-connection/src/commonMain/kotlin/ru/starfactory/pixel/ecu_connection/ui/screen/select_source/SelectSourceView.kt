@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import ru.starfactory.core.compose.paddingSystemWindowInsets
-import ru.starfactory.core.uikit.layout.FlexVerticalGrid
+import ru.starfactory.core.uikit.layout.PFlexVerticalGrid
 import ru.starfactory.core.uikit.view.POutlinedCard
 import ru.starfactory.pixel.ecu_connection.domain.source.SourceType
 
@@ -42,7 +42,7 @@ private fun SelectSourceContent(state: SelectSourceViewState.ShowSources) {
                 .align(Alignment.Center)
                 .verticalScroll(rememberScrollState())
         ) {
-            FlexVerticalGrid(
+            PFlexVerticalGrid(
                 3,
                 Modifier
                     .padding(16.dp),

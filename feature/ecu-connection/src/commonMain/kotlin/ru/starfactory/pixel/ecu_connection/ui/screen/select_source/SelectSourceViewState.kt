@@ -12,5 +12,5 @@ internal sealed class SelectSourceViewState {
 
 
     @Immutable
-    data class Source(val type: SourceType, val name: String)
+    data class Source(val type: SourceType, val id: String, val name: String)
 }

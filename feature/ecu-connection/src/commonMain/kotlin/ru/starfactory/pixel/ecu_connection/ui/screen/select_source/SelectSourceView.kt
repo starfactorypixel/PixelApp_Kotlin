@@ -8,6 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
+import androidx.compose.material.icons.filled.Usb
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,7 +27,15 @@ internal fun SelectSourceView(viewModel: SelectSourceViewModel) {
 }
 
 @Composable
-private fun SelectSourceContent(state: SelectSourceViewState.ShowSources) {
+private fun SelectSourceContent(state: SelectSourceViewState) {
+    when (state) {
+        SelectSourceViewState.Loading -> Unit // Loading is very fast
+        is SelectSourceViewState.ShowSources -> ShowSourcesContent(state)
+    }
+}
+
+@Composable
+private fun ShowSourcesContent(state: SelectSourceViewState.ShowSources) {
     val sources: List<SelectSourceViewState.Source> = state.sources
 
     Box(
@@ -55,6 +64,7 @@ private fun SelectSourceContent(state: SelectSourceViewState.ShowSources) {
 @Composable
 private fun SourceContent(source: SelectSourceViewState.Source) {
     when (source.type) {
+        SourceType.USB_SERIAL -> PWSettingsMenuItem(source.name, Icons.Default.Usb)
         SourceType.DEMO -> PWSettingsMenuItem(source.name, Icons.Default.BugReport)
     }
 }

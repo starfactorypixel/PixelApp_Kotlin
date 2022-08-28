@@ -1,25 +1,33 @@
 package ru.starfactory.pixel.ecu_connection.ui.screen.select_source
 
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import ru.starfactory.core.decompose.view_model.ViewModel
+import ru.starfactory.core.serial.domain.SerialDevice
+import ru.starfactory.core.serial.domain.SerialDeviceType
+import ru.starfactory.core.serial.domain.SerialInteractor
 import ru.starfactory.pixel.ecu_connection.domain.source.SourceType
 
-internal class SelectSourceViewModel : ViewModel() {
-    val state = MutableStateFlow(
-        SelectSourceViewState.ShowSources(
-            listOf(
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo2"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo2"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo3"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo4"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo5"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo6"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo7"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo8"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo9"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo10"),
-            )
-        )
-    )
+internal class SelectSourceViewModel(
+    private val serialInteractor: SerialInteractor,
+) : ViewModel() {
+    val state = serialInteractor.observeSerialDevices()
+        .map { devices ->
+            devices.toSources() +
+                    listOf(
+                        SelectSourceViewState.Source(SourceType.DEMO, "Demo", "Demo"),
+                        SelectSourceViewState.Source(SourceType.DEMO, "Demo2", "Demo2"),
+                        SelectSourceViewState.Source(SourceType.DEMO, "Demo2", "Demo3"),
+                    )
+        }
+        .map { SelectSourceViewState.ShowSources(it) }
+        .stateIn(viewModelScope, started = SharingStarted.Eagerly, SelectSourceViewState.Loading)
+
+}
+
+private fun List<SerialDevice>.toSources() = map { it.toSource() }
+private fun SerialDevice.toSource() = SelectSourceViewState.Source(type.toSourceType(), id, name)
+private fun SerialDeviceType.toSourceType(): SourceType = when (this) {
+    SerialDeviceType.USB -> SourceType.USB_SERIAL
 }

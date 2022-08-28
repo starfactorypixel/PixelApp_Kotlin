@@ -34,7 +34,10 @@ fun PWSettingsMenuItem(
         border = BorderStroke(1.dp, color ?: Color.White)
     ) {
         Box {
-            Row(Modifier.align(Alignment.Center)) {
+            Row(
+                Modifier.align(Alignment.Center)
+                    .padding(16.dp)
+            ) {
                 Icon(icon, null)
                 Text(text, Modifier.padding(start = 8.dp))
             }

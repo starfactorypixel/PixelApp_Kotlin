@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.Usb
@@ -14,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.uikit.layout.PFlexVerticalGrid
@@ -55,6 +57,12 @@ private fun ShowSourcesContent(
                 .align(Alignment.Center)
                 .verticalScroll(rememberScrollState())
         ) {
+            Text(
+                "Select source",
+                Modifier.align(Alignment.CenterHorizontally),
+                style = PixelTheme.typography.h6,
+                fontWeight = FontWeight.W600,
+            )
             PFlexVerticalGrid(
                 3,
                 Modifier.padding(16.dp),

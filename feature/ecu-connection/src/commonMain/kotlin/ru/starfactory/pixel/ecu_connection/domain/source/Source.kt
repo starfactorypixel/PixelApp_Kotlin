@@ -6,4 +6,5 @@ sealed class Source {
     object Demo : Source() {
         override val sourceType: SourceType = SourceType.DEMO
     }
+    data class Serial(override val sourceType: SourceType, val id: String, val name: String) : Source()
 }

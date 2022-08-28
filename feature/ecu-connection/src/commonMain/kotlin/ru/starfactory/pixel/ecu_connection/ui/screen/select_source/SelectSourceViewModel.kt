@@ -1,25 +1,24 @@
 package ru.starfactory.pixel.ecu_connection.ui.screen.select_source
 
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import ru.starfactory.core.decompose.view_model.ViewModel
-import ru.starfactory.pixel.ecu_connection.domain.source.SourceType
+import ru.starfactory.pixel.ecu_connection.domain.source.EcuSourceInteractor
+import ru.starfactory.pixel.ecu_connection.domain.source.Source
 
-internal class SelectSourceViewModel : ViewModel() {
-    val state = MutableStateFlow(
-        SelectSourceViewState.ShowSources(
-            listOf(
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo2"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo2"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo3"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo4"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo5"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo6"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo7"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo8"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo9"),
-                SelectSourceViewState.Source(SourceType.DEMO, "Demo10"),
-            )
-        )
-    )
+internal class SelectSourceViewModel(
+    private val ecuSourceInteractor: EcuSourceInteractor,
+) : ViewModel() {
+    val state = ecuSourceInteractor.observeSources()
+        .map { devices -> devices.toUiSources() }
+        .map { SelectSourceViewState.ShowSources(it) }
+        .stateIn(viewModelScope, started = SharingStarted.Eagerly, SelectSourceViewState.Loading)
+
+}
+
+private fun List<Source>.toUiSources() = map { it.toSource() }
+private fun Source.toSource() = when (this) {
+    Source.Demo -> SelectSourceViewState.Source(sourceType, "demo", "demo")
+    is Source.Serial -> SelectSourceViewState.Source(sourceType, id, name)
 }

@@ -16,6 +16,6 @@ import ru.starfactory.pixel.ecu_connection.ui.screen.select_source.SelectSourceV
 fun Modules.featureEcuConnection() = DI.Module("feature-ecu-connection") {
     bindSingleton<EcuDemoSourceConnectionInteractor> { EcuDemoSourceConnectionInteractorImpl() }
     bindSingleton<EcuDefaultSourceConnectionInteractor> { EcuDefaultSourceConnectionInteractorImpl(i()) }
-    bindSingleton<EcuSourceInteractor> { EcuSourceInteractorImpl(i()) }
-    bindProvider { SelectSourceViewModel() }
+    bindSingleton<EcuSourceInteractor> { EcuSourceInteractorImpl(i(), i(), i()) }
+    bindProvider { SelectSourceViewModel(i()) }
 }

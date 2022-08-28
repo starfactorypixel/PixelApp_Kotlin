@@ -9,13 +9,16 @@ import ru.starfactory.pixel.ecu_connection.domain.connection.EcuDefaultSourceCon
 import ru.starfactory.pixel.ecu_connection.domain.connection.EcuDefaultSourceConnectionInteractorImpl
 import ru.starfactory.pixel.ecu_connection.domain.connection.demo.EcuDemoSourceConnectionInteractor
 import ru.starfactory.pixel.ecu_connection.domain.connection.demo.EcuDemoSourceConnectionInteractorImpl
+import ru.starfactory.pixel.ecu_connection.domain.repository.EcuSourceRepository
+import ru.starfactory.pixel.ecu_connection.domain.repository.EcuSourceRepositoryImpl
 import ru.starfactory.pixel.ecu_connection.domain.source.EcuSourceInteractor
 import ru.starfactory.pixel.ecu_connection.domain.source.EcuSourceInteractorImpl
 import ru.starfactory.pixel.ecu_connection.ui.screen.select_source.SelectSourceViewModel
 
 fun Modules.featureEcuConnection() = DI.Module("feature-ecu-connection") {
+    bindSingleton<EcuSourceRepository> { EcuSourceRepositoryImpl(i()) }
     bindSingleton<EcuDemoSourceConnectionInteractor> { EcuDemoSourceConnectionInteractorImpl() }
     bindSingleton<EcuDefaultSourceConnectionInteractor> { EcuDefaultSourceConnectionInteractorImpl(i()) }
-    bindSingleton<EcuSourceInteractor> { EcuSourceInteractorImpl(i(), i(), i()) }
+    bindSingleton<EcuSourceInteractor> { EcuSourceInteractorImpl(i(), i(), i(), i()) }
     bindProvider { SelectSourceViewModel(i()) }
 }

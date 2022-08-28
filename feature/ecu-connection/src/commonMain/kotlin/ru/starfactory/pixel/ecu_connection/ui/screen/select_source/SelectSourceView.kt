@@ -17,25 +17,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.uikit.layout.PFlexVerticalGrid
+import ru.starfactory.core.uikit.theme.PixelTheme
 import ru.starfactory.core.uikit.widget.PWSettingsMenuItem
 import ru.starfactory.pixel.ecu_connection.domain.source.SourceType
 
 @Composable
 internal fun SelectSourceView(viewModel: SelectSourceViewModel) {
     val state by viewModel.state.collectAsState()
-    SelectSourceContent(state)
+    SelectSourceContent(state, viewModel::onSelectSource)
 }
 
 @Composable
-private fun SelectSourceContent(state: SelectSourceViewState) {
+private fun SelectSourceContent(
+    state: SelectSourceViewState,
+    onSelectSource: (SelectSourceViewState.Source) -> Unit
+) {
     when (state) {
         SelectSourceViewState.Loading -> Unit // Loading is very fast
-        is SelectSourceViewState.ShowSources -> ShowSourcesContent(state)
+        is SelectSourceViewState.ShowSources -> ShowSourcesContent(state, onSelectSource)
     }
 }
 
 @Composable
-private fun ShowSourcesContent(state: SelectSourceViewState.ShowSources) {
+private fun ShowSourcesContent(
+    state: SelectSourceViewState.ShowSources,
+    onSelectSource: (SelectSourceViewState.Source) -> Unit
+) {
     val sources: List<SelectSourceViewState.Source> = state.sources
 
     Box(
@@ -53,7 +60,7 @@ private fun ShowSourcesContent(state: SelectSourceViewState.ShowSources) {
                 Modifier.padding(16.dp),
             ) {
                 sources.forEach {
-                    SourceContent(it)
+                    SourceContent(it) { onSelectSource(it) }
                 }
             }
         }
@@ -62,10 +69,17 @@ private fun ShowSourcesContent(state: SelectSourceViewState.ShowSources) {
 }
 
 @Composable
-private fun SourceContent(source: SelectSourceViewState.Source) {
-    when (source.type) {
-        SourceType.USB_SERIAL -> PWSettingsMenuItem(source.name, Icons.Default.Usb)
-        SourceType.DEMO -> PWSettingsMenuItem(source.name, Icons.Default.BugReport)
+private fun SourceContent(
+    source: SelectSourceViewState.Source,
+    onClick: () -> Unit,
+) {
+    val icon = when (source.type) {
+        SourceType.USB_SERIAL -> Icons.Default.Usb
+        SourceType.DEMO -> Icons.Default.BugReport
     }
+
+    val color = if (source.isSelected) PixelTheme.colors.primary else null
+
+    PWSettingsMenuItem(source.name, icon, color = color, onClick = onClick)
 }
 

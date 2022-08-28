@@ -27,7 +27,7 @@ internal class SelectSourceViewModel(
 }
 
 private fun List<SerialDevice>.toSources() = map { it.toSource() }
-private fun SerialDevice.toSource() = SelectSourceViewState.Source(type.toSourceType(), id, name)
+private fun SerialDevice.toSource() = SelectSourceViewState.Source(type.toSourceType(), id.toString(), name)
 private fun SerialDeviceType.toSourceType(): SourceType = when (this) {
     SerialDeviceType.USB -> SourceType.USB_SERIAL
 }

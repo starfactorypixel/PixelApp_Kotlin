@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlin.math.ceil
+import kotlin.math.min
 
 @Composable
 fun PFlexVerticalGrid(
@@ -32,7 +33,7 @@ fun PFlexVerticalGrid(
 
         var contentWidth = 0
         var countHorizontal = 0
-        for (i in maxCount downTo 1) {
+        for (i in min(maxCount, placeables.size) downTo 1) {
             contentWidth = maxWidth * i + (verticalSpacingPx * (i - 1)).toInt()
             countHorizontal = i
             if (contentWidth <= constraints.maxWidth) break

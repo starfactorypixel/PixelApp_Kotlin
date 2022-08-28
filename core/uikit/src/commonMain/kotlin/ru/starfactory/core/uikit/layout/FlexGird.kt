@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.dp
 import kotlin.math.ceil
 
 @Composable
-fun FlexVerticalGrid(
+fun PFlexVerticalGrid(
     maxCount: Int,
     modifier: Modifier = Modifier,
-    verticalSpacing: Dp = 0.dp,
-    horizontalSpacing: Dp = 0.dp,
+    verticalSpacing: Dp = 16.dp,
+    horizontalSpacing: Dp = 16.dp,
     content: @Composable () -> Unit
 ) {
     require(maxCount > 0)

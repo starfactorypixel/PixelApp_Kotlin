@@ -73,4 +73,5 @@ internal class EcuSourceInteractorImpl(
 
 private fun SerialDeviceType.toSourceType(): SourceType = when (this) {
     SerialDeviceType.USB -> SourceType.USB_SERIAL
+    SerialDeviceType.BLUETOOTH -> SourceType.BLUETOOTH
 }

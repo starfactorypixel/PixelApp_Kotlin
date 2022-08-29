@@ -6,6 +6,7 @@ import ru.starfactory.core.di.Modules
 import ru.starfactory.core.di.i
 import ru.starfactory.core.key_value_storage.coreKeyValueStorage
 import ru.starfactory.core.serial.bluetooth.coreSerialBluetooth
+import ru.starfactory.core.serial.bluetooth.domain.BluetoothSerialInteractor
 import ru.starfactory.core.serial.coreSerial
 import ru.starfactory.core.serial.domain.SourceTypeSerialInteractor
 import ru.starfactory.core.serial.usb.coreSerialUsb
@@ -39,6 +40,7 @@ fun Modules.mainCommonModule() = DI.Module("main-common-module") {
 
     // Bindings
     inSet<SourceTypeSerialInteractor> { provider { i<UsbSerialInteractor>() } }
+    inSet<SourceTypeSerialInteractor> { provider { i<BluetoothSerialInteractor>() } }
 
     // View Models
     bindProvider { RootViewModel() }

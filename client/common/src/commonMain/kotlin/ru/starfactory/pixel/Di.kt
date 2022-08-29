@@ -3,8 +3,12 @@ package ru.starfactory.pixel
 import org.kodein.di.*
 import ru.starfactory.core.apps.coreApps
 import ru.starfactory.core.di.Modules
+import ru.starfactory.core.di.i
 import ru.starfactory.core.key_value_storage.coreKeyValueStorage
 import ru.starfactory.core.serial.coreSerial
+import ru.starfactory.core.serial.domain.SourceTypeSerialInteractor
+import ru.starfactory.core.serial.usb.coreSerialUsb
+import ru.starfactory.core.serial.usb.domian.UsbSerialInteractor
 import ru.starfactory.core.usb.coreUsb
 import ru.starfactory.feature.apps.featureApps
 import ru.starfactory.pixel.dashboard_screen.featureDashboardScreen
@@ -20,6 +24,7 @@ fun Modules.mainCommonModule() = DI.Module("main-common-module") {
     importOnce(Modules.coreApps())
     importOnce(Modules.coreKeyValueStorage())
     importOnce(Modules.coreSerial())
+    importOnce(Modules.coreSerialUsb())
     importOnce(Modules.coreUsb())
 
     // Feature
@@ -29,6 +34,9 @@ fun Modules.mainCommonModule() = DI.Module("main-common-module") {
     importOnce(Modules.featureMainScreen())
     importOnce(Modules.featureSettingsScreen())
     importOnce(Modules.featureTheming())
+
+    // Bindings
+    inSet<SourceTypeSerialInteractor> { provider { i<UsbSerialInteractor>() } }
 
     // View Models
     bindProvider { RootViewModel() }

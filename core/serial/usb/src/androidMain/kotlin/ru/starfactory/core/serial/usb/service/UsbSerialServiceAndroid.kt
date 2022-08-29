@@ -9,6 +9,7 @@ import ru.starfactory.core.coroutines.shareDefault
 import ru.starfactory.core.serial.domain.SerialDevice
 import ru.starfactory.core.serial.domain.SerialDeviceId
 import ru.starfactory.core.serial.domain.SerialDeviceType
+import ru.starfactory.core.serial.usb.domian.UsbSerialDevice
 import ru.starfactory.core.usb.service.UsbServiceAndroid
 import android.hardware.usb.UsbDevice as UsbDeviceAndroid
 
@@ -37,13 +38,13 @@ internal class UsbSerialServiceAndroidImpl(
 
     private val prober = UsbSerialProber(probeTable)
 
-    private val usbSerialDevicesObservable: Flow<List<SerialDevice>> =
+    private val usbSerialDevicesObservable: Flow<List<UsbSerialDevice>> =
         usbService.observeUsbDevicesAndroid()
             .map { devices -> devices.values }
             .map { devices -> devices.toSerialDevices() }
             .shareDefault(scope)
 
-    override fun observeUsbSerialDevices(): Flow<List<SerialDevice>> = usbSerialDevicesObservable
+    override fun observeUsbSerialDevices(): Flow<List<UsbSerialDevice>> = usbSerialDevicesObservable
 
     //            .map { devices -> devices.toUsbSerialDevices() }
 //            .shareDefault(scope)
@@ -99,11 +100,11 @@ internal class UsbSerialServiceAndroidImpl(
 //            }
 //        }
 //
-    private fun Collection<UsbDeviceAndroid>.toSerialDevices(): List<SerialDevice> =
+    private fun Collection<UsbDeviceAndroid>.toSerialDevices(): List<UsbSerialDevice> =
         mapNotNull {
             val driver = prober.probeDevice(it)
             if (driver != null) {
-                SerialDevice(
+                UsbSerialDevice(
                     id = SerialDeviceId(SerialDeviceType.USB, it.deviceId.toString()),
                     type = SerialDeviceType.USB,
                     name = it.deviceName,

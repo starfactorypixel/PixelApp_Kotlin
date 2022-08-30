@@ -8,7 +8,7 @@ kotlin {
     sourceSets {
         named("commonMain") {
             dependencies {
-                implementation(project(":core:serial:impl"))
+                implementation(project(":core:serial"))
             }
         }
     }

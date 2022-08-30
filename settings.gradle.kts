@@ -30,6 +30,7 @@ rootProject.name = "pixel"
 
 include(
     ":core:apps",
+    ":core:bluetooth",
     ":core:compose",
     ":core:coroutines",
     ":core:decompose",
@@ -37,8 +38,9 @@ include(
     ":core:key-value-storage",
     ":core:logger",
     ":core:navigation",
-    ":core:serial:api",
-    ":core:serial:impl",
+    ":core:permission",
+    ":core:serial",
+    ":core:serial:bluetooth",
     ":core:serial:usb",
     ":core:uikit",
     ":core:usb",

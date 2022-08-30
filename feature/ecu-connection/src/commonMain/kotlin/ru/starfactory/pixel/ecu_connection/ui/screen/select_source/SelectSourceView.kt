@@ -8,6 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.Usb
 import androidx.compose.runtime.Composable
@@ -83,6 +84,7 @@ private fun SourceContent(
 ) {
     val icon = when (source.type) {
         SourceType.USB_SERIAL -> Icons.Default.Usb
+        SourceType.BLUETOOTH -> Icons.Default.Bluetooth
         SourceType.DEMO -> Icons.Default.BugReport
     }
 

@@ -9,6 +9,7 @@ kotlin {
         named("commonMain") {
             dependencies {
                 implementation(project(":core:serial"))
+                implementation(project(":core:serial:bluetooth"))
             }
         }
     }

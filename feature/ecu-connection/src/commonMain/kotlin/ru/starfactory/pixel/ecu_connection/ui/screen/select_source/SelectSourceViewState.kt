@@ -8,7 +8,10 @@ internal sealed class SelectSourceViewState {
     object Loading : SelectSourceViewState()
 
     @Immutable
-    data class ShowSources(val sources: List<Source>) : SelectSourceViewState()
+    data class ShowSources(
+        val sources: List<Source>,
+        val isBluetoothPermissionGranted: Boolean,
+    ) : SelectSourceViewState()
 
 
     @Immutable

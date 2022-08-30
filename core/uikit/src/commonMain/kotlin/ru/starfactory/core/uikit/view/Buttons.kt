@@ -1,61 +1,34 @@
 package ru.starfactory.core.uikit.view
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.dp
+import ru.starfactory.core.uikit.theme.PixelTheme
 
 @Composable
-fun POutlinedFloatingActionButton(
+fun POutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    shape: Shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
-    backgroundColor: Color = Color.Transparent,
-    contentColor: Color = contentColorFor(backgroundColor),
-    elevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
-    borderStroke: BorderStroke = BorderStroke(2.dp, MaterialTheme.colors.surface),
-    content: @Composable () -> Unit
+    elevation: ButtonElevation? = null,
+    shape: Shape = RoundedCornerShape(percent = 50),
+    border: BorderStroke? = ButtonDefaults.outlinedBorder,
+    colors: ButtonColors = ButtonDefaults.outlinedButtonColors(
+        backgroundColor = PixelTheme.colors.onBackground.copy(alpha = .07f),
+        contentColor = PixelTheme.colors.onBackground,
+    ),
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    content: @Composable RowScope.() -> Unit
 ) {
-    PTextFloatingActionButton(
-        onClick,
-        modifier
-            .border(borderStroke, shape),
-        interactionSource,
-        shape,
-        backgroundColor,
-        contentColor,
-        elevation,
-        content
-    )
-}
-
-@Composable
-fun PTextFloatingActionButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    shape: Shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
-    backgroundColor: Color = Color.Transparent,
-    contentColor: Color = contentColorFor(backgroundColor),
-    elevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
-    content: @Composable () -> Unit
-) {
-    FloatingActionButton(
-        onClick,
-        modifier,
-        interactionSource,
-        shape,
-        backgroundColor,
-        contentColor,
-        elevation,
-        content
+    OutlinedButton(
+        onClick, modifier, enabled, interactionSource, elevation, shape, border, colors, contentPadding, content
     )
 }

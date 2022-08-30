@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.uikit.layout.PFlexVerticalGrid
 import ru.starfactory.core.uikit.theme.PixelTheme
+import ru.starfactory.core.uikit.view.POutlinedButton
 import ru.starfactory.core.uikit.view.POutlinedCard
 import ru.starfactory.core.uikit.widget.PWSettingsMenuItem
 import ru.starfactory.pixel.ecu_connection.domain.source.SourceType
@@ -115,7 +116,7 @@ private fun BluetoothPermissionContent(modifier: Modifier = Modifier, onRequestB
                     .align(Alignment.CenterVertically)
             )
             Spacer(Modifier.weight(1f))
-            OutlinedButton(
+            POutlinedButton(
                 onClick = onRequestBluetoothPermission,
                 Modifier
                     .padding(start = 16.dp)

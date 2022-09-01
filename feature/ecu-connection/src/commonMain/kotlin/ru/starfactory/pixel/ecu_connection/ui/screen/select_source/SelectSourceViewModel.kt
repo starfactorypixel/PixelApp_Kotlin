@@ -15,14 +15,11 @@ import ru.starfactory.pixel.ecu_connection.domain.source.Source
 internal class SelectSourceViewModel(
     private val ecuSourceInteractor: EcuSourceInteractor,
     private val bluetoothSerialInteractor: BluetoothSerialInteractor,
-    private val permissionInteractor: PermissionInteractor,
 ) : ViewModel() {
     val state = combine(
         ecuSourceInteractor.observeSources(),
         ecuSourceInteractor.observeSelectedSource(),
-        // TODO Sumin: запрашивать будем все же через этот интерактор
-        // bluetoothSerialInteractor.observeIsPermissionGranted(),
-        permissionInteractor.observeIsPermissionGranted(Permission.BLUETOOTH_CONNECT),
+        bluetoothSerialInteractor.observeIsConnectPermissionGranted(),
     ) { sources, selectedSource, isBluetoothPermissionGranted ->
         val uiSources = sources.map { it.toUiSource(it == selectedSource) }
         SelectSourceViewState.ShowSources(uiSources, isBluetoothPermissionGranted)
@@ -37,8 +34,7 @@ internal class SelectSourceViewModel(
 
     fun onRequestBluetoothPermission() {
         viewModelScope.launch {
-//            bluetoothSerialInteractor.requestPermission()
-            permissionInteractor.requestPermission(Permission.BLUETOOTH_CONNECT)
+            bluetoothSerialInteractor.requestConnectPermission()
         }
     }
 }

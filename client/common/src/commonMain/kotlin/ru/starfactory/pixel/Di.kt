@@ -2,6 +2,7 @@ package ru.starfactory.pixel
 
 import org.kodein.di.*
 import ru.starfactory.core.apps.coreApps
+import ru.starfactory.core.bluetooth.coreBluetooth
 import ru.starfactory.core.di.Modules
 import ru.starfactory.core.di.i
 import ru.starfactory.core.key_value_storage.coreKeyValueStorage
@@ -25,6 +26,7 @@ import ru.starfactory.pixel.ui.screen.root.RootViewModel
 fun Modules.mainCommonModule() = DI.Module("main-common-module") {
     // Core
     importOnce(Modules.coreApps())
+    importOnce(Modules.coreBluetooth())
     importOnce(Modules.coreKeyValueStorage())
     importOnce(Modules.corePermission())
     importOnce(Modules.coreSerial())

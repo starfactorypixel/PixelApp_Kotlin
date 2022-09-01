@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ru.starfactory.core.compose.LocalConfigurationHolder
 import ru.starfactory.core.navigation.ui.NavigationContentView
+import ru.starfactory.core.permission.ui.PermissionView
 import ru.starfactory.core.uikit.theme.PixelTheme
 import ru.starfactory.pixel.theming.ui.theme.ThemeView
 
@@ -17,7 +18,7 @@ fun RootView(rootComponent: RootComponent) {
 
     LocalConfigurationHolder {
 
-        // PermissionView()
+        PermissionView(rootComponent.permissionViewModel)
 
         ThemeView(rootComponent.themeViewModel) {
             Surface(

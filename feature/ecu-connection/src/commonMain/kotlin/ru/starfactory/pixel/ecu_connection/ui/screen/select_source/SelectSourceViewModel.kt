@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ru.starfactory.core.decompose.view_model.ViewModel
+import ru.starfactory.core.permission.domain.PermissionInteractor
+import ru.starfactory.core.permission.service.Permission
 import ru.starfactory.core.serial.bluetooth.domain.BluetoothSerialInteractor
 import ru.starfactory.pixel.ecu_connection.domain.source.EcuSourceInteractor
 import ru.starfactory.pixel.ecu_connection.domain.source.Source
@@ -13,11 +15,14 @@ import ru.starfactory.pixel.ecu_connection.domain.source.Source
 internal class SelectSourceViewModel(
     private val ecuSourceInteractor: EcuSourceInteractor,
     private val bluetoothSerialInteractor: BluetoothSerialInteractor,
+    private val permissionInteractor: PermissionInteractor,
 ) : ViewModel() {
     val state = combine(
         ecuSourceInteractor.observeSources(),
         ecuSourceInteractor.observeSelectedSource(),
-        bluetoothSerialInteractor.observeIsPermissionGranted(),
+        // TODO Sumin: запрашивать будем все же через этот интерактор
+        // bluetoothSerialInteractor.observeIsPermissionGranted(),
+        permissionInteractor.observeIsPermissionGranted(Permission.BLUETOOTH_CONNECT),
     ) { sources, selectedSource, isBluetoothPermissionGranted ->
         val uiSources = sources.map { it.toUiSource(it == selectedSource) }
         SelectSourceViewState.ShowSources(uiSources, isBluetoothPermissionGranted)
@@ -32,7 +37,8 @@ internal class SelectSourceViewModel(
 
     fun onRequestBluetoothPermission() {
         viewModelScope.launch {
-            bluetoothSerialInteractor.requestPermission()
+//            bluetoothSerialInteractor.requestPermission()
+            permissionInteractor.requestPermission(Permission.BLUETOOTH_CONNECT)
         }
     }
 }

@@ -5,6 +5,7 @@ import ru.starfactory.core.apps.coreApps
 import ru.starfactory.core.di.Modules
 import ru.starfactory.core.di.i
 import ru.starfactory.core.key_value_storage.coreKeyValueStorage
+import ru.starfactory.core.permission.corePermission
 import ru.starfactory.core.serial.bluetooth.coreSerialBluetooth
 import ru.starfactory.core.serial.bluetooth.domain.BluetoothSerialInteractor
 import ru.starfactory.core.serial.coreSerial
@@ -25,6 +26,7 @@ fun Modules.mainCommonModule() = DI.Module("main-common-module") {
     // Core
     importOnce(Modules.coreApps())
     importOnce(Modules.coreKeyValueStorage())
+    importOnce(Modules.corePermission())
     importOnce(Modules.coreSerial())
     importOnce(Modules.coreSerialBluetooth())
     importOnce(Modules.coreSerialUsb())

@@ -1,15 +1,10 @@
-package ru.starfactory.pixel.service.permission
+package ru.starfactory.core.permission.service
 
 import android.content.Context
 import android.content.pm.PackageManager
 
-interface PermissionService {
-    fun getIsPermissionGranted(permission: Permission): Boolean
-    suspend fun requestPermission(permission: Permission): Boolean
-}
-
-class PermissionServiceImpl(private val context: Context) : PermissionService {
-    var permissionRequester: PermissionRequester? = null
+internal class AndroidPermissionService(private val context: Context) : PermissionService {
+    override var permissionRequester: PermissionRequester? = null
 
     override fun getIsPermissionGranted(permission: Permission): Boolean {
         return context.checkSelfPermission(permission.raw) == PackageManager.PERMISSION_GRANTED
@@ -22,3 +17,8 @@ class PermissionServiceImpl(private val context: Context) : PermissionService {
             ?: throw RuntimeException("Permission requester not attached")
     }
 }
+
+val Permission.raw: String
+    get() = when (this) {
+        Permission.BLUETOOTH_CONNECT -> "android.permission.BLUETOOTH_CONNECT"
+    }

@@ -1,28 +1,27 @@
-package ru.starfactory.pixel.ui.screen.permission
+package ru.starfactory.core.permission.ui
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import ru.starfactory.core.decompose.view_model.ViewModel
-import ru.starfactory.pixel.service.permission.PermissionRequester
-import ru.starfactory.pixel.service.permission.PermissionService
-import ru.starfactory.pixel.service.permission.PermissionServiceImpl
+import ru.starfactory.core.permission.service.PermissionRequester
+import ru.starfactory.core.permission.service.PermissionService
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 
-class PermissionViewModel(private val permissionService: PermissionService) : ViewModel(), PermissionRequester {
+class PermissionViewModel internal constructor(private val permissionService: PermissionService) : ViewModel(), PermissionRequester {
     val permissionRequest = Channel<String>() //TODO Sumin: тут скорее всего нужен полноценный стейт
 
     private val mutex = Mutex()
     private var continuation: Continuation<Boolean>? = null
 
     init {
-        (permissionService as PermissionServiceImpl).permissionRequester = this
+        permissionService.permissionRequester = this
     }
 
     override fun onDestroy() {
-        (permissionService as PermissionServiceImpl).permissionRequester = null
+        permissionService.permissionRequester = null
         super.onDestroy()
     }
 

@@ -16,6 +16,7 @@ kotlin {
                 implementation(project(":core:key-value-storage"))
                 implementation(project(":core:logger"))
                 implementation(project(":core:navigation"))
+                implementation(project(":core:permission"))
                 implementation(project(":core:uikit"))
             }
         }

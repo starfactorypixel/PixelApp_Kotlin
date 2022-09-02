@@ -1,6 +1,5 @@
 package ru.starfactory.pixel.main_screen.ui.screen.main
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
@@ -23,7 +22,6 @@ import ru.starfactory.core.compose.LocalConfiguration
 import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.*
-import ru.starfactory.core.uikit.theme.PixelTheme
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsetsHolder
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.MainMenuInsets
 import ru.starfactory.pixel.main_screen.ui.widged.BottomActionsView

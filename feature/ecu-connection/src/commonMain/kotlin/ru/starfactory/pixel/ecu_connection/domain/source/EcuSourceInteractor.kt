@@ -61,7 +61,7 @@ internal class EcuSourceInteractorImpl(
                 devices.map {
                     Source(
                         sourceType = it.type.toSourceType(),
-                        id = it.id.toString(),
+                        id = it.id.rawId,
                         name = it.name
                     )
                 }

@@ -5,39 +5,36 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.window.FrameWindowScope
+import androidx.compose.ui.window.WindowState
 
-internal val LocalComposeWindow = compositionLocalOf<ComposeWindow> {
+internal val LocalComposeWindow = compositionLocalOf<WindowState> {
     throw IllegalStateException("No local provider for LocalComposeWindow")
 }
 
 @Composable
-fun FrameWindowScope.LocalComposeWindowHolder(content: @Composable () -> Unit) {
-    CompositionLocalProvider(LocalComposeWindow provides window, content = content)
+fun FrameWindowScope.LocalComposeWindowHolder(windowState: WindowState, content: @Composable () -> Unit) {
+    CompositionLocalProvider(LocalComposeWindow provides windowState, content = content)
 }
 
 @Composable
 actual fun LocalConfigurationHolder(content: @Composable () -> Unit) {
-    val windowInfo = LocalComposeWindow.current
-    val density = LocalDensity.current
-    CompositionLocalProvider(LocalConfiguration provides JvmConfiguration(windowInfo, density), content = content)
-}
+    val window = LocalComposeWindow.current
+    val windowSize = window.size
 
-private class JvmConfiguration(
-    private val configuration: ComposeWindow,
-    private val density: Density,
-) : Configuration {
-    override val screenWidth: Dp
-        get() = with(density) { configuration.width.toDp() }
+    val screenWidth = windowSize.width
+    val screenHeight = windowSize.height
 
-    override val screenHeight: Dp
-        get() = with(density) { configuration.height.toDp() }
-    override val orientation: Configuration.Orientation
-        get() = if (screenWidth > screenHeight) {
+    val configuration = Configuration(
+        screenWidth = screenWidth,
+        screenHeight = screenHeight,
+        orientation = if (screenWidth > screenHeight) {
             Configuration.Orientation.PORTRAIT
         } else {
             Configuration.Orientation.LANDSCAPE
         }
+    )
+
+    CompositionLocalProvider(LocalConfiguration provides configuration, content = content)
 }
+

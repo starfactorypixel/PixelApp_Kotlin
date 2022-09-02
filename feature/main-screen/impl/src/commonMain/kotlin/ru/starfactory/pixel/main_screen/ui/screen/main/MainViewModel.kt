@@ -4,6 +4,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.starfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.core.navigation.Screen
@@ -22,12 +23,17 @@ internal class MainViewModel(
 
     val state = MutableStateFlow(
         MainViewState(
-            MainViewState.MenuItem.values().filter(this::isFeatureAvailable)
+            MainViewState.MenuItem.values().filter(this::isFeatureAvailable),
+            selectedMenuItem = MainViewState.MenuItem.GENERAL,
         )
     )
 
     fun onSelectMenuItem(menuItem: MainViewState.MenuItem) {
         viewModelScope.launch {
+            state.update {
+                it.copy(selectedMenuItem = menuItem)
+            }
+
             val newScreen = when (menuItem) {
                 MainViewState.MenuItem.GENERAL -> DashboardScreen
                 MainViewState.MenuItem.NAVIGATION -> NavigatorScreen
@@ -37,6 +43,7 @@ internal class MainViewModel(
             navigation.replaceCurrent(newScreen)
         }
     }
+
     fun onClickSettings() {
         rootNavigation.push(SettingsScreen)
     }

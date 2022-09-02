@@ -18,15 +18,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import ru.starfactory.core.uikit.theme.PixelTheme
 
 private val ADDITIONAL_PADDING = 4.dp
 
 @Composable
-internal fun PVerticalMainMenu(
-    items: List<PVerticalMenuItem>,
+internal fun <ID> PVerticalMainMenu(
+    items: List<PVerticalMenuItem<ID>>,
     modifier: Modifier = Modifier,
-    selectedItemIndex: Int = -1,
-    onClickItem: (Int) -> Unit = {},
+    selectedItemId: ID? = null,
+    onClickItem: (ID) -> Unit = {},
     isShowTitle: Boolean = true,
 ) {
     Row(modifier.height(IntrinsicSize.Max)) {
@@ -34,13 +35,13 @@ internal fun PVerticalMainMenu(
         Column(
             Modifier
                 .clip(RoundedCornerShape(percent = 100))
-                .background(Color(0xFF1A2227)) //TODO sumin вынести в тему
+                .background(PixelTheme.colors.background)
         ) {
             items.forEachIndexed { index, menuItem ->
                 ItemIconContent(
                     menuItem.icon,
-                    isSelected = index == selectedItemIndex,
-                    onClickItem = { onClickItem(index) },
+                    isSelected = menuItem.id == selectedItemId,
+                    onClickItem = { onClickItem(menuItem.id) },
                     isFirst = index == 0,
                     isLast = index == items.size - 1,
                 )
@@ -55,8 +56,8 @@ internal fun PVerticalMainMenu(
                     .padding(vertical = ADDITIONAL_PADDING)
                     .width(IntrinsicSize.Max)
             ) {
-                items.forEachIndexed { index, menuItem ->
-                    ItemDescriptionContent(menuItem.text, index == selectedItemIndex, onClickItem = { onClickItem(index) })
+                items.forEach { menuItem ->
+                    ItemDescriptionContent(menuItem.text, menuItem.id == selectedItemId, onClickItem = { onClickItem(menuItem.id) })
                 }
             }
         }
@@ -110,4 +111,4 @@ private fun ColumnScope.ItemDescriptionContent(text: String, isSelected: Boolean
 }
 
 
-internal data class PVerticalMenuItem(val icon: ImageVector, val text: String)
+internal data class PVerticalMenuItem<ID>(val id: ID, val icon: ImageVector, val text: String)

@@ -163,7 +163,7 @@ private enum class MenuType {
         fun fromConfiguration(configuration: Configuration) = when (configuration.screenWidth) {
             in 0.dp..399.dp -> Bottom
             in 400.dp..599.dp -> Start
-            else -> StartExpanded
+            else -> if (configuration.isTablet) StartExpanded else Start
         }
     }
 }

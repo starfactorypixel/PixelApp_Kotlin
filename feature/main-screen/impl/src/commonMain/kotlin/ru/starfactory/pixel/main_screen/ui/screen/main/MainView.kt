@@ -1,15 +1,19 @@
 package ru.starfactory.pixel.main_screen.ui.screen.main
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.BatteryChargingFull
 import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
@@ -18,6 +22,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
+import ru.starfactory.core.compose.Configuration
 import ru.starfactory.core.compose.LocalConfiguration
 import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.navigation.Screen
@@ -53,10 +58,10 @@ private fun MainContent(
             .fillMaxSize()
             .paddingSystemWindowInsets()
     ) {
-        var mainMenuInsets by remember { mutableStateOf(MainMenuInsets()) }
-        val localDensity = LocalDensity.current
+        val mainMenuInsets = remember { mutableStateOf(MainMenuInsets()) }
+        val menuType = MenuType.fromConfiguration(LocalConfiguration.current)
 
-        LocalMainMenuInsetsHolder(mainMenuInsets) {
+        LocalMainMenuInsetsHolder(mainMenuInsets.value) {
             Column {
                 NavigationContentView(childStack, Modifier.weight(1f))
                 BottomActionsView(
@@ -65,58 +70,109 @@ private fun MainContent(
                         .padding(horizontal = 16.dp),
                     onClickSettings = onClickSettings,
                 )
+                if (menuType == MenuType.Bottom) {
+                    HorizontalMainMenuContent(
+                        state.menuItems,
+                        state.selectedMenuItem,
+                        onSelectMenuItem,
+                        mainMenuInsets,
+                    )
+                }
             }
         }
 
-        Row(modifier = Modifier.fillMaxHeight()) {
-            MainMenuContent(
+        if (menuType >= MenuType.Start) {
+            VerticalMainMenuContent(
                 state.menuItems,
+                state.selectedMenuItem,
+                menuType,
                 onSelectMenuItem,
-                Modifier
-                    .onGloballyPositioned { coordinates ->
-                        with(localDensity) {
-                            val offset = coordinates.positionInRoot()
-                            val size = coordinates.size
-                            mainMenuInsets = MainMenuInsets(
-                                DpOffset(offset.x.toDp(), offset.y.toDp()),
-                                DpSize(size.width.toDp(), size.height.toDp()),
-                                isPositioned = true
-                            )
-                        }
-                    }
-                    .align(Alignment.CenterVertically)
-                    .padding(16.dp)
+                mainMenuInsets,
             )
         }
     }
 }
 
 @Composable
-private fun MainMenuContent(
+private fun HorizontalMainMenuContent(
     items: List<MainViewState.MenuItem>,
+    selectedItem: MainViewState.MenuItem,
     onSelectMenuItem: (MainViewState.MenuItem) -> Unit,
-    modifier: Modifier = Modifier,
+    mainMenuInsets: MutableState<MainMenuInsets>,
 ) {
-    val isShowTitle = LocalConfiguration.current.screenWidth > 600.dp
-    var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
-
-    PVerticalMainMenu(
-        items = items.toPMenuItem(),
-        modifier,
-        selectedItemIndex = selectedItemIndex,
-        onClickItem = {
-            selectedItemIndex = it
-            onSelectMenuItem(items[it])
-        },
-        isShowTitle = isShowTitle
-    )
+    LaunchedEffect(Unit) { mainMenuInsets.value = MainMenuInsets(isPositioned = true) }
+    Column {
+        Divider(Modifier.fillMaxWidth())
+        BottomNavigation(
+            backgroundColor = Color.Transparent,
+            elevation = 0.dp,
+        ) {
+            items.forEach {
+                val item = it.toPMenuItem()
+                BottomNavigationItem(
+                    selected = item.id == selectedItem,
+                    onClick = { onSelectMenuItem(item.id) },
+                    icon = { Icon(item.icon, null) }
+                )
+            }
+        }
+    }
 }
 
-private fun List<MainViewState.MenuItem>.toPMenuItem(): List<PVerticalMenuItem> = this.map { it.toPMenuItem() }
+@Composable
+private fun VerticalMainMenuContent(
+    items: List<MainViewState.MenuItem>,
+    selectedItem: MainViewState.MenuItem,
+    menuType: MenuType,
+    onSelectMenuItem: (MainViewState.MenuItem) -> Unit,
+    mainMenuInsets: MutableState<MainMenuInsets>,
+) {
+    val localDensity = LocalDensity.current
+    val isShowTitle = menuType == MenuType.StartExpanded
 
-private fun MainViewState.MenuItem.toPMenuItem(): PVerticalMenuItem = when (this) {
-    MainViewState.MenuItem.GENERAL -> PVerticalMenuItem(Icons.Default.DirectionsCar, "General")
-    MainViewState.MenuItem.NAVIGATION -> PVerticalMenuItem(Icons.Default.Navigation, "Navigation")
-    MainViewState.MenuItem.APPS -> PVerticalMenuItem(Icons.Default.Apps, "Apps")
-    MainViewState.MenuItem.CHARGING -> PVerticalMenuItem(Icons.Default.BatteryChargingFull, "Charging")
+    Row(modifier = Modifier.fillMaxHeight()) {
+        PVerticalMainMenu(
+            items = items.toPMenuItem(),
+            Modifier
+                .onGloballyPositioned { coordinates ->
+                    with(localDensity) {
+                        val offset = coordinates.positionInRoot()
+                        val size = coordinates.size
+                        mainMenuInsets.value = MainMenuInsets(
+                            DpOffset(offset.x.toDp(), offset.y.toDp()),
+                            DpSize(size.width.toDp(), size.height.toDp()),
+                            isPositioned = true
+                        )
+                    }
+                }
+                .align(Alignment.CenterVertically)
+                .padding(16.dp),
+            selectedItemId = selectedItem,
+            onClickItem = onSelectMenuItem,
+            isShowTitle = isShowTitle
+        )
+    }
+}
+
+private enum class MenuType {
+    Bottom,
+    Start,
+    StartExpanded;
+
+    companion object {
+        fun fromConfiguration(configuration: Configuration) = when (configuration.screenWidth) {
+            in 0.dp..399.dp -> Bottom
+            in 400.dp..599.dp -> Start
+            else -> StartExpanded
+        }
+    }
+}
+
+private fun List<MainViewState.MenuItem>.toPMenuItem(): List<PVerticalMenuItem<MainViewState.MenuItem>> = this.map { it.toPMenuItem() }
+
+private fun MainViewState.MenuItem.toPMenuItem(): PVerticalMenuItem<MainViewState.MenuItem> = when (this) {
+    MainViewState.MenuItem.GENERAL -> PVerticalMenuItem(id = this, Icons.Default.DirectionsCar, "General")
+    MainViewState.MenuItem.NAVIGATION -> PVerticalMenuItem(id = this, Icons.Default.Navigation, "Navigation")
+    MainViewState.MenuItem.APPS -> PVerticalMenuItem(id = this, Icons.Default.Apps, "Apps")
+    MainViewState.MenuItem.CHARGING -> PVerticalMenuItem(id = this, Icons.Default.BatteryChargingFull, "Charging")
 }

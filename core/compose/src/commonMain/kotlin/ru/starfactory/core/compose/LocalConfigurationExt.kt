@@ -1,6 +1,7 @@
 package ru.starfactory.core.compose
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.ui.unit.Dp
@@ -13,11 +14,12 @@ val LocalConfiguration = compositionLocalOf<Configuration>(neverEqualPolicy()) {
 @Composable
 expect fun LocalConfigurationHolder(content: @Composable () -> Unit)
 
-interface Configuration {
-    val screenWidth: Dp
-    val screenHeight: Dp
-    val orientation: Orientation
-
+@Immutable
+data class Configuration(
+    val screenWidth: Dp,
+    val screenHeight: Dp,
+    val orientation: Orientation,
+) {
     enum class Orientation {
         PORTRAIT,
         LANDSCAPE,

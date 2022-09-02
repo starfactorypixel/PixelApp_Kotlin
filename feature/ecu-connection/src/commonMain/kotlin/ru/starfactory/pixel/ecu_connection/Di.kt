@@ -20,5 +20,5 @@ fun Modules.featureEcuConnection() = DI.Module("feature-ecu-connection") {
     bindSingleton<EcuDemoSourceConnectionInteractor> { EcuDemoSourceConnectionInteractorImpl() }
     bindSingleton<EcuDefaultSourceConnectionInteractor> { EcuDefaultSourceConnectionInteractorImpl(i()) }
     bindSingleton<EcuSourceInteractor> { EcuSourceInteractorImpl(i(), i(), i(), i()) }
-    bindProvider { SelectSourceViewModel(i(), i(), i()) }
+    bindProvider { SelectSourceViewModel(i(), i()) }
 }

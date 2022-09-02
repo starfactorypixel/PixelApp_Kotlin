@@ -8,6 +8,7 @@ kotlin {
         named("commonMain") {
             dependencies {
                 api(project(":core:apps"))
+                api(project(":core:bluetooth"))
                 api(project(":core:compose"))
                 api(project(":core:coroutines"))
                 api(project(":core:decompose"))

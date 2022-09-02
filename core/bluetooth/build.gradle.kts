@@ -9,6 +9,7 @@ kotlin {
                 implementation(project(":core:coroutines"))
                 implementation(project(":core:di"))
                 implementation(project(":core:logger"))
+                implementation(project(":core:permission"))
             }
         }
     }

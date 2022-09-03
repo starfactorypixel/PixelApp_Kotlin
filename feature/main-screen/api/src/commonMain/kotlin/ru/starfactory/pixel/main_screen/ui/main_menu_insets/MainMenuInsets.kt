@@ -19,3 +19,11 @@ val LocalMainMenuInsets = compositionLocalOf<MainMenuInsets> { MainMenuInsets() 
 fun LocalMainMenuInsetsHolder(mainMenuInsets: MainMenuInsets, content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalMainMenuInsets provides mainMenuInsets, content = content)
 }
+
+@Composable
+fun WithLocalMainMenuInsets(content: @Composable (MainMenuInsets) -> Unit) {
+    val mainMenuInsets = LocalMainMenuInsets.current
+    if (mainMenuInsets.isPositioned) {
+        content(mainMenuInsets)
+    }
+}

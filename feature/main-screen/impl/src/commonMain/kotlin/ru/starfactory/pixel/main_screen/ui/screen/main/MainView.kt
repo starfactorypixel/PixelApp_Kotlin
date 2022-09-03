@@ -43,8 +43,6 @@ private fun MainContent(
         val screenSize = configuration.screenSize
         val orientation = configuration.orientation
 
-        println("s = $screenSize, o = $orientation")
-
         when {
             screenSize == Configuration.ScreenSize.Phone && orientation == Configuration.Orientation.PORTRAIT -> {
                 MainContentPhonePortrait(state, onSelectMenuItem, onClickSettings, childStack)

@@ -23,6 +23,14 @@ internal fun MainContentPhoneLandscape(
 ) {
     val mainMenuInsets = remember { mutableStateOf(MainMenuInsets()) }
 
+    VerticalMainMenuContent(
+        state.menuItems,
+        state.selectedMenuItem,
+        false,
+        onSelectMenuItem,
+        mainMenuInsets,
+    )
+
     LocalMainMenuInsetsHolder(mainMenuInsets.value) {
         Column {
             CollapsingActionsMainMenuContent(Modifier.weight(1f), onClickSettings) {
@@ -32,12 +40,4 @@ internal fun MainContentPhoneLandscape(
             }
         }
     }
-
-    VerticalMainMenuContent(
-        state.menuItems,
-        state.selectedMenuItem,
-        false,
-        onSelectMenuItem,
-        mainMenuInsets,
-    )
 }

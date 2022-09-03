@@ -25,6 +25,14 @@ internal fun MainContentTablet(
 ) {
     val mainMenuInsets = remember { mutableStateOf(MainMenuInsets()) }
 
+    VerticalMainMenuContent(
+        state.menuItems,
+        state.selectedMenuItem,
+        true,
+        onSelectMenuItem,
+        mainMenuInsets,
+    )
+
     LocalMainMenuInsetsHolder(mainMenuInsets.value) {
         Column {
             NavigationContentView(childStack, Modifier.weight(1f))
@@ -36,12 +44,4 @@ internal fun MainContentTablet(
             )
         }
     }
-
-    VerticalMainMenuContent(
-        state.menuItems,
-        state.selectedMenuItem,
-        true,
-        onSelectMenuItem,
-        mainMenuInsets,
-    )
 }

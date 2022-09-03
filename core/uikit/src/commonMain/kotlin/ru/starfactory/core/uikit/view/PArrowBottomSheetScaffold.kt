@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -43,7 +44,7 @@ fun PArrowBottomSheetScaffold(
     floatingActionButton: (@Composable () -> Unit)? = null,
     floatingActionButtonPosition: FabPosition = FabPosition.End,
     sheetGesturesEnabled: Boolean = true,
-    sheetShape: Shape = MaterialTheme.shapes.large,
+    sheetShape: Shape = MaterialTheme.shapes.large.copy(bottomStart = CornerSize(0.dp), bottomEnd = CornerSize(0.dp)),
     sheetElevation: Dp = 0.dp,
     sheetBackgroundColor: @Composable (progress: Float) -> Color = { PixelTheme.colors.surface.copy(alpha = it) },
     sheetContentColor: Color = contentColorFor(sheetBackgroundColor(1f)),

@@ -27,7 +27,15 @@ data class Configuration(
     val minSize: Dp = min(screenWidth, screenHeight)
     val maxSize: Dp = max(screenWidth, screenHeight)
 
-    val isTablet: Boolean = minSize >= 600.dp
+    val screenSize: ScreenSize = when (minSize) {
+        in 0.dp..599.dp -> ScreenSize.Phone
+        else -> ScreenSize.Tablet
+    }
+
+    enum class ScreenSize {
+        Phone,
+        Tablet
+    }
 
     enum class Orientation {
         PORTRAIT,

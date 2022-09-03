@@ -1,15 +1,9 @@
 package ru.starfactory.pixel.main_screen.ui.screen.main
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Apps
-import androidx.compose.material.icons.filled.BatteryChargingFull
-import androidx.compose.material.icons.filled.DirectionsCar
-import androidx.compose.material.icons.filled.Navigation
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,11 +16,13 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
+import kotlinx.coroutines.launch
 import ru.starfactory.core.compose.Configuration
 import ru.starfactory.core.compose.LocalConfiguration
 import ru.starfactory.core.compose.paddingSystemWindowInsets
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.*
+import ru.starfactory.core.uikit.view.PArrowBottomSheetScaffold
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsetsHolder
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.MainMenuInsets
 import ru.starfactory.pixel.main_screen.ui.widged.BottomActionsView
@@ -46,6 +42,7 @@ internal fun MainView(viewModel: MainViewModel, childStack: Value<ChildStack<Scr
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun MainContent(
     state: MainViewState,
@@ -58,18 +55,50 @@ private fun MainContent(
             .fillMaxSize()
             .paddingSystemWindowInsets()
     ) {
+        val configuration = LocalConfiguration.current
+        val coroutineScope = rememberCoroutineScope()
         val mainMenuInsets = remember { mutableStateOf(MainMenuInsets()) }
-        val menuType = MenuType.fromConfiguration(LocalConfiguration.current)
+        val menuType = MenuType.fromConfiguration(configuration)
+        val bottomActionsType = BottomActionsType.fromConfiguration(configuration)
 
         LocalMainMenuInsetsHolder(mainMenuInsets.value) {
             Column {
-                NavigationContentView(childStack, Modifier.weight(1f))
-                BottomActionsView(
-                    Modifier
-                        .padding(bottom = 16.dp)
-                        .padding(horizontal = 16.dp),
-                    onClickSettings = onClickSettings,
-                )
+
+                val scaffoldState = rememberBottomSheetScaffoldState()
+                PArrowBottomSheetScaffold(
+                    sheetContent = {
+                        BottomActionsView(
+                            Modifier
+                                .padding(bottom = 16.dp)
+                                .padding(horizontal = 16.dp),
+                            onClickSettings = onClickSettings,
+                        )
+                    },
+                    Modifier.weight(1f),
+                    onArrowClick = {
+                        coroutineScope.launch {
+                            if (scaffoldState.bottomSheetState.isExpanded) scaffoldState.bottomSheetState.collapse()
+                            else scaffoldState.bottomSheetState.expand()
+                        }
+                    },
+                    scaffoldState = scaffoldState,
+                    drawerGesturesEnabled = bottomActionsType == BottomActionsType.Collapsed,
+                    sheetPeekHeight = if (bottomActionsType == BottomActionsType.Collapsed) 40.dp else 0.dp,
+                    backgroundColor = Color.Transparent,
+                ) {
+                    Column(Modifier.padding(it)) {
+                        NavigationContentView(childStack, Modifier.weight(1f))
+                        if (bottomActionsType == BottomActionsType.Default) {
+                            BottomActionsView(
+                                Modifier
+                                    .padding(bottom = 16.dp)
+                                    .padding(horizontal = 16.dp),
+                                onClickSettings = onClickSettings,
+                            )
+                        }
+                    }
+                }
+
                 if (menuType == MenuType.Bottom) {
                     HorizontalMainMenuContent(
                         state.menuItems,
@@ -151,6 +180,18 @@ private fun VerticalMainMenuContent(
             onClickItem = onSelectMenuItem,
             isShowTitle = isShowTitle
         )
+    }
+}
+
+private enum class BottomActionsType {
+    Default,
+    Collapsed;
+
+    companion object {
+        fun fromConfiguration(configuration: Configuration) = when (configuration.isTablet) {
+            true -> Default
+            false -> Collapsed
+        }
     }
 }
 

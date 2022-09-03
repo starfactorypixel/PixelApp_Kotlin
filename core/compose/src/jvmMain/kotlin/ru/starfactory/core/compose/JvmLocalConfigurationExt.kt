@@ -29,9 +29,9 @@ actual fun LocalConfigurationHolder(content: @Composable () -> Unit) {
         screenWidth = screenWidth,
         screenHeight = screenHeight,
         orientation = if (screenWidth > screenHeight) {
-            Configuration.Orientation.PORTRAIT
-        } else {
             Configuration.Orientation.LANDSCAPE
+        } else {
+            Configuration.Orientation.PORTRAIT
         }
     )
 

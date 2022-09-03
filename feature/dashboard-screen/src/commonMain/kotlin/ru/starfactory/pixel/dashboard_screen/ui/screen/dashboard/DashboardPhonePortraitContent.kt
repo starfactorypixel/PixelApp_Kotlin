@@ -20,13 +20,18 @@ internal fun DashboardPhonePortraitContent(
     Column(
         Modifier
             .fillMaxSize()
-            .padding(32.dp)
+            .padding(horizontal = 16.dp, vertical = 32.dp)
     ) {
         CurrentSpeedView(
             state.primaryState.speed,
         )
         StatisticsView(
             batteryCharge = state.primaryState.batteryCharge.toInt(),
+            Modifier.padding(top = 16.dp)
+        )
+        FastActionsView(
+            Modifier
+                .padding(top = 16.dp)
         )
     }
 }

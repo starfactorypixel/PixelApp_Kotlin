@@ -26,7 +26,6 @@ internal fun VerticalMainMenuContent(
     isSubtractWindowPaddings: Boolean = true,
 ) {
     val localDensity = LocalDensity.current
-
     val windowInsets = WindowInsets.systemBars.asPaddingValues()
 
     Row(modifier = Modifier.fillMaxHeight()) {
@@ -34,8 +33,6 @@ internal fun VerticalMainMenuContent(
             items = items.toPMenuItem(),
             Modifier
                 .onGloballyPositioned { coordinates ->
-
-
                     with(localDensity) {
                         val offset = coordinates.positionInRoot()
                         val size = coordinates.size

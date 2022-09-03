@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun CurrentSpeedView(
     speed: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier) {
         Text(

@@ -3,7 +3,6 @@ package ru.starfactory.core.serial.bluetooth.domain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.starfactory.core.bluetooth.domain.BluetoothInteractor
-import ru.starfactory.core.serial.domain.SerialDeviceInfo
 import ru.starfactory.core.serial.domain.SerialDeviceType
 import ru.starfactory.core.serial.domain.SerialDevicesProvider
 

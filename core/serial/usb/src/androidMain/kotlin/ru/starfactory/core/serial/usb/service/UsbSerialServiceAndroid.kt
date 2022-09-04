@@ -2,7 +2,7 @@ package ru.starfactory.core.serial.usb.service
 
 import com.hoho.android.usbserial.driver.CdcAcmSerialDriver
 import com.hoho.android.usbserial.driver.UsbSerialProber
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.starfactory.core.coroutines.shareDefault
@@ -11,25 +11,25 @@ import ru.starfactory.core.serial.usb.domian.UsbSerialDeviceInfo
 import ru.starfactory.core.usb.service.UsbServiceAndroid
 import android.hardware.usb.UsbDevice as UsbDeviceAndroid
 
-
 internal interface UsbSerialServiceAndroid : UsbSerialService {
 //    fun observeUsbSerialDevices(): Flow<Map<String, UsbSerialDeviceAndroid>>
 //    suspend fun getUsbSerialDevices(): Map<String, UsbSerialDeviceAndroid>
 //    suspend fun findUsbSerialDeviceByName(deviceName: String): UsbSerialDeviceAndroid?
 //    suspend fun connect(deviceName: String, block: suspend CoroutineScope.(connection: UsbSerialConnection) -> Unit)
 //
-////    interface UsbSerialConnection {
-////        suspend fun send(byteArray: ByteArray)
-////        suspend fun receive(byteArray: ByteArray, timeout: Int): Int
-////    }
+// //    interface UsbSerialConnection {
+// //        suspend fun send(byteArray: ByteArray)
+// //        suspend fun receive(byteArray: ByteArray, timeout: Int): Int
+// //    }
 }
 
 internal class UsbSerialServiceAndroidImpl(
     usbService: UsbServiceAndroid,
     private val scope: CoroutineScope,
 ) : UsbSerialServiceAndroid {
-    private val usbManager = usbService.getRawManager()
+    // private val usbManager = usbService.getRawManager()
 
+    @Suppress("MagicNumber")
     private val probeTable = UsbSerialProber.getDefaultProbeTable().apply {
         addProduct(0x2A03, 0x43, CdcAcmSerialDriver::class.java) // Arduino Uno
     }
@@ -40,7 +40,7 @@ internal class UsbSerialServiceAndroidImpl(
         usbService.observeUsbDevicesAndroid()
             .map { devices ->
                 devices
-                    .filter { (_,device)->device.checkDriver() }
+                    .filter { (_, device) -> device.checkDriver() }
                     .mapValues { (_, deviceInfo) -> deviceInfo.toSerialDeviceInfo() }
             }
             .shareDefault(scope)
@@ -113,40 +113,40 @@ internal class UsbSerialServiceAndroidImpl(
         )
     }
 //
-////    fun test() {
-////        GlobalScope.launch {
-////            observeUsbSerialDevices().collectLatest {
-////                Log.i(TAG, "Devices: $it")
-////            }
-////            val probeTable = ProbeTable().apply {
-////                addProduct(0x2a03, 0x43, CdcAcmSerialDriver::class.java)
-////            }
-////
-////            // Find all available drivers from attached devices.
-////            val availableDrivers = UsbSerialProber(probeTable).findAllDrivers(usbManager)
-////            if (availableDrivers.isEmpty()) {
-////                return@launch
-////            }
-////
-////
-////            // Open a connection to the first available driver.
-////            val driver = availableDrivers[0]
-////            usbService.requestPermission(driver.device)
-////            val connection = usbManager.openDevice(driver.device)
-////                ?: // add UsbManager.requestPermission(driver.getDevice(), ..) handling here
-////                return@launch
-////
-////            val port = driver.ports[0] // Most devices have just one port (port 0)
-////
-////            port.open(connection)
-////            port.setParameters(9600, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE)
-////
-////
-////            val buffer = ByteArray(1024)
-////            while (true) {
-////                val readed = port.read(buffer, 500)
-////                Log.i(TAG, String(buffer, offset = 0, length = readed))
-////            }
-////        }
-////    }
+// //    fun test() {
+// //        GlobalScope.launch {
+// //            observeUsbSerialDevices().collectLatest {
+// //                Log.i(TAG, "Devices: $it")
+// //            }
+// //            val probeTable = ProbeTable().apply {
+// //                addProduct(0x2a03, 0x43, CdcAcmSerialDriver::class.java)
+// //            }
+// //
+// //            // Find all available drivers from attached devices.
+// //            val availableDrivers = UsbSerialProber(probeTable).findAllDrivers(usbManager)
+// //            if (availableDrivers.isEmpty()) {
+// //                return@launch
+// //            }
+// //
+// //
+// //            // Open a connection to the first available driver.
+// //            val driver = availableDrivers[0]
+// //            usbService.requestPermission(driver.device)
+// //            val connection = usbManager.openDevice(driver.device)
+// //                ?: // add UsbManager.requestPermission(driver.getDevice(), ..) handling here
+// //                return@launch
+// //
+// //            val port = driver.ports[0] // Most devices have just one port (port 0)
+// //
+// //            port.open(connection)
+// //            port.setParameters(9600, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE)
+// //
+// //
+// //            val buffer = ByteArray(1024)
+// //            while (true) {
+// //                val readed = port.read(buffer, 500)
+// //                Log.i(TAG, String(buffer, offset = 0, length = readed))
+// //            }
+// //        }
+// //    }
 }

@@ -1,7 +1,6 @@
 package ru.starfactory.core.serial.usb.domian
 
 import kotlinx.coroutines.flow.Flow
-import ru.starfactory.core.serial.domain.SerialDeviceType
 import ru.starfactory.core.serial.domain.SerialDevicesProvider
 import ru.starfactory.core.serial.usb.service.UsbSerialService
 

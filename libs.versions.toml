@@ -25,6 +25,7 @@ jb-compose = "1.2.0-alpha01-dev770"
 
 gradlePlugins-android = "7.2.0"
 gradlePlugins-checkUpdates = "0.39.0"
+gradlePlugins-detekt = "1.19.0"
 
 
 [libraries]
@@ -35,6 +36,7 @@ gradlePlugins-jb-compose = { module = "org.jetbrains.compose:compose-gradle-plug
 gradlePlugins-checkUpdates = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradlePlugins-checkUpdates" }
 gradlePlugins-google-services = { module = "com.google.gms:google-services", version.ref = "google-serivces" }
 gradlePlugins-google-firebase-crashlytic = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "google-firebase-crashlytic" }
+gradlePlugins-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "gradlePlugins-detekt" }
 
 # Kotlin
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
@@ -67,3 +69,4 @@ decompose-android = { module = "com.arkivanov.decompose:extensions-android", ver
 serial-usb = { module = "com.github.mik3y:usb-serial-for-android", version.ref = "serial-usb" }
 multiplatformSettings-core = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 multiplatformSettings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "gradlePlugins-detekt" }

@@ -1,7 +1,9 @@
 package ru.starfactory.core.serial.domain
 
-interface SerialDevice {
-    val id: SerialDeviceId
-    val type: SerialDeviceType
-    val name: String
+data class SerialDevice(
+    val providerId: String,
+    val deviceId: String,
+    val info: SerialDeviceInfo
+) {
+    val id: String = "$providerId@$deviceId"
 }

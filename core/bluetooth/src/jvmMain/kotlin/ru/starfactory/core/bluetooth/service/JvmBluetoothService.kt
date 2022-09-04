@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.starfactory.core.bluetooth.domain.BluetoothDevice
 
-class JvmBluetoothService() : BluetoothService {
+class JvmBluetoothService : BluetoothService {
 
     override fun getIsEnabled(): Boolean = false
 

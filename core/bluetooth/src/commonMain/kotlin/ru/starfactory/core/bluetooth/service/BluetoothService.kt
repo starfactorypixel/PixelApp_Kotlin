@@ -2,7 +2,6 @@ package ru.starfactory.core.bluetooth.service
 
 import kotlinx.coroutines.flow.Flow
 import ru.starfactory.core.bluetooth.domain.BluetoothDevice
-import java.util.*
 
 interface BluetoothService {
     fun getIsEnabled(): Boolean

@@ -25,7 +25,7 @@ jb-compose = "1.2.0-alpha01-dev770"
 
 gradlePlugins-android = "7.2.0"
 gradlePlugins-checkUpdates = "0.39.0"
-gradlePlugins-detekt = "1.19.0"
+gradlePlugins-detekt = "1.21.0"
 
 
 [libraries]

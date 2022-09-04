@@ -16,7 +16,7 @@ actual fun LocalConfigurationHolder(content: @Composable () -> Unit) {
             ConfigurationPlatform.ORIENTATION_LANDSCAPE -> Configuration.Orientation.LANDSCAPE
             ConfigurationPlatform.ORIENTATION_PORTRAIT -> Configuration.Orientation.PORTRAIT
             ConfigurationPlatform.ORIENTATION_UNDEFINED -> Configuration.Orientation.PORTRAIT // i'm think this is ok
-            else -> throw RuntimeException("Unexpected orientation = $value")
+            else -> throw IllegalStateException("Unexpected orientation = $value")
         }
     )
 

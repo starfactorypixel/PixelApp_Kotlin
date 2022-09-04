@@ -10,6 +10,7 @@ plugins {
 val libs = the<LibrariesForLibs>()
 
 val detektConfigFile = rootProject.projectDir.resolve("config/detekt").resolve("detekt.yml")
+check(detektConfigFile.isFile)
 
 // Конфигурирем на уровне тасок, а не на уровне плагина, так как таски созданные в ручную
 // не подтягивают дефолтные значения из конфигурации плагина

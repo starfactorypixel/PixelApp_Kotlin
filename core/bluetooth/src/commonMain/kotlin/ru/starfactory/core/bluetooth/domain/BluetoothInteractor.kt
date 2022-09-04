@@ -45,6 +45,7 @@ internal class BluetoothInteractorImpl(
         }
     }
 
-//    override suspend fun connect(address: String, channelId: UUID, block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit) =
+//    override suspend fun connect(address: String, channelId: UUID,
+//    block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit) =
 //        bluetoothService.connect(address, channelId, block)
 }

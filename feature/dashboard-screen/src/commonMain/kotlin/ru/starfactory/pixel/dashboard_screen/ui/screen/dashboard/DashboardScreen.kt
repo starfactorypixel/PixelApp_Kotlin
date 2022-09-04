@@ -1,4 +1,4 @@
-package ru.starfactory.pixel.dashboard_screen.ui.screen
+package ru.starfactory.pixel.dashboard_screen.ui.screen.dashboard
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ComponentContext
@@ -7,8 +7,6 @@ import org.kodein.di.DI
 import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.ScreenInstance
-import ru.starfactory.pixel.dashboard_screen.ui.screen.dashboard.DashboardView
-import ru.starfactory.pixel.dashboard_screen.ui.screen.dashboard.DashboardViewModel
 
 @Parcelize
 object DashboardScreen : Screen {

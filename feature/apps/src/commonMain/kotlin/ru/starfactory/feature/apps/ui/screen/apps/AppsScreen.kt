@@ -1,4 +1,4 @@
-package ru.starfactory.feature.apps.ui.screen
+package ru.starfactory.feature.apps.ui.screen.apps
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ComponentContext
@@ -7,8 +7,6 @@ import org.kodein.di.DI
 import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.ScreenInstance
-import ru.starfactory.feature.apps.ui.screen.apps.AppsView
-import ru.starfactory.feature.apps.ui.screen.apps.AppsViewModel
 
 @Parcelize
 object AppsScreen : Screen {

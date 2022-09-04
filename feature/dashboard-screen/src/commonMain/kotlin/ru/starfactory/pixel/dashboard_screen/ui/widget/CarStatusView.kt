@@ -26,9 +26,13 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.*
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 import ru.starfactory.core.uikit.view.POutlinedFloatingActionButton
-import ru.starfactory.pixel.dashboard_screen.ui.dashboardiconpack.DashboardCar
+import ru.starfactory.pixel.dashboard_screen.ui.icon.DashboardCar
 import kotlin.math.max
 import kotlin.math.min
 
@@ -127,16 +131,16 @@ fun CarStatusView(
 
             canvasPlaceable.place(0, 0)
 
-            startIndicatorsPlaceable.forEachIndexed { i, it ->
+            startIndicatorsPlaceable.forEachIndexed { i, indicatorPlaceable ->
                 val indicator = groupedIndicators[IndicatorPosition.START]!![i]
 
-                val x = max(0, carOffset.x - maxLineWidthPx - it.width)
-                val y = (carOffset.y + carPlaceable.height * indicator.y - it.height / 2f).toInt()
+                val x = max(0, carOffset.x - maxLineWidthPx - indicatorPlaceable.width)
+                val y = (carOffset.y + carPlaceable.height * indicator.y - indicatorPlaceable.height / 2f).toInt()
 
                 canvasDraws += CanvasDrawInfo(
                     lineStart = Offset(
-                        x = x.toFloat() + it.width,
-                        y = y + it.height / 2f,
+                        x = x.toFloat() + indicatorPlaceable.width,
+                        y = y + indicatorPlaceable.height / 2f,
                     ),
                     dot = Offset(
                         x = carOffset.x + carPlaceable.width * indicator.x,
@@ -145,19 +149,19 @@ fun CarStatusView(
                     color = indicator.color
                 )
 
-                it.place(x, y)
+                indicatorPlaceable.place(x, y)
             }
 
-            endIndicatorsPlaceable.forEachIndexed { i, it ->
+            endIndicatorsPlaceable.forEachIndexed { i, indicatorPlaceable ->
                 val indicator = groupedIndicators[IndicatorPosition.END]!![i]
 
-                val x = min(containerSize.width - it.width, carOffset.x + carPlaceable.width + maxLineWidthPx)
-                val y = (carOffset.y + carPlaceable.height * indicator.y - it.height / 2f).toInt()
+                val x = min(containerSize.width - indicatorPlaceable.width, carOffset.x + carPlaceable.width + maxLineWidthPx)
+                val y = (carOffset.y + carPlaceable.height * indicator.y - indicatorPlaceable.height / 2f).toInt()
 
                 canvasDraws += CanvasDrawInfo(
                     lineStart = Offset(
                         x = x.toFloat(),
-                        y = y + it.height / 2f,
+                        y = y + indicatorPlaceable.height / 2f,
                     ),
                     dot = Offset(
                         x = carOffset.x + carPlaceable.width * indicator.x,
@@ -166,14 +170,14 @@ fun CarStatusView(
                     color = indicator.color
                 )
 
-                it.place(x, y)
+                indicatorPlaceable.place(x, y)
             }
 
-            centerIndicatorsPlaceable.forEachIndexed { i, it ->
+            centerIndicatorsPlaceable.forEachIndexed { i, indicatorPlaceable ->
                 val indicator = groupedIndicators[IndicatorPosition.CENTER]!![i]
-                it.place(
-                    x = (carOffset.x + carPlaceable.width * indicator.x - it.width / 2f).toInt(),
-                    y = (carOffset.y + carPlaceable.height * indicator.y - it.height / 2f).toInt(),
+                indicatorPlaceable.place(
+                    x = (carOffset.x + carPlaceable.width * indicator.x - indicatorPlaceable.width / 2f).toInt(),
+                    y = (carOffset.y + carPlaceable.height * indicator.y - indicatorPlaceable.height / 2f).toInt(),
                 )
             }
         }
@@ -188,6 +192,7 @@ private fun CarStatusIndicatorContent(
     fun icon(modifier: Modifier = Modifier) {
         POutlinedFloatingActionButton(
             onClick = {},
+            modifier,
             backgroundColor = indicator.color.copy(alpha = .3f),
             borderStroke = BorderStroke(2.dp, indicator.color)
         ) {
@@ -279,12 +284,13 @@ data class CarStatusIndicator(
     val color: Color,
 )
 
+@Suppress("MagicNumber")
 private val CarStatusIndicator.position: IndicatorPosition
     get() = when (x) {
         in 0f..0.45f -> IndicatorPosition.START
         in 0.45f..0.55f -> IndicatorPosition.CENTER
         in 0.55f..1f -> IndicatorPosition.END
-        else -> throw IllegalStateException("x coordinate must be in range 0..1, x=$x")
+        else -> error("x coordinate must be in range 0..1, x=$x")
     }
 
 private enum class IndicatorPosition {

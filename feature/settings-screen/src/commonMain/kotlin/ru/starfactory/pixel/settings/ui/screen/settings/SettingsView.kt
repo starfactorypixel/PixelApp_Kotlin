@@ -1,11 +1,18 @@
 package ru.starfactory.pixel.settings.ui.screen.settings
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Android
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Colorize
+import androidx.compose.material.icons.filled.Notes
+import androidx.compose.material.icons.filled.Usb
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue

@@ -12,7 +12,7 @@ import ru.starfactory.core.navigation.NavigationType
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.navigation.ui.ScreenInstance
 import ru.starfactory.core.navigation.ui.defaultChildStack
-import ru.starfactory.pixel.dashboard_screen.ui.screen.DashboardScreen
+import ru.starfactory.pixel.dashboard_screen.ui.screen.dashboard.DashboardScreen
 import ru.starfactory.pixel.main_screen.ui.screen.main.MainView
 import ru.starfactory.pixel.main_screen.ui.screen.main.MainViewModel
 

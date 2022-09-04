@@ -8,16 +8,17 @@ import ru.starfactory.pixel.ecu_connection.domain.connection.EcuSourceConnection
 
 internal interface EcuDemoSourceConnectionInteractor : EcuSourceConnectionInteractor
 
+@Suppress("MagicNumber")
 internal class EcuDemoSourceConnectionInteractorImpl : EcuDemoSourceConnectionInteractor {
     override fun observePrimaryState(): Flow<EcuPrimaryState> {
         return flow {
 
             while (true) {
-                (0..99).forEach {
+                for (it in 0..99) {
                     emit(EcuPrimaryState(it, it.toFloat()))
                     delay(100)
                 }
-                (99 downTo 0).forEach {
+                for (it in 99 downTo 0) {
                     emit(EcuPrimaryState(it, it.toFloat()))
                     delay(100)
                 }

@@ -1,7 +1,10 @@
 package ru.starfactory.pixel.ecu_connection.domain.source
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import ru.starfactory.core.coroutines.shareDefault
 import ru.starfactory.core.serial.domain.SerialDeviceType
 import ru.starfactory.core.serial.domain.SerialInteractor

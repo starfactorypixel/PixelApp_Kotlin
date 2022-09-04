@@ -2,7 +2,7 @@ package ru.starfactory.core.serial.usb.service
 
 import com.hoho.android.usbserial.driver.CdcAcmSerialDriver
 import com.hoho.android.usbserial.driver.UsbSerialProber
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.starfactory.core.coroutines.shareDefault
@@ -28,8 +28,9 @@ internal class UsbSerialServiceAndroidImpl(
     usbService: UsbServiceAndroid,
     private val scope: CoroutineScope,
 ) : UsbSerialServiceAndroid {
-    private val usbManager = usbService.getRawManager()
+//    private val usbManager = usbService.getRawManager()
 
+    @Suppress("MagicNumber")
     private val probeTable = UsbSerialProber.getDefaultProbeTable().apply {
         addProduct(0x2A03, 0x43, CdcAcmSerialDriver::class.java) // Arduino Uno
     }

@@ -14,3 +14,6 @@ naming:
   FunctionNaming:
     # Allow start function name from upper case to use in compose
     functionPattern: '([A-z][a-zA-Z0-9]*)|(`.*`)'
+style:
+  MaxLineLength:
+    maxLineLength: 140

@@ -6,10 +6,8 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.starfactory.core.coroutines.shareDefault
-import ru.starfactory.core.serial.domain.SerialDevice
-import ru.starfactory.core.serial.domain.SerialDeviceId
 import ru.starfactory.core.serial.domain.SerialDeviceType
-import ru.starfactory.core.serial.usb.domian.UsbSerialDevice
+import ru.starfactory.core.serial.usb.domian.UsbSerialDeviceInfo
 import ru.starfactory.core.usb.service.UsbServiceAndroid
 import android.hardware.usb.UsbDevice as UsbDeviceAndroid
 
@@ -38,13 +36,16 @@ internal class UsbSerialServiceAndroidImpl(
 
     private val prober = UsbSerialProber(probeTable)
 
-    private val usbSerialDevicesObservable: Flow<List<UsbSerialDevice>> =
+    private val usbSerialDevicesObservableInfo: Flow<Map<String, UsbSerialDeviceInfo>> =
         usbService.observeUsbDevicesAndroid()
-            .map { devices -> devices.values }
-            .map { devices -> devices.toSerialDevices() }
+            .map { devices ->
+                devices
+                    .filter { (_,device)->device.checkDriver() }
+                    .mapValues { (_, deviceInfo) -> deviceInfo.toSerialDeviceInfo() }
+            }
             .shareDefault(scope)
 
-    override fun observeUsbSerialDevices(): Flow<List<UsbSerialDevice>> = usbSerialDevicesObservable
+    override fun observeUsbSerialDevices(): Flow<Map<String, UsbSerialDeviceInfo>> = usbSerialDevicesObservableInfo
 
     //            .map { devices -> devices.toUsbSerialDevices() }
 //            .shareDefault(scope)
@@ -100,19 +101,17 @@ internal class UsbSerialServiceAndroidImpl(
 //            }
 //        }
 //
-    private fun Collection<UsbDeviceAndroid>.toSerialDevices(): List<UsbSerialDevice> =
-        mapNotNull {
-            val driver = prober.probeDevice(it)
-            if (driver != null) {
-                UsbSerialDevice(
-                    id = SerialDeviceId(SerialDeviceType.USB, it.deviceId.toString()),
-                    type = SerialDeviceType.USB,
-                    name = it.deviceName,
-                )
-            } else {
-                null
-            }
-        }
+
+    private fun UsbDeviceAndroid.checkDriver(): Boolean {
+        return prober.probeDevice(this) != null
+    }
+
+    private fun UsbDeviceAndroid.toSerialDeviceInfo(): UsbSerialDeviceInfo {
+        return UsbSerialDeviceInfo(
+            type = SerialDeviceType.USB,
+            name = this.deviceName,
+        )
+    }
 //
 ////    fun test() {
 ////        GlobalScope.launch {

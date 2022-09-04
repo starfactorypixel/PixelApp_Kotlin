@@ -8,11 +8,11 @@ import ru.starfactory.core.di.i
 import ru.starfactory.core.key_value_storage.coreKeyValueStorage
 import ru.starfactory.core.permission.corePermission
 import ru.starfactory.core.serial.bluetooth.coreSerialBluetooth
-import ru.starfactory.core.serial.bluetooth.domain.BluetoothSerialInteractor
+import ru.starfactory.core.serial.bluetooth.domain.BluetoothSerialDevicesProvider
 import ru.starfactory.core.serial.coreSerial
-import ru.starfactory.core.serial.domain.SourceTypeSerialInteractor
+import ru.starfactory.core.serial.domain.SerialDevicesProvider
 import ru.starfactory.core.serial.usb.coreSerialUsb
-import ru.starfactory.core.serial.usb.domian.UsbSerialInteractor
+import ru.starfactory.core.serial.usb.domian.UsbSerialDevicesProvider
 import ru.starfactory.core.usb.coreUsb
 import ru.starfactory.feature.apps.featureApps
 import ru.starfactory.pixel.dashboard_screen.featureDashboardScreen
@@ -43,8 +43,8 @@ fun Modules.mainCommonModule() = DI.Module("main-common-module") {
     importOnce(Modules.featureTheming())
 
     // Bindings
-    inSet<SourceTypeSerialInteractor> { provider { i<UsbSerialInteractor>() } }
-    inSet<SourceTypeSerialInteractor> { provider { i<BluetoothSerialInteractor>() } }
+    inSet<Pair<String, SerialDevicesProvider>> { provider { Pair("usb", i<UsbSerialDevicesProvider>()) } }
+    inSet<Pair<String, SerialDevicesProvider>> { provider { Pair("bluetooth", i<BluetoothSerialDevicesProvider>()) } }
 
     // View Models
     bindProvider { RootViewModel() }

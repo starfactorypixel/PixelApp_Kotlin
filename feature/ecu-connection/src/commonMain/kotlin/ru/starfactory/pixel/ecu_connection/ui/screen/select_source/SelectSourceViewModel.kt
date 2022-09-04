@@ -2,19 +2,16 @@ package ru.starfactory.pixel.ecu_connection.ui.screen.select_source
 
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ru.starfactory.core.decompose.view_model.ViewModel
-import ru.starfactory.core.permission.domain.PermissionInteractor
-import ru.starfactory.core.permission.service.Permission
-import ru.starfactory.core.serial.bluetooth.domain.BluetoothSerialInteractor
+import ru.starfactory.core.serial.bluetooth.domain.BluetoothSerialDevicesProvider
 import ru.starfactory.pixel.ecu_connection.domain.source.EcuSourceInteractor
 import ru.starfactory.pixel.ecu_connection.domain.source.Source
 
 internal class SelectSourceViewModel(
     private val ecuSourceInteractor: EcuSourceInteractor,
-    private val bluetoothSerialInteractor: BluetoothSerialInteractor,
+    private val bluetoothSerialInteractor: BluetoothSerialDevicesProvider,
 ) : ViewModel() {
     val state = combine(
         ecuSourceInteractor.observeSources(),

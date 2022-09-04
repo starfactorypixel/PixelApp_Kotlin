@@ -1,33 +1,28 @@
 package ru.starfactory.core.serial.bluetooth.domain
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import ru.starfactory.core.bluetooth.domain.BluetoothInteractor
-import ru.starfactory.core.serial.domain.SerialDevice
-import ru.starfactory.core.serial.domain.SerialDeviceId
+import ru.starfactory.core.serial.domain.SerialDeviceInfo
 import ru.starfactory.core.serial.domain.SerialDeviceType
-import ru.starfactory.core.serial.domain.SourceTypeSerialInteractor
+import ru.starfactory.core.serial.domain.SerialDevicesProvider
 
-interface BluetoothSerialInteractor : SourceTypeSerialInteractor {
+interface BluetoothSerialDevicesProvider : SerialDevicesProvider {
     fun isConnectPermissionGranted(): Boolean
     fun observeIsConnectPermissionGranted(): Flow<Boolean>
     suspend fun requestConnectPermission(): Boolean
-    override fun observeSerialDevices(): Flow<List<BluetoothSerialDevice>>
+    override fun observeSerialDevicesInfo(): Flow<Map<String, BluetoothSerialDeviceInfo>>
 }
 
-internal class BluetoothSerialInteractorImpl(
+internal class BluetoothSerialDevicesProviderImpl(
     private val bluetoothInteractor: BluetoothInteractor
-) : BluetoothSerialInteractor {
-    override val sourceType: SerialDeviceType = SerialDeviceType.BLUETOOTH
+) : BluetoothSerialDevicesProvider {
 
-    override fun observeSerialDevices(): Flow<List<BluetoothSerialDevice>> {
+    override fun observeSerialDevicesInfo(): Flow<Map<String, BluetoothSerialDeviceInfo>> {
         return bluetoothInteractor.observeBoundedDevices()
             .map { devices ->
-                devices.map { device ->
-                    BluetoothSerialDevice(
-                        SerialDeviceId(SerialDeviceType.BLUETOOTH, device.address),
+                devices.associate { device ->
+                    device.address to BluetoothSerialDeviceInfo(
                         SerialDeviceType.BLUETOOTH,
                         name = device.name,
                     )

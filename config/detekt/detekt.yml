@@ -1,0 +1,26 @@
+# Default config location
+# https://github.com/detekt/detekt/blob/master/detekt-core/src/main/resources/default-detekt-config.yml
+
+complexity:
+  LongParameterList:
+    active: false
+  LongMethod:
+    active: false
+  TooManyFunctions:
+    active: false
+naming:
+  PackageNaming:
+    packagePattern: '[a-z]+(\.[a-z][A-Za-z0-9_]*)*'
+  FunctionNaming:
+    # Allow start function name from upper case to use in compose
+    functionPattern: '([A-z][a-zA-Z0-9]*)|(`.*`)'
+
+formatting:
+  MaximumLineLength:
+    maxLineLength: 140
+
+style:
+  MaxLineLength:
+    maxLineLength: 140
+  ReturnCount:
+    active: false

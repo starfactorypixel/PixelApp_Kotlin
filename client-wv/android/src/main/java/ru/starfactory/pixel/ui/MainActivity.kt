@@ -15,6 +15,7 @@ class MainActivity : ComponentActivity() {
         val wv = findViewById<WebView>(R.id.web_view).apply {
             settings.javaScriptEnabled = true
         }
-        wv.loadUrl("localhost:3000") //TODO Sumin: Надо припилить какой-то параметр типа env, чтобы можно было подкидывать ссылку без изменения исходников
+        // TODO Sumin: Надо припилить какой-то параметр типа env, чтобы можно было подкидывать ссылку без изменения исходников
+        wv.loadUrl("localhost:3000")
     }
 }

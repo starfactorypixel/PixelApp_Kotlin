@@ -2,12 +2,15 @@ package ru.starfactory.feature.apps.ui.screen.apps
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import ru.starfactory.core.apps.domain.AppInfo
-import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsets
 
 @Composable
@@ -33,7 +35,6 @@ private fun AppsContent(state: AppsViewState) {
         is AppsViewState.ListApps -> ListAppsContent(state)
         AppsViewState.Loading -> Unit // Loading is very fast
     }
-
 }
 
 @Composable

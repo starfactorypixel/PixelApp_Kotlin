@@ -1,3 +1,4 @@
+@file:Suppress("NoWildcardImports", "WildcardImport") // TODO Sumin
 package ru.starfactory.core.navigation.ui
 
 import androidx.compose.runtime.Composable

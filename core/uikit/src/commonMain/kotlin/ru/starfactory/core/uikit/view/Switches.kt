@@ -5,7 +5,9 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -13,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-//TODO Sumin: вынести все параметры в конструктор
+// TODO Sumin: вынести все параметры в конструктор
 fun POutlinedSwitch(
     isSelected: Boolean,
     onClick: () -> Unit,
@@ -38,4 +40,3 @@ fun POutlinedSwitch(
         content = content
     )
 }
-

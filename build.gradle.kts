@@ -2,6 +2,14 @@ plugins {
     id("ru.starfactory.convention.check-updates")
 }
 
+allprojects {
+    afterEvaluate { // TODO Sumin: поправить этот костыль
+        apply {
+            plugin("ru.starfactory.convention.analyze.detekt")
+        }
+    }
+}
+
 tasks.register<Delete>("clean") {
     delete(rootProject.buildDir)
 }

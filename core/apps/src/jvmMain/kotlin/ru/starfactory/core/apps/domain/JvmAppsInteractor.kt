@@ -8,7 +8,6 @@ internal class JvmAppsInteractor : AppsInteractor {
     }
 
     private fun error(): Nothing {
-        throw RuntimeException("AppsInteractor not supported for jvm")
+        throw NotImplementedError("AppsInteractor not supported for jvm")
     }
 }
-

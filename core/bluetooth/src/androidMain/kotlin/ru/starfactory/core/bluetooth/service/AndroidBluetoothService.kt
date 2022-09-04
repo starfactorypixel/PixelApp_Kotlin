@@ -6,10 +6,8 @@ import android.bluetooth.BluetoothManager
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import ru.starfactory.core.bluetooth.domain.BluetoothDevice
 import android.bluetooth.BluetoothDevice as AndroidBluetoothDevice
-
 
 class AndroidBluetoothService(context: Context) : BluetoothService {
     private val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager

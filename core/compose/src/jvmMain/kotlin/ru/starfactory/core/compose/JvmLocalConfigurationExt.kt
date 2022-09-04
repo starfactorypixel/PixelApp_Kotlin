@@ -3,8 +3,6 @@ package ru.starfactory.core.compose
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.ui.awt.ComposeWindow
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.window.FrameWindowScope
 import androidx.compose.ui.window.WindowState
 
@@ -37,4 +35,3 @@ actual fun LocalConfigurationHolder(content: @Composable () -> Unit) {
 
     CompositionLocalProvider(LocalConfiguration provides configuration, content = content)
 }
-

@@ -1,4 +1,4 @@
-package ru.starfactory.pixel.dashboard_screen.ui.dashboardiconpack
+package ru.starfactory.pixel.dashboard_screen.ui.icon
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.ui.graphics.Color
@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.vector.ImageVector.Builder
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
+@Suppress("MagicNumber")
 internal val Icons.DashboardCar: ImageVector
     get() {
         if (_dashboardCar != null) {
@@ -155,7 +156,7 @@ internal val Icons.DashboardCar: ImageVector
             }
         }
             .build()
-        return `_dashboardCar`!!
+        return _dashboardCar!!
     }
 
 private var _dashboardCar: ImageVector? = null

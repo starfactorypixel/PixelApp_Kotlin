@@ -1,6 +1,9 @@
 package ru.starfactory.pixel
 
-import org.kodein.di.*
+import org.kodein.di.DI
+import org.kodein.di.bindProvider
+import org.kodein.di.inSet
+import org.kodein.di.provider
 import ru.starfactory.core.apps.coreApps
 import ru.starfactory.core.bluetooth.coreBluetooth
 import ru.starfactory.core.di.Modules

@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.drawable.toBitmap
 
-
 internal class AndroidAppsInteractor(context: Context) : AppsInteractor {
     private val pm: PackageManager = context.packageManager
     override val isAvailable: Boolean = true
@@ -35,4 +34,3 @@ internal class AndroidAppsInteractor(context: Context) : AppsInteractor {
             .toList()
     }
 }
-

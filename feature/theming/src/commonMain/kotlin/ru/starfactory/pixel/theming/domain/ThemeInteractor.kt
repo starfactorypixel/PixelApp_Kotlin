@@ -3,7 +3,6 @@ package ru.starfactory.pixel.theming.domain
 import kotlinx.coroutines.flow.Flow
 import ru.starfactory.pixel.theming.repository.ThemeRepository
 
-
 interface ThemeInteractor {
     fun observeCurrentTheme(): Flow<Theme>
     suspend fun setCurrentTheme(theme: Theme)

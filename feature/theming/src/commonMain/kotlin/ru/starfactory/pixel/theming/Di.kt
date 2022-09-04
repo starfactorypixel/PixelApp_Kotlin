@@ -1,6 +1,8 @@
 package ru.starfactory.pixel.theming
 
-import org.kodein.di.*
+import org.kodein.di.DI
+import org.kodein.di.bindProvider
+import org.kodein.di.bindSingleton
 import ru.starfactory.core.di.Modules
 import ru.starfactory.core.di.i
 import ru.starfactory.pixel.theming.domain.ThemeInteractor

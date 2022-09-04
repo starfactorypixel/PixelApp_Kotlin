@@ -4,7 +4,16 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -72,7 +81,7 @@ private fun ItemIconContent(
     isFirst: Boolean,
     isLast: Boolean,
 ) {
-    val targetColor = if (isSelected) Color(0xFF07AFD4) else Color.Transparent
+    val targetColor = if (isSelected) PixelTheme.colors.primary else Color.Transparent
     val backgroundColor by animateColorAsState(targetColor)
 
     val topPadding = 12.dp + if (isFirst) ADDITIONAL_PADDING else 0.dp
@@ -91,7 +100,7 @@ private fun ItemIconContent(
 
 @Composable
 private fun ColumnScope.ItemDescriptionContent(text: String, isSelected: Boolean, onClickItem: () -> Unit) {
-    val targetColor = if (isSelected) Color(0xFF07AFD4) else MaterialTheme.colors.onSurface
+    val targetColor = if (isSelected) PixelTheme.colors.primary else MaterialTheme.colors.onSurface
     val textColor by animateColorAsState(targetColor)
     val interactionSource = remember { MutableInteractionSource() }
     Row(
@@ -109,6 +118,5 @@ private fun ColumnScope.ItemDescriptionContent(text: String, isSelected: Boolean
         )
     }
 }
-
 
 internal data class PVerticalMenuItem<ID>(val id: ID, val icon: ImageVector, val text: String)

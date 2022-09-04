@@ -1,13 +1,16 @@
 package ru.starfactory.core.uikit.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.*
+import androidx.compose.material.Colors
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Shapes
+import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 
-
 @Composable
+@Suppress("UnusedPrivateMember") // TODO Sumin
 fun PixelTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
 
 //    val colors = if (darkTheme) {

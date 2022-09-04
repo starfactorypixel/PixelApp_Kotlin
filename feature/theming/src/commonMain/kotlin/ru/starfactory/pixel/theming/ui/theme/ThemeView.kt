@@ -4,8 +4,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import ru.starfactory.core.decompose.view_model.ViewModel
-import ru.starfactory.core.decompose.view_model.decomposeViewModel
 import ru.starfactory.core.uikit.theme.PixelTheme
 import ru.starfactory.pixel.theming.domain.Theme
 

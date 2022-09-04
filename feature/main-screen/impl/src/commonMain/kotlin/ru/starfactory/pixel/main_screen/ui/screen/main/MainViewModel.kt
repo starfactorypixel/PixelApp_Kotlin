@@ -9,8 +9,8 @@ import kotlinx.coroutines.launch
 import ru.starfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.feature.apps.domain.AppsFeatureAvailabilityInteractor
-import ru.starfactory.feature.apps.ui.screen.AppsScreen
-import ru.starfactory.pixel.dashboard_screen.ui.screen.DashboardScreen
+import ru.starfactory.feature.apps.ui.screen.apps.AppsScreen
+import ru.starfactory.pixel.dashboard_screen.ui.screen.dashboard.DashboardScreen
 import ru.starfactory.pixel.main_screen.ui.screen.ChargingScreen
 import ru.starfactory.pixel.main_screen.ui.screen.NavigatorScreen
 import ru.starfactory.pixel.settings.ui.screen.settings.SettingsScreen

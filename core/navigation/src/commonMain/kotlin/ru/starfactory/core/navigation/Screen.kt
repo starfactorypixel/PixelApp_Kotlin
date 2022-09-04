@@ -1,6 +1,5 @@
 package ru.starfactory.core.navigation
 
-import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.parcelable.Parcelable
 import org.kodein.di.DI

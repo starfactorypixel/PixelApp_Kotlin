@@ -28,5 +28,4 @@ internal class ThemeRepositoryImpl(keyValueStorageService: KeyValueStorageServic
     companion object {
         private const val THEME_KEY = "theme"
     }
-
 }

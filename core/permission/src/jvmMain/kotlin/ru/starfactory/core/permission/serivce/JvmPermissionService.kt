@@ -14,5 +14,4 @@ internal class JvmPermissionService : PermissionService {
     override suspend fun requestPermission(permission: Permission): Boolean {
         return true
     }
-
 }

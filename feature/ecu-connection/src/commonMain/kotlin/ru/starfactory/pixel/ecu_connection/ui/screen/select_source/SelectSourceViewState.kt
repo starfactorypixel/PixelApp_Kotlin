@@ -13,7 +13,6 @@ internal sealed class SelectSourceViewState {
         val isBluetoothPermissionGranted: Boolean,
     ) : SelectSourceViewState()
 
-
     @Immutable
     data class Source(
         val type: SourceType,

@@ -7,9 +7,20 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.BottomSheetScaffoldState
+import androidx.compose.material.BottomSheetValue
+import androidx.compose.material.DrawerDefaults
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FabPosition
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.contentColorFor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +31,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ru.starfactory.core.uikit.theme.PixelTheme
+
+private const val HALF_OF_FULL_CIRCLE = 180f
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -35,7 +48,7 @@ fun PArrowBottomSheetScaffold(
                 .run { if (onArrowClick != null) clickable { onArrowClick() } else this }
                 .padding(8.dp)
                 .align(Alignment.CenterHorizontally)
-                .rotate(progress * 180f)
+                .rotate(progress * HALF_OF_FULL_CIRCLE)
         )
     },
     scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(),
@@ -91,7 +104,6 @@ fun PArrowBottomSheetScaffold(
     )
 }
 
-
 @OptIn(ExperimentalMaterialApi::class)
 val BottomSheetScaffoldState.currentFraction: Float
     get() {
@@ -106,6 +118,6 @@ val BottomSheetScaffoldState.currentFraction: Float
             targetValue == BottomSheetValue.Collapsed -> 0f
             targetValue == BottomSheetValue.Expanded -> 1f
 
-            else -> throw IllegalStateException()
+            else -> error("Unreached code")
         }
     }

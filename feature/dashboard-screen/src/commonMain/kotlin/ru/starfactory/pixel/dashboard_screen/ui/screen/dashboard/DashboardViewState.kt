@@ -6,4 +6,3 @@ internal sealed class DashboardViewState {
     object Loading : DashboardViewState()
     data class ShowData(val primaryState: EcuPrimaryState) : DashboardViewState()
 }
-

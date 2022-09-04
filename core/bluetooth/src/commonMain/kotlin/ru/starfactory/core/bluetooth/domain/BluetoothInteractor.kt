@@ -1,7 +1,6 @@
 package ru.starfactory.core.bluetooth.domain
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import ru.starfactory.core.bluetooth.service.BluetoothService
@@ -16,7 +15,7 @@ interface BluetoothInteractor {
     fun getBoundedDevices(): List<BluetoothDevice>
     fun observeBoundedDevices(): Flow<List<BluetoothDevice>>
 
-    //suspend fun connect(address: String, channelId: UUID, block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit)
+    // suspend fun connect(address: String, channelId: UUID, block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit)
 }
 
 internal class BluetoothInteractorImpl(
@@ -46,6 +45,7 @@ internal class BluetoothInteractorImpl(
         }
     }
 
-//    override suspend fun connect(address: String, channelId: UUID, block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit) =
+//    override suspend fun connect(address: String, channelId: UUID,
+//    block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit) =
 //        bluetoothService.connect(address, channelId, block)
 }

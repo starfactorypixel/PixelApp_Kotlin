@@ -1,6 +1,10 @@
 package ru.starfactory.pixel.main_screen.ui.screen.main
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
@@ -36,11 +40,13 @@ internal fun VerticalMainMenuContent(
                     with(localDensity) {
                         val offset = coordinates.positionInRoot()
                         val size = coordinates.size
+
+                        val x = offset.x.toDp() - if (isSubtractWindowPaddings)
+                            windowInsets.calculateLeftPadding(LayoutDirection.Ltr) else 0.dp
+                        val y = offset.y.toDp() - if (isSubtractWindowPaddings) windowInsets.calculateTopPadding() else 0.dp
+
                         mainMenuInsets.value = MainMenuInsets(
-                            DpOffset(
-                                x = offset.x.toDp() - if (isSubtractWindowPaddings) windowInsets.calculateLeftPadding(LayoutDirection.Ltr) else 0.dp,
-                                y = offset.y.toDp() - if (isSubtractWindowPaddings) windowInsets.calculateTopPadding() else 0.dp
-                            ),
+                            DpOffset(x, y),
                             DpSize(size.width.toDp(), size.height.toDp()),
                             isPositioned = true
                         )

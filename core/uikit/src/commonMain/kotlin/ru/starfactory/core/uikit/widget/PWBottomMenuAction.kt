@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import ru.starfactory.core.uikit.theme.DEFAULT_CONTENT_ALPHA
 import ru.starfactory.core.uikit.theme.PixelTheme
 import ru.starfactory.core.uikit.view.POutlinedFloatingActionButton
 
@@ -27,8 +28,7 @@ fun PWBottomMenuAction(
         POutlinedFloatingActionButton(
             onClick = onClick,
             Modifier.align(Alignment.CenterHorizontally),
-            // TODO Sumin вынести альфу в константы
-            backgroundColor = borderColor.copy(.15f),
+            backgroundColor = borderColor.copy(DEFAULT_CONTENT_ALPHA),
             borderStroke = BorderStroke(2.dp, borderColor),
         ) {
             Icon(icon, null, Modifier.size(32.dp))

@@ -1,5 +1,6 @@
 package ru.starfactory.core.logger
 
+@Suppress("MemberNameEqualsClassName")
 object Log {
 
     fun i(tag: String, message: String) = log(LogLevel.INFO, tag) { message }

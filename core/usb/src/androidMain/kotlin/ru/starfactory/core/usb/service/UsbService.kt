@@ -8,7 +8,13 @@ import android.hardware.usb.UsbManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import ru.starfactory.core.coroutines.observeBroadcastIntents
 import ru.starfactory.core.coroutines.shareDefault
 import ru.starfactory.core.logger.Log

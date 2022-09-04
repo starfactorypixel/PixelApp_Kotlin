@@ -1,3 +1,4 @@
+@file:Suppress("MagicNumber")
 package ru.starfactory.core.uikit.theme
 
 import androidx.compose.runtime.Stable
@@ -8,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 internal val MainGradientDarkStart = Color(0xFF435159)
 internal val MainGradientDarkEnd = Color(0xFF1F292E)
 
-internal val LocalPGradients = staticCompositionLocalOf<PGradients> { throw IllegalStateException() }
+internal val LocalPGradients = staticCompositionLocalOf<PGradients> { error("LocalPGradients not set") }
 
 @Stable
 class PGradients(

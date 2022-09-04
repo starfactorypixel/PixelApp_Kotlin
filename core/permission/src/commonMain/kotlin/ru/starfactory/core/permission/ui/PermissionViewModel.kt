@@ -1,7 +1,11 @@
 package ru.starfactory.core.permission.ui
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import ru.starfactory.core.decompose.view_model.ViewModel
@@ -30,7 +34,7 @@ class PermissionViewModel internal constructor(private val permissionService: Pe
             coroutineScope {
                 val viewModelLifecycleWeather = launch {
                     viewModelScope.coroutineContext[Job]!!.join()
-                    throw RuntimeException("View model destroying")
+                    error("View model destroying")
                 }
 
                 val resultDeferred = async {

@@ -1,8 +1,11 @@
+@file:Suppress("UnusedPrivateMember", "MagicNumber") // TODO Sumin
 package ru.starfactory.core.uikit.theme
 
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
+
+internal const val DEFAULT_CONTENT_ALPHA = .15f
 
 private val LightBlue400 = Color(0xFF29B6F6)
 private val Green200 = Color(0xFFA5D6A7)

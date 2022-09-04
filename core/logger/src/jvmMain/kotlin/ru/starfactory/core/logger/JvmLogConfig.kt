@@ -18,6 +18,7 @@ private class JvmLogger : Logger {
         println("[$level][$tag] ${message()}\n${getStackTraceString(e)}")
     }
 
+    @Suppress("ReturnCount")
     fun getStackTraceString(tr: Throwable?): String {
         if (tr == null) {
             return ""

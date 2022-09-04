@@ -14,7 +14,7 @@ internal class AndroidPermissionService(private val context: Context) : Permissi
         if (getIsPermissionGranted(permission)) return true
 
         return permissionRequester?.requestPermission(permission = permission.raw)
-            ?: throw RuntimeException("Permission requester not attached")
+            ?: error("Permission requester not attached")
     }
 }
 

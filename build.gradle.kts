@@ -3,7 +3,7 @@ plugins {
 }
 
 allprojects {
-    afterEvaluate {//TODO Sumin: поправить этот костыль
+    afterEvaluate { // TODO Sumin: поправить этот костыль
         apply {
             plugin("ru.starfactory.convention.analyze.detekt")
         }

@@ -11,7 +11,7 @@ import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 
 class PermissionViewModel internal constructor(private val permissionService: PermissionService) : ViewModel(), PermissionRequester {
-    val permissionRequest = Channel<String>() //TODO Sumin: тут скорее всего нужен полноценный стейт
+    val permissionRequest = Channel<String>() // TODO Sumin: тут скорее всего нужен полноценный стейт
 
     private val mutex = Mutex()
     private var continuation: Continuation<Boolean>? = null

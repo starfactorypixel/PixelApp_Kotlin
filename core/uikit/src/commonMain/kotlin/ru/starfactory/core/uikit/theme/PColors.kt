@@ -13,7 +13,6 @@ private val BlueGrey600 = Color(0xFF546E7A)
 private val BlueGrey900 = Color(0xFF263238)
 private val BlueGrey1000 = Color(0xFF1A2227)
 
-
 internal object PColors {
     val DarkColorPalette = darkColors(
         primary = LightBlue400,

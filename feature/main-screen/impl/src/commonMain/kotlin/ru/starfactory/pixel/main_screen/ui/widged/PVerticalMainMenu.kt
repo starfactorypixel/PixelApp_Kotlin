@@ -110,5 +110,4 @@ private fun ColumnScope.ItemDescriptionContent(text: String, isSelected: Boolean
     }
 }
 
-
 internal data class PVerticalMenuItem<ID>(val id: ID, val icon: ImageVector, val text: String)

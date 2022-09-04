@@ -27,7 +27,7 @@ fun PWBottomMenuAction(
         POutlinedFloatingActionButton(
             onClick = onClick,
             Modifier.align(Alignment.CenterHorizontally),
-            //TODO Sumin вынести альфу в константы
+            // TODO Sumin вынести альфу в константы
             backgroundColor = borderColor.copy(.15f),
             borderStroke = BorderStroke(2.dp, borderColor),
         ) {

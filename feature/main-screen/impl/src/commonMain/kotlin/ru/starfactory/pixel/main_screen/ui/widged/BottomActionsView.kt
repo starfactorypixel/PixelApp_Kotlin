@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ru.starfactory.core.uikit.theme.PixelTheme
-import ru.starfactory.core.uikit.view.POutlinedFloatingActionButton
 import ru.starfactory.core.uikit.view.PTextFloatingActionButton
 import ru.starfactory.core.uikit.widget.PWBottomMenuAction
 

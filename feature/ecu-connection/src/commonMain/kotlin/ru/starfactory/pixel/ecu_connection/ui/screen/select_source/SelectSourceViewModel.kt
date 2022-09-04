@@ -6,8 +6,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ru.starfactory.core.decompose.view_model.ViewModel
-import ru.starfactory.core.permission.domain.PermissionInteractor
-import ru.starfactory.core.permission.service.Permission
 import ru.starfactory.core.serial.bluetooth.domain.BluetoothSerialInteractor
 import ru.starfactory.pixel.ecu_connection.domain.source.EcuSourceInteractor
 import ru.starfactory.pixel.ecu_connection.domain.source.Source

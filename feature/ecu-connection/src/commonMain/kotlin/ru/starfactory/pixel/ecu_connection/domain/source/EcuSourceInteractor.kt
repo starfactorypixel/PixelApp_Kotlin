@@ -33,7 +33,6 @@ internal class EcuSourceInteractorImpl(
         ) { sources -> sources.flatMap { it } }
             .shareDefault(scope)
 
-
     override fun observeSources(): Flow<List<Source>> = sourcesObservable
 
     override fun observeDefaultSourceConnectionInteractor(): Flow<EcuSourceConnectionInteractor> {

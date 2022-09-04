@@ -22,7 +22,6 @@ internal class EcuDemoSourceConnectionInteractorImpl : EcuDemoSourceConnectionIn
                     delay(100)
                 }
             }
-
         }
     }
 }

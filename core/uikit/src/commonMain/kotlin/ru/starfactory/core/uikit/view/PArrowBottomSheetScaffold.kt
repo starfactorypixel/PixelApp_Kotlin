@@ -91,7 +91,6 @@ fun PArrowBottomSheetScaffold(
     )
 }
 
-
 @OptIn(ExperimentalMaterialApi::class)
 val BottomSheetScaffoldState.currentFraction: Float
     get() {

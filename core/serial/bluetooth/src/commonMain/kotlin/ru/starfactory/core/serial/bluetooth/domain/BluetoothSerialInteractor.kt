@@ -1,11 +1,8 @@
 package ru.starfactory.core.serial.bluetooth.domain
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import ru.starfactory.core.bluetooth.domain.BluetoothInteractor
-import ru.starfactory.core.serial.domain.SerialDevice
 import ru.starfactory.core.serial.domain.SerialDeviceId
 import ru.starfactory.core.serial.domain.SerialDeviceType
 import ru.starfactory.core.serial.domain.SourceTypeSerialInteractor

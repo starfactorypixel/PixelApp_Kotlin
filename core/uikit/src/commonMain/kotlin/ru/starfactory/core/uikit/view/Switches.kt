@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-//TODO Sumin: вынести все параметры в конструктор
+// TODO Sumin: вынести все параметры в конструктор
 fun POutlinedSwitch(
     isSelected: Boolean,
     onClick: () -> Unit,
@@ -38,4 +38,3 @@ fun POutlinedSwitch(
         content = content
     )
 }
-

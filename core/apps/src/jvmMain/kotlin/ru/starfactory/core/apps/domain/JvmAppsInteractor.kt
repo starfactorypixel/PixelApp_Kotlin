@@ -11,4 +11,3 @@ internal class JvmAppsInteractor : AppsInteractor {
         throw RuntimeException("AppsInteractor not supported for jvm")
     }
 }
-

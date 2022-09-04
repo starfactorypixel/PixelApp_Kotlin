@@ -5,9 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +32,7 @@ fun ArcProgressBar(
     frameWidth: Dp = 12.dp,
     strokeColor: Color = MaterialTheme.colors.primary,
     frameColor: Color = MaterialTheme.colors.onPrimary,
-    content: @Composable BoxScope .() -> Unit = {}
+    content: @Composable BoxScope.() -> Unit = {}
 ) {
 
     var rootWidth by remember {

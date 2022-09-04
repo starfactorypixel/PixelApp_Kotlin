@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bluetooth
@@ -93,7 +92,6 @@ private fun ShowSourcesContent(
                 }
             }
         }
-
     }
 }
 
@@ -143,4 +141,3 @@ private fun SourceContent(
 
     PWSettingsMenuItem(source.name, icon, color = color, onClick = onClick)
 }
-

@@ -1,10 +1,7 @@
 package ru.starfactory.core.bluetooth.service
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import ru.starfactory.core.bluetooth.domain.BluetoothDevice
-import java.io.InputStream
-import java.io.OutputStream
 import java.util.*
 
 interface BluetoothService {

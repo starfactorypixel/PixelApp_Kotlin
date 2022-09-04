@@ -3,7 +3,6 @@ package ru.starfactory.pixel.dashboard_screen.ui.widget
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
@@ -13,9 +12,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -93,7 +92,6 @@ fun CarStatusView(
         val zeroMinSizeConstraints = constraints.copy(minWidth = 0, minHeight = 0)
         val containerSize = IntSize(constraints.maxWidth, constraints.maxHeight)
 
-
         // Step 1: measure START indicators
         val startIndicatorsPlaceable = startIndicatorsMeasurables.map { it.measure(zeroMinSizeConstraints) }
         val startIndicatorsWidth = startIndicatorsPlaceable.maxOfOrNull { it.measuredWidth } ?: 0
@@ -120,7 +118,6 @@ fun CarStatusView(
 
         // measure canvas
         val canvasPlaceable = canvasMeasurable.measure(constraints)
-
 
         layout(containerSize.width, containerSize.height) {
             canvasDraws.clear()
@@ -237,7 +234,6 @@ private fun CarStatusIndicatorContent(
             }
         }
     }
-
 }
 
 @Composable

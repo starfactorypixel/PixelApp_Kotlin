@@ -2,11 +2,8 @@ package ru.starfactory.core.serial.usb
 
 import org.kodein.di.DI
 import org.kodein.di.bindSingleton
-import org.kodein.di.inSet
-import org.kodein.di.provider
 import ru.starfactory.core.di.Modules
 import ru.starfactory.core.di.i
-import ru.starfactory.core.serial.domain.SourceTypeSerialInteractor
 import ru.starfactory.core.serial.usb.domian.UsbSerialInteractor
 import ru.starfactory.core.serial.usb.domian.UsbSerialInteractorImpl
 

@@ -24,7 +24,6 @@ dependencyResolutionManagement {
             from(files("libs.versions.toml"))
         }
     }
-
 }
 rootProject.name = "pixel"
 

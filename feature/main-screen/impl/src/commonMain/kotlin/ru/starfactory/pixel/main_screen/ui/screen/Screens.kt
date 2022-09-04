@@ -29,7 +29,6 @@ object MainScreen : Screen {
 
         val childStack = componentContext.defaultChildStack(navigation, DashboardScreen, subDi)
 
-
         return object : ScreenInstance {
             @Composable
             override fun ScreenInstanceView() {

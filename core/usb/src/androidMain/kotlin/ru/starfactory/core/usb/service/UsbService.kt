@@ -4,7 +4,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.hardware.usb.UsbDevice as UsbDeviceAndroid
 import android.hardware.usb.UsbManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
@@ -14,6 +13,7 @@ import ru.starfactory.core.coroutines.observeBroadcastIntents
 import ru.starfactory.core.coroutines.shareDefault
 import ru.starfactory.core.logger.Log
 import ru.starfactory.core.usb.domain.UsbDevice
+import android.hardware.usb.UsbDevice as UsbDeviceAndroid
 
 interface UsbServiceAndroid : UsbService {
 

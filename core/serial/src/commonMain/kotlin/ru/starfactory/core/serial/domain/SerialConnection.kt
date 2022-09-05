@@ -1,3 +1,9 @@
 package ru.starfactory.core.serial.domain
 
-interface SerialConnection
+import java.io.InputStream
+import java.io.OutputStream
+
+interface SerialConnection {
+    val inputStream: InputStream
+    val outputStream: OutputStream
+}

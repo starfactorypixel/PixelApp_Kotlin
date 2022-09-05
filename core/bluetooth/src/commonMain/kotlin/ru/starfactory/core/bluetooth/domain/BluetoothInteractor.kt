@@ -1,11 +1,13 @@
 package ru.starfactory.core.bluetooth.domain
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import ru.starfactory.core.bluetooth.service.BluetoothService
 import ru.starfactory.core.permission.domain.PermissionInteractor
 import ru.starfactory.core.permission.service.Permission
+import java.util.UUID
 
 interface BluetoothInteractor {
     fun isConnectPermissionGranted(): Boolean
@@ -15,7 +17,7 @@ interface BluetoothInteractor {
     fun getBoundedDevices(): List<BluetoothDevice>
     fun observeBoundedDevices(): Flow<List<BluetoothDevice>>
 
-    // suspend fun connect(address: String, channelId: UUID, block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit)
+    suspend fun connect(address: String, channelId: UUID, block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit)
 }
 
 internal class BluetoothInteractorImpl(
@@ -45,7 +47,11 @@ internal class BluetoothInteractorImpl(
         }
     }
 
-//    override suspend fun connect(address: String, channelId: UUID,
-//    block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit) =
-//        bluetoothService.connect(address, channelId, block)
+    override suspend fun connect(
+        address: String,
+        channelId: UUID,
+        block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit
+    ) {
+        return bluetoothService.connect(address, channelId, block)
+    }
 }

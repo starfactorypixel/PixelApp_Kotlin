@@ -4,9 +4,16 @@ import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import ru.starfactory.core.bluetooth.domain.BluetoothDevice
+import java.io.InputStream
+import java.io.OutputStream
+import java.util.UUID
 import android.bluetooth.BluetoothDevice as AndroidBluetoothDevice
 
 class AndroidBluetoothService(context: Context) : BluetoothService {
@@ -22,29 +29,24 @@ class AndroidBluetoothService(context: Context) : BluetoothService {
         return flow { emit(getBoundedDevices()) } // TODO Sumin
     }
 
-//    @SuppressLint("MissingPermission")
-//    override suspend fun connect(
-//        address: String,
-//        channelId: UUID,
-//        block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit
-//    ) = withContext(Dispatchers.IO) {
-//        val device = bluetoothAdapter.getRemoteDevice(address)
-//        println(device.address)
-//        device.createRfcommSocketToServiceRecord(channelId).use { channel ->
-//            channel.connect()
-//
-//            val connection = object : BluetoothService.BluetoothConnection {
-//                override val inputStream: InputStream = channel.inputStream
-//                override val outputStream: OutputStream = channel.outputStream
-//            }
-//            coroutineScope {
-//                block(this, connection)
-//            }
-//        }
-//    }
+    @SuppressLint("MissingPermission")
+    override suspend fun connect(
+        address: String,
+        channelId: UUID,
+        block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit
+    ) = withContext(Dispatchers.IO) {
+        val device = bluetoothAdapter.getRemoteDevice(address)
+        device.createRfcommSocketToServiceRecord(channelId).use { channel ->
+            channel.connect()
 
-    companion object {
-        // private const val TAG = Tag.BLUETOOTH
+            val connection = object : BluetoothService.BluetoothConnection {
+                override val inputStream: InputStream = channel.inputStream
+                override val outputStream: OutputStream = channel.outputStream
+            }
+            coroutineScope {
+                block(this, connection)
+            }
+        }
     }
 }
 
@@ -54,4 +56,5 @@ private fun Set<AndroidBluetoothDevice>.toBluetoothDevices() = map { it.toBlueto
 private fun AndroidBluetoothDevice.toBluetoothDevice() = BluetoothDevice(
     address = this.address,
     name = this.name,
+    channels = this.uuids.map { it.uuid }
 )

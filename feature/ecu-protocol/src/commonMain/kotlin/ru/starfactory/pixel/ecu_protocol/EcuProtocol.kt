@@ -3,6 +3,8 @@ package ru.starfactory.pixel.ecu_protocol
 import java.io.InputStream
 import java.io.OutputStream
 
+//TODO Sumin: это тестовая не оптимальная реализация протокола.
+// В будущем, после того как закрепим это поведение тестами, перепишем это оптимально
 class EcuProtocol(
     inputStream: InputStream,
     outputStream: OutputStream,
@@ -109,7 +111,7 @@ class EcuProtocol(
             return TYPE_MAPPING[raw] ?: error("Unknown type $raw")
         }
 
-        private const val PROTOCOL_VERSION = 0x2
+        private const val PROTOCOL_VERSION = 0x0
 
         private const val MAX_DATA_LENGTH = 64
 

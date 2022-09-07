@@ -5,9 +5,10 @@ import java.io.OutputStream
 
 class EcuProtocol(
     inputStream: InputStream,
-    private val outputStream: OutputStream,
+    outputStream: OutputStream,
 ) {
     private val i = InputStreamReader(inputStream)
+    private val o = OutputScreamWriter(outputStream)
 
     fun readMessage(): EcuMessage {
         check(i.readByte() == START_BYTE) { "Unexpected start byte" }
@@ -45,16 +46,22 @@ class EcuProtocol(
     }
 
     fun writeMessage(message: EcuMessage) {
-
+        o.writeByte(START_BYTE)
+        o.resetCrc()
+        o.writeByte(((PROTOCOL_VERSION shl 5) or (message.transport.raw shl 3)).toByte())
+        o.writeByte(message.type.raw.toByte())
+        o.writeShort(message.id.toShort())
+        check(message.data.size <= MAX_DATA_LENGTH) { "Data size ${message.data.size} more that max data size" }
+        o.writeByte(message.data.size.toByte())
+        message.data.forEach { o.writeByte(it) }
+        o.writeShort(o.crc)
+        o.writeByte(STOP_BYTE)
     }
 
-    private class InputStreamReader(private val inputStream: InputStream) {
-        var crc: Short = 0xFFFF.toShort()
-            private set
-
+    private class InputStreamReader(private val inputStream: InputStream) : CrcCalculator() {
         fun readByte(): Byte {
             val data = inputStream.read().toByte()
-            crc = CRC16MCRF4XX.update(crc, data)
+            updateCrc(data)
             return data
         }
 
@@ -62,6 +69,27 @@ class EcuProtocol(
 
         fun readShortAsInt(): Int {
             return (readByteAsInt() shl 8) or readByteAsInt()
+        }
+    }
+
+    private class OutputScreamWriter(private val outputStream: OutputStream) : CrcCalculator() {
+        fun writeByte(data: Byte) {
+            updateCrc(data)
+            outputStream.write(data.toInt())
+        }
+
+        fun writeShort(data: Short) {
+            writeByte((data.toInt() ushr 8 and 0xFF).toByte())
+            writeByte((data.toInt() and 0xFF).toByte())
+        }
+    }
+
+    private abstract class CrcCalculator {
+        var crc: Short = 0xFFFF.toShort()
+            private set
+
+        protected fun updateCrc(data: Byte) {
+            crc = CRC16MCRF4XX.update(crc, data)
         }
 
         fun resetCrc() {
@@ -82,6 +110,8 @@ class EcuProtocol(
         }
 
         private const val PROTOCOL_VERSION = 0x2
+
+        private const val MAX_DATA_LENGTH = 64
 
         private const val START_BYTE: Byte = 0x3C
         private const val STOP_BYTE: Byte = 0x3E

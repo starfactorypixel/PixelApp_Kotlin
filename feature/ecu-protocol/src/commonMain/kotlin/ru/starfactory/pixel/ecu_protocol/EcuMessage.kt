@@ -1,12 +1,12 @@
 package ru.starfactory.pixel.ecu_protocol
 
-
+@Suppress("MagicNumber")
 data class EcuMessage(
-    val transport: Transport,
-    val haveAdditionalData: Boolean,
+    val transport: Transport = Transport.Raw,
+    val haveAdditionalData: Boolean = false,
     val type: Type,
     val id: Int,
-    val data: ByteArray,
+    val data: ByteArray = ByteArray(0),
 ) {
     enum class Type(val raw: Int) {
         MIRROR(0x00),

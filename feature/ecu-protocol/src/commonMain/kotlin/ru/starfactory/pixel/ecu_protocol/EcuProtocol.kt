@@ -10,7 +10,7 @@ class EcuProtocol(
     outputStream: OutputStream,
 ) {
     private val i = InputStreamReader(inputStream)
-    private val o = OutputScreamWriter(outputStream)
+    private val o = OutputStreamWriter(outputStream)
 
     fun readMessage(): EcuMessage {
         check(i.readByte() == START_BYTE) { "Unexpected start byte" }
@@ -74,7 +74,7 @@ class EcuProtocol(
         }
     }
 
-    private class OutputScreamWriter(private val outputStream: OutputStream) : CrcCalculator() {
+    private class OutputStreamWriter(private val outputStream: OutputStream) : CrcCalculator() {
         fun writeByte(data: Byte) {
             updateCrc(data)
             outputStream.write(data.toInt())

@@ -12,7 +12,7 @@ data class EcuMessage(
         MIRROR(0x00),
         BUFFER(0x01),
         CAN(0x02),
-        ERROR(0x1F),
+        ERROR(0x1E),
         ;
 
         companion object

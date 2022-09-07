@@ -26,6 +26,7 @@ kotlin {
                 api(project(":feature:apps"))
                 api(project(":feature:dashboard-screen"))
                 api(project(":feature:ecu-connection"))
+                api(project(":feature:ecu-protocol"))
                 api(project(":feature:main-screen:impl"))
                 api(project(":feature:settings-screen"))
                 api(project(":feature:theming"))

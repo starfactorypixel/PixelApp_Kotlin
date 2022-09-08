@@ -25,10 +25,11 @@ jobs:
         shell: bash
         env:
           GOOGLE_PLAY_SERVICES_JSON: ${{ secrets.GOOGLE_PLAY_SERVICES_JSON }}
-          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
         run: echo "$GOOGLE_PLAY_SERVICES_JSON" > client/android/google-services.json
 
       - name: Run gradle
+        env:
+          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
         run: >-
           ./gradlew
           -PpIsGoogleServicesEnabled=true

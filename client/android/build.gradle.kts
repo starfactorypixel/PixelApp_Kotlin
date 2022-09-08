@@ -2,6 +2,7 @@
 
 plugins {
     id("ru.starfactory.convention.android.application")
+    id("ru.starfactory.convention.android.signature")
     id("kotlin-parcelize")
 }
 

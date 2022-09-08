@@ -2,6 +2,8 @@ name: ci
 
 on:
   push:
+    tags:
+      - v*
     branches:
       - master
 
@@ -35,7 +37,6 @@ jobs:
           -PpIsGoogleServicesEnabled=true
           -PpIsGithubActions=true
           -PpUseReleaseKeys=true
-          -PpBuildNumber=${{ github.run_number }}
           :ci
 
       - name: Upload debug apk

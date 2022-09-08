@@ -25,5 +25,5 @@ jobs:
           ./gradlew
           -PpIsGoogleServicesEnabled=false
           -PpIsGithubActions=true
-          -PpBuildNumber=${{ evn.GITHUB_RUN_NUMBER }}
+          -PpBuildNumber=${{ env.GITHUB_RUN_NUMBER }}
           :pr

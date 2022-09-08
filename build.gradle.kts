@@ -17,7 +17,8 @@ tasks.register<Delete>("clean") {
 tasks.register("ci") {
     dependsOn(":dependencyUpdates")
     dependsOn(":client:android:assembleDebug")
-    dependsOn(":client:android:lintDebug")
+    dependsOn(":client:android:assembleRelease")
+    dependsOn(":client:android:lintRelease")
 
     dependsOn(":client-wv:android:assembleDebug")
     dependsOn(":client-wv:android:lintDebug")

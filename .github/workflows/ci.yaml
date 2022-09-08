@@ -25,6 +25,7 @@ jobs:
         shell: bash
         env:
           GOOGLE_PLAY_SERVICES_JSON: ${{ secrets.GOOGLE_PLAY_SERVICES_JSON }}
+          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
         run: echo "$GOOGLE_PLAY_SERVICES_JSON" > client/android/google-services.json
 
       - name: Run gradle
@@ -32,16 +33,26 @@ jobs:
           ./gradlew
           -PpIsGoogleServicesEnabled=true
           -PpIsGithubActions=true
+          -PpUseReleaseKeys=true
           :ci
 
       - name: Upload debug apk
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: debug-apk
           path: "client/android/build/outputs/apk/debug/**.apk"
+          if-no-files-found: error
+
+      - name: Upload release apk
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-apk
+          path: "client/android/build/outputs/apk/release/**.apk"
+          if-no-files-found: error
 
       - name: Upload debug wv apk
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: debug-wv-apk
           path: "client-wv/android/build/outputs/apk/debug/**.apk"
+          if-no-files-found: error

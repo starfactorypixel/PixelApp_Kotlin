@@ -35,7 +35,7 @@ jobs:
           -PpIsGoogleServicesEnabled=true
           -PpIsGithubActions=true
           -PpUseReleaseKeys=true
-          -PpBuildNumber=${{ env.GITHUB_RUN_NUMBER }}
+          -PpBuildNumber=${{ github.run_number }}
           :ci
 
       - name: Upload debug apk

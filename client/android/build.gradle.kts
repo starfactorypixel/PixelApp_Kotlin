@@ -3,6 +3,7 @@
 plugins {
     id("ru.starfactory.convention.android.application")
     id("ru.starfactory.convention.android.signature")
+    id("ru.starfactory.convention.android.version")
     id("kotlin-parcelize")
 }
 
@@ -17,8 +18,6 @@ if (pIsGoogleServicesEnabled.toBoolean()) {
 android {
     defaultConfig {
         applicationId = "ru.starfactory.pixel"
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

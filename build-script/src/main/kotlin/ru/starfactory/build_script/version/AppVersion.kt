@@ -11,12 +11,12 @@ data class AppVersion(
     val path: Int,
 
     val commitsBehindLastRelease: Int,
-    val lastCommitHash: String?
-) {
-    val androidVersionCode: Int = major * 100_000 + minor * 100 + path
-}
+    val lastCommitHash: String?,
 
-private val TAG_REGEXP = Regex("^v(?<major>\\d+)\\.(?<minor>\\d{1,3})\\.(?<path>\\d{1,2})(-(?<commitsCount>\\d{3,4}))?(-(?<lastCommitHash>[a-z\\d]+))?\n?\$")
+    val androidVersionCode: Int = major * 100_000 + minor * 100 + path
+)
+
+private val TAG_REGEXP = Regex("^v(?<major>\\d+)\\.(?<minor>\\d{1,3})\\.(?<path>\\d{1,2})(-(?<commitsCount>\\d+))?(-(?<lastCommitHash>[a-z\\d]+))?\n?\$")
 
 
 fun Project.appVersion(): AppVersion {

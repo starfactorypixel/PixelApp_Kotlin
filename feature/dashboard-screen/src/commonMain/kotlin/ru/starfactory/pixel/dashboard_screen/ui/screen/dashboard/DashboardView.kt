@@ -1,29 +1,58 @@
 package ru.starfactory.pixel.dashboard_screen.ui.screen.dashboard
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import ru.starfactory.core.compose.Configuration
 import ru.starfactory.core.compose.LocalConfiguration
+import ru.starfactory.core.uikit.view.POutlinedButton
+import ru.starfactory.pixel.main_screen.ui.main_menu_insets.WithLocalMainMenuInsets
 
 @Composable
 internal fun DashboardView(viewModel: DashboardViewModel) {
     val state by viewModel.state.collectAsState()
-    DashboardContent(state)
+    DashboardContent(state, viewModel::onClickSelectSource)
 }
 
 @Composable
 private fun DashboardContent(
     state: DashboardViewState,
+    onClickSelectSource: () -> Unit,
 ) {
     return when (state) {
         DashboardViewState.Loading -> Unit // Loading is very fast
-        is DashboardViewState.ShowData -> ShowDataContent(state)
+        DashboardViewState.SourceNotSelected -> SourceNotSelectedContent(onClickSelectSource)
+        is DashboardViewState.ShowData -> DataContent(state)
     }
 }
 
 @Composable
-private fun ShowDataContent(
+private fun SourceNotSelectedContent(onClickSelectSource: () -> Unit) {
+    WithLocalMainMenuInsets { mainMenuInsets ->
+        Box(
+            Modifier
+                .padding(start = mainMenuInsets.positionInRoot.x + mainMenuInsets.size.width)
+                .fillMaxSize()
+        ) {
+            Column(Modifier.align(Alignment.Center)) {
+                Text("Source not selected")
+                POutlinedButton(onClick = onClickSelectSource) {
+                    Text("Select source")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DataContent(
     state: DashboardViewState.ShowData,
 ) {
     val configuration = LocalConfiguration.current

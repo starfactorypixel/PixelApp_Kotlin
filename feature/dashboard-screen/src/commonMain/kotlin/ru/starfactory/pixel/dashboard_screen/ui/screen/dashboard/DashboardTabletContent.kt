@@ -18,14 +18,13 @@ import ru.starfactory.pixel.dashboard_screen.ui.widget.CarStatusView
 import ru.starfactory.pixel.dashboard_screen.ui.widget.CurrentSpeedView
 import ru.starfactory.pixel.dashboard_screen.ui.widget.FastActionsView
 import ru.starfactory.pixel.dashboard_screen.ui.widget.StatisticsView
-import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsets
+import ru.starfactory.pixel.main_screen.ui.main_menu_insets.WithLocalMainMenuInsets
 
 @Composable
 @Suppress("MagicNumber")
 internal fun DashboardTabletContent(
     state: DashboardViewState.ShowData,
 ) {
-    val mainMenuInsets = LocalMainMenuInsets.current
     val configuration = LocalConfiguration.current
 
     Column(
@@ -49,7 +48,7 @@ internal fun DashboardTabletContent(
                 FastActionsView(Modifier.padding(horizontal = 16.dp))
             }
         }
-        if (mainMenuInsets.isPositioned) {
+        WithLocalMainMenuInsets { mainMenuInsets ->
             CarStatusView(
 
                 listOf(

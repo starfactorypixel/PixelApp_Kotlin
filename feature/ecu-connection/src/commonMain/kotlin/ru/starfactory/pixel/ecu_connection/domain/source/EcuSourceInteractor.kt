@@ -6,9 +6,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.reduce
-import kotlinx.coroutines.flow.retry
 import ru.starfactory.core.coroutines.shareDefault
 import ru.starfactory.core.serial.domain.SerialDeviceType
 import ru.starfactory.core.serial.domain.SerialInteractor
@@ -58,8 +55,7 @@ internal class EcuSourceInteractorImpl(
                 when {
                     source == null -> flowOf(null)
                     source.sourceType == SourceType.DEMO -> flowOf(ecuDemoSourceConnectionInteractor)
-                    source.sourceType == SourceType.USB_SERIAL || source.sourceType == SourceType.BLUETOOTH ->
-                        serialSourceConnectionInteractorObservable(source.id)
+                    source.sourceType.isSerial -> serialSourceConnectionInteractorObservable(source.id)
                     else -> error("Unreachable code, source: $source")
                 }
             }
@@ -93,7 +89,8 @@ internal class EcuSourceInteractorImpl(
     }
 
     private fun serialSourceConnectionInteractorObservable(deviceId: String): Flow<EcuSerialSourceConnectionInteractor?> {
-        return flowOf(null) //TODO Sumin
+        return serialInteractor.observeSerialDevice(deviceId)
+            .map { if (it != null) ecuSerialSourceConnectionInteractorFactory.create(it) else null }
     }
 
     private fun demoSourcesObservable(): Flow<List<Source>> = flowOf(listOf(Source(SourceType.DEMO, "demo", "Demo")))
@@ -103,3 +100,10 @@ private fun SerialDeviceType.toSourceType(): SourceType = when (this) {
     SerialDeviceType.USB -> SourceType.USB_SERIAL
     SerialDeviceType.BLUETOOTH -> SourceType.BLUETOOTH
 }
+
+private val SourceType.isSerial: Boolean
+    get() = when (this) {
+        SourceType.DEMO -> false
+        SourceType.USB_SERIAL,
+        SourceType.BLUETOOTH -> true
+    }

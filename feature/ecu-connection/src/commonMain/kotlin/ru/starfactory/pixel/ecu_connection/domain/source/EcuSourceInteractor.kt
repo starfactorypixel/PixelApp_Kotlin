@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import ru.starfactory.core.coroutines.shareDefault
 import ru.starfactory.core.serial.domain.SerialDeviceType
 import ru.starfactory.core.serial.domain.SerialInteractor
@@ -19,7 +20,7 @@ interface EcuSourceInteractor {
 
     suspend fun selectSource(source: Source)
     suspend fun selectSource(sourceId: String)
-    fun observeDefaultSourceConnectionInteractor(): Flow<EcuSourceConnectionInteractor>
+    fun observeSelectedSourceConnectionInteractor(): Flow<EcuSourceConnectionInteractor?>
 }
 
 internal class EcuSourceInteractorImpl(
@@ -36,20 +37,30 @@ internal class EcuSourceInteractorImpl(
         ) { sources -> sources.flatMap { it } }
             .shareDefault(scope)
 
-    override fun observeSources(): Flow<List<Source>> = sourcesObservable
-
-    override fun observeDefaultSourceConnectionInteractor(): Flow<EcuSourceConnectionInteractor> {
-        return flowOf(ecuDemoSourceConnectionInteractor)
-    }
-
-    override fun observeSelectedSource(): Flow<Source?> {
-        return combine(
+    private val selectedSourceObservable: Flow<Source?> =
+        combine(
             observeSources(),
             ecuSourceRepository.observeSelectedSourceId()
         ) { sources, sourceId ->
             sources.find { it.id == sourceId }
         }
+            .shareDefault(scope)
+
+    private val selectedSourceConnectionInteractorObservable: Flow<EcuSourceConnectionInteractor?> =
+        selectedSourceObservable
+            .mapLatest {
+                // TODO Sumin: add connection for other sources
+                if (it != null) ecuDemoSourceConnectionInteractor else null
+            }
+            .shareDefault(scope)
+
+    override fun observeSources(): Flow<List<Source>> = sourcesObservable
+
+    override fun observeSelectedSourceConnectionInteractor(): Flow<EcuSourceConnectionInteractor?> {
+        return selectedSourceConnectionInteractorObservable
     }
+
+    override fun observeSelectedSource(): Flow<Source?> = selectedSourceObservable
 
     override suspend fun selectSource(source: Source) = selectSource(source.id)
 

@@ -62,3 +62,7 @@ jobs:
           name: debug-wv-apk
           path: "client-wv/android/build/outputs/apk/debug/**.apk"
           if-no-files-found: error
+
+      - name: Create release
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: echo "Create release test output"

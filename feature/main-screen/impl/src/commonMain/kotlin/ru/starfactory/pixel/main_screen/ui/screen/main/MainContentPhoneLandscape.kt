@@ -1,7 +1,8 @@
 package ru.starfactory.pixel.main_screen.ui.screen.main
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,20 +23,19 @@ internal fun MainContentPhoneLandscape(
     childStack: Value<ChildStack<Screen, ScreenInstance>>
 ) {
     val mainMenuInsets = remember { mutableStateOf(MainMenuInsets()) }
-
-    VerticalMainMenuContent(
-        state.menuItems,
-        state.selectedMenuItem,
-        false,
-        onSelectMenuItem,
-        mainMenuInsets,
-    )
-
     LocalMainMenuInsetsHolder(mainMenuInsets.value) {
-        Column {
+        Column(Modifier.fillMaxSize()) {
             CollapsingActionsMainMenuContent(Modifier.weight(1f), onClickSettings) {
-                Column(Modifier.padding(it)) {
-                    NavigationContentView(childStack, Modifier.weight(1f))
+                Box {
+                    VerticalMainMenuContent(
+                        state.menuItems,
+                        state.selectedMenuItem,
+                        false,
+                        onSelectMenuItem,
+                        mainMenuInsets,
+                    )
+                    // it is okay doesn't apply padding here
+                    NavigationContentView(childStack, Modifier.fillMaxSize())
                 }
             }
         }

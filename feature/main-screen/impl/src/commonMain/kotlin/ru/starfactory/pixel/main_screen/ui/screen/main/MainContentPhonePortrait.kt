@@ -1,8 +1,8 @@
 package ru.starfactory.pixel.main_screen.ui.screen.main
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Divider
@@ -35,9 +35,8 @@ internal fun MainContentPhonePortrait(
     LocalMainMenuInsetsHolder(mainMenuInsets.value) {
         Column {
             CollapsingActionsMainMenuContent(Modifier.weight(1f), onClickSettings) {
-                Column(Modifier.padding(it)) {
-                    NavigationContentView(childStack, Modifier.weight(1f))
-                }
+                // it is okay doesn't apply padding here
+                NavigationContentView(childStack, Modifier.fillMaxSize())
             }
 
             HorizontalMainMenuContent(

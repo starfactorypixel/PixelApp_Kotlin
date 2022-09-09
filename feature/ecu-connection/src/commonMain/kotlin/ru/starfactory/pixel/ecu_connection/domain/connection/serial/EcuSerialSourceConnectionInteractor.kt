@@ -21,6 +21,7 @@ internal class EcuSerialSourceConnectionInteractorImpl(
 ) : EcuSerialSourceConnectionInteractor {
     override fun observePrimaryState(): Flow<EcuPrimaryState> {
 
+        // TODO Sumin это временное решение только положительный кейс
         return flow {
             serialInteractor.connect(serialDevice) {
                 val ecuProtocol = EcuProtocol(EcuProtocolRaw(it.inputStream, it.outputStream))

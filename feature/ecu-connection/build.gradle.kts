@@ -10,6 +10,8 @@ kotlin {
             dependencies {
                 implementation(project(":core:serial"))
                 implementation(project(":core:serial:bluetooth"))
+
+                implementation(project(":feature:ecu-protocol"))
             }
         }
     }

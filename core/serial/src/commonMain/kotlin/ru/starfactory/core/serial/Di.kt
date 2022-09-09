@@ -11,5 +11,5 @@ import ru.starfactory.core.serial.domain.SerialInteractorImpl
 
 fun Modules.coreSerial() = DI.Module("core-serial") {
     bindSet<Pair<String, SerialDevicesProvider>>()
-    bindSingleton<SerialInteractor> { SerialInteractorImpl(i()) }
+    bindSingleton<SerialInteractor> { SerialInteractorImpl(i(), i()) }
 }

@@ -34,10 +34,13 @@ class AndroidBluetoothService(context: Context) : BluetoothService {
         address: String,
         channelId: UUID,
         block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit
-    ) = withContext(Dispatchers.IO) {
+    ) {
         val device = bluetoothAdapter.getRemoteDevice(address)
         device.createRfcommSocketToServiceRecord(channelId).use { channel ->
-            channel.connect()
+
+            withContext(Dispatchers.IO) {
+                channel.connect()
+            }
 
             val connection = object : BluetoothService.BluetoothConnection {
                 override val inputStream: InputStream = channel.inputStream

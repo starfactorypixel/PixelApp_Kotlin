@@ -3,14 +3,16 @@ package ru.starfactory.pixel.ecu_connection.domain.source
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import ru.starfactory.core.coroutines.shareDefault
 import ru.starfactory.core.serial.domain.SerialDeviceType
 import ru.starfactory.core.serial.domain.SerialInteractor
 import ru.starfactory.pixel.ecu_connection.domain.connection.EcuSourceConnectionInteractor
 import ru.starfactory.pixel.ecu_connection.domain.connection.demo.EcuDemoSourceConnectionInteractor
+import ru.starfactory.pixel.ecu_connection.domain.connection.serial.EcuSerialSourceConnectionInteractor
+import ru.starfactory.pixel.ecu_connection.domain.connection.serial.EcuSerialSourceConnectionInteractorFactory
 import ru.starfactory.pixel.ecu_connection.domain.repository.EcuSourceRepository
 
 interface EcuSourceInteractor {
@@ -25,6 +27,7 @@ interface EcuSourceInteractor {
 
 internal class EcuSourceInteractorImpl(
     private val ecuDemoSourceConnectionInteractor: EcuDemoSourceConnectionInteractor,
+    private val ecuSerialSourceConnectionInteractorFactory: EcuSerialSourceConnectionInteractorFactory,
     private val scope: CoroutineScope,
     private val serialInteractor: SerialInteractor,
     private val ecuSourceRepository: EcuSourceRepository,
@@ -48,9 +51,13 @@ internal class EcuSourceInteractorImpl(
 
     private val selectedSourceConnectionInteractorObservable: Flow<EcuSourceConnectionInteractor?> =
         selectedSourceObservable
-            .mapLatest {
-                // TODO Sumin: add connection for other sources
-                if (it != null) ecuDemoSourceConnectionInteractor else null
+            .flatMapLatest { source ->
+                when {
+                    source == null -> flowOf(null)
+                    source.sourceType == SourceType.DEMO -> flowOf(ecuDemoSourceConnectionInteractor)
+                    source.sourceType.isSerial -> serialSourceConnectionInteractorObservable(source.id)
+                    else -> error("Unreachable code, source: $source")
+                }
             }
             .shareDefault(scope)
 
@@ -81,6 +88,11 @@ internal class EcuSourceInteractorImpl(
             }
     }
 
+    private fun serialSourceConnectionInteractorObservable(deviceId: String): Flow<EcuSerialSourceConnectionInteractor?> {
+        return serialInteractor.observeSerialDevice(deviceId)
+            .map { if (it != null) ecuSerialSourceConnectionInteractorFactory.create(it) else null }
+    }
+
     private fun demoSourcesObservable(): Flow<List<Source>> = flowOf(listOf(Source(SourceType.DEMO, "demo", "Demo")))
 }
 
@@ -88,3 +100,10 @@ private fun SerialDeviceType.toSourceType(): SourceType = when (this) {
     SerialDeviceType.USB -> SourceType.USB_SERIAL
     SerialDeviceType.BLUETOOTH -> SourceType.BLUETOOTH
 }
+
+private val SourceType.isSerial: Boolean
+    get() = when (this) {
+        SourceType.DEMO -> false
+        SourceType.USB_SERIAL,
+        SourceType.BLUETOOTH -> true
+    }

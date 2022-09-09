@@ -10,8 +10,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import ru.starfactory.core.compose.Configuration
 import ru.starfactory.core.compose.LocalConfiguration
+import ru.starfactory.core.uikit.theme.PixelTheme
 import ru.starfactory.core.uikit.view.POutlinedButton
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.WithLocalMainMenuInsets
 
@@ -42,8 +44,17 @@ private fun SourceNotSelectedContent(onClickSelectSource: () -> Unit) {
                 .fillMaxSize()
         ) {
             Column(Modifier.align(Alignment.Center)) {
-                Text("Source not selected")
-                POutlinedButton(onClick = onClickSelectSource) {
+                Text(
+                    "Source not selected or not existed",
+                    Modifier.align(Alignment.CenterHorizontally),
+                    style = PixelTheme.typography.h6
+                )
+                POutlinedButton(
+                    onClick = onClickSelectSource,
+                    Modifier
+                        .padding(top = 8.dp)
+                        .align(Alignment.CenterHorizontally)
+                ) {
                     Text("Select source")
                 }
             }

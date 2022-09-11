@@ -23,7 +23,7 @@ val Permission.raw: String
         Permission.BLUETOOTH_CONNECT -> {
             // old android version use location permission to bluetooth access
             // https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower
-            if (android.os.Build.VERSION.SDK_INT > 30) "android.permission.BLUETOOTH_CONNECT"
+            if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.R) "android.permission.BLUETOOTH_CONNECT"
             else "android.permission.ACCESS_FINE_LOCATION"
         }
     }

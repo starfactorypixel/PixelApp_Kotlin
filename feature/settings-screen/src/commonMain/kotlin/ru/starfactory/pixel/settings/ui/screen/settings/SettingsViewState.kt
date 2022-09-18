@@ -8,11 +8,19 @@ sealed class SettingsViewState {
     @Immutable
     data class ShowSettings(val menuItems: List<MenuItem>) : SettingsViewState()
 
-    enum class MenuItem {
+    data class MenuItem(val id: MenuItemId, val state: MenuItemState)
+
+    sealed class MenuItemState {
+        object None : MenuItemState()
+        data class SwitcherState(val isEnabled: Boolean) : MenuItemState()
+    }
+
+    enum class MenuItemId {
         DATA_SOURCE,
         THEME,
         FAST_ACTION,
         LICENSE,
-        ABOUT
+        ABOUT,
+        ALWAYS_ON_DISPLAY,
     }
 }

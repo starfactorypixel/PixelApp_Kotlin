@@ -51,6 +51,7 @@ private fun SettingsContent(
             Modifier
                 .align(Alignment.Center)
                 .verticalScroll(rememberScrollState())
+                .padding(vertical = 16.dp)
         ) {
             when (state) {
                 SettingsViewState.Loading -> Unit // Loading is very fast

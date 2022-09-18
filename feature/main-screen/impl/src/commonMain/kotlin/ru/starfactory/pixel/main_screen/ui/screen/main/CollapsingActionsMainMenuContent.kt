@@ -27,7 +27,7 @@ fun CollapsingActionsMainMenuContent(
         sheetContent = {
             BottomActionsView(
                 Modifier
-                    .padding(bottom = 16.dp)
+                    .padding(bottom = 8.dp)
                     .padding(horizontal = 16.dp),
                 onClickSettings = onClickSettings,
             )

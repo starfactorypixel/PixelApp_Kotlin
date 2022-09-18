@@ -1,7 +1,6 @@
 package ru.starfactory.core.uikit.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Shapes
 import androidx.compose.material.Typography
@@ -22,9 +21,12 @@ fun PixelTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
     val colors = PColors.DarkColorPalette
     val gradients = PGradients.DarkColorGradient
 
-    CompositionLocalProvider(LocalPGradients provides gradients) {
+    CompositionLocalProvider(
+        LocalPColors provides colors,
+        LocalPGradients provides gradients,
+    ) {
         MaterialTheme(
-            colors = colors,
+            colors = colors.toColors(),
             typography = Typography,
             shapes = Shapes,
             content = content
@@ -33,10 +35,10 @@ fun PixelTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
 }
 
 object PixelTheme {
-    val colors: Colors
+    val colors: PColors
         @Composable
         @ReadOnlyComposable
-        get() = MaterialTheme.colors
+        get() = LocalPColors.current
 
     val typography: Typography
         @Composable

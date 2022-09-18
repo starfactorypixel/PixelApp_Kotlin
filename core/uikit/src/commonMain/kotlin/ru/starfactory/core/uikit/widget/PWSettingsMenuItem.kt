@@ -46,7 +46,10 @@ fun PWSettingsMenuItem(
                 )
                 Text(
                     text,
-                    Modifier.padding(start = 8.dp).align(Alignment.CenterVertically)
+                    Modifier
+                        .padding(start = 8.dp)
+                        .align(Alignment.CenterVertically)
+                        .weight(1f)
                 )
                 additionalContent()
             }

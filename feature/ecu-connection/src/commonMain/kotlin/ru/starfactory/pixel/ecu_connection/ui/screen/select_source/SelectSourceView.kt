@@ -90,6 +90,7 @@ private fun ShowSourcesContent(
             }
 
             PFlexVerticalGrid(
+                minCount = 2,
                 maxCount = 3,
                 Modifier
                     .padding(16.dp),

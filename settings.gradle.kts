@@ -50,6 +50,7 @@ include(
     ":feature:dashboard-screen",
     ":feature:ecu-connection",
     ":feature:ecu-protocol",
+    ":feature:keep-screen-on",
     ":feature:main-screen:api",
     ":feature:main-screen:impl",
     ":feature:settings-screen",

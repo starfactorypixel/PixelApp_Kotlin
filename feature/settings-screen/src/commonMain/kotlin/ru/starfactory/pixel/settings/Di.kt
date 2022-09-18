@@ -8,5 +8,5 @@ import ru.starfactory.core.navigation.NavigationType
 import ru.starfactory.pixel.settings.ui.screen.settings.SettingsViewModel
 
 fun Modules.featureSettingsScreen() = DI.Module("feature-settings-screen") {
-    bindProvider { SettingsViewModel(i(tag = NavigationType.ROOT)) }
+    bindProvider { SettingsViewModel(i(), i(tag = NavigationType.ROOT)) }
 }

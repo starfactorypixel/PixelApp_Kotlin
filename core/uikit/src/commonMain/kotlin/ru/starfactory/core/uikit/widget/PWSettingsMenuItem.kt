@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
@@ -24,6 +25,7 @@ fun PWSettingsMenuItem(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     color: Color? = null,
+    additionalContent: @Composable RowScope.() -> Unit = {}
 ) {
     POutlinedCard(
         modifier
@@ -37,8 +39,19 @@ fun PWSettingsMenuItem(
                 Modifier.align(Alignment.Center)
                     .padding(16.dp)
             ) {
-                Icon(icon, null)
-                Text(text, Modifier.padding(start = 8.dp))
+                Icon(
+                    icon,
+                    null,
+                    Modifier.align(Alignment.CenterVertically)
+                )
+                Text(
+                    text,
+                    Modifier
+                        .padding(start = 8.dp)
+                        .align(Alignment.CenterVertically)
+                        .weight(1f)
+                )
+                additionalContent()
             }
         }
     }

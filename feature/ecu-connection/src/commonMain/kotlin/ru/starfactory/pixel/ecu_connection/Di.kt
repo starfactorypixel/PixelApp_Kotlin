@@ -5,6 +5,7 @@ import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
 import ru.starfactory.core.di.Modules
 import ru.starfactory.core.di.i
+import ru.starfactory.core.navigation.NavigationType
 import ru.starfactory.pixel.ecu_connection.domain.connection.demo.EcuDemoSourceConnectionInteractor
 import ru.starfactory.pixel.ecu_connection.domain.connection.demo.EcuDemoSourceConnectionInteractorImpl
 import ru.starfactory.pixel.ecu_connection.domain.connection.serial.EcuSerialSourceConnectionInteractorFactory
@@ -20,5 +21,5 @@ fun Modules.featureEcuConnection() = DI.Module("feature-ecu-connection") {
     bindSingleton<EcuDemoSourceConnectionInteractor> { EcuDemoSourceConnectionInteractorImpl() }
     bindSingleton<EcuSerialSourceConnectionInteractorFactory> { EcuSerialSourceConnectionInteractorFactoryImpl(i(), i()) }
     bindSingleton<EcuSourceInteractor> { EcuSourceInteractorImpl(i(), i(), i(), i(), i()) }
-    bindProvider { SelectSourceViewModel(i(), i()) }
+    bindProvider { SelectSourceViewModel(i(), i(), i(NavigationType.ROOT)) }
 }

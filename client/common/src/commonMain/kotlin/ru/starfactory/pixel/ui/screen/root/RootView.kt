@@ -11,6 +11,7 @@ import ru.starfactory.core.compose.LocalConfigurationHolder
 import ru.starfactory.core.navigation.ui.NavigationContentView
 import ru.starfactory.core.permission.ui.PermissionView
 import ru.starfactory.core.uikit.theme.PixelTheme
+import ru.starfactory.pixel.keep_screen_on.ui.KeepScreenOnView
 import ru.starfactory.pixel.theming.ui.theme.ThemeView
 
 @Composable
@@ -19,6 +20,7 @@ fun RootView(rootComponent: RootComponent) {
     LocalConfigurationHolder {
 
         PermissionView(rootComponent.permissionViewModel)
+        KeepScreenOnView(rootComponent.keepScreenOnViewModel)
 
         ThemeView(rootComponent.themeViewModel) {
             Surface(

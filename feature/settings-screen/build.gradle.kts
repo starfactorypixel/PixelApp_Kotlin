@@ -9,6 +9,7 @@ kotlin {
         named("commonMain") {
             dependencies {
                 implementation(project(":feature:ecu-connection"))
+                implementation(project(":feature:keep-screen-on"))
             }
         }
     }

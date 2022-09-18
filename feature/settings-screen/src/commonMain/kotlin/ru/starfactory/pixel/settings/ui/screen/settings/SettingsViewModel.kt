@@ -3,25 +3,24 @@ package ru.starfactory.pixel.settings.ui.screen.settings
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import ru.starfactory.core.decompose.view_model.ViewModel
 import ru.starfactory.core.navigation.Screen
 import ru.starfactory.pixel.ecu_connection.ui.screen.select_source.SelectSourceScreen
+import ru.starfactory.pixel.keep_screen_on.domain.KeepScreenOnInteractor
 import ru.starfactory.pixel.settings.ui.screen.settings.SettingsViewState.MenuItem
 import ru.starfactory.pixel.settings.ui.screen.settings.SettingsViewState.MenuItemId
 import ru.starfactory.pixel.settings.ui.screen.settings.SettingsViewState.MenuItemState
 
 internal class SettingsViewModel(
+    private val keepScreenOnInteractor: KeepScreenOnInteractor,
     private val rootNavigation: StackNavigation<Screen>,
 ) : ViewModel() {
 
-    private val alwaysOnState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
-    val state = alwaysOnState.map { getState(it) }
+    val state = keepScreenOnInteractor.observeIsScreenAlwaysOn().map { getState(it) }
         .stateIn(viewModelScope, SharingStarted.Eagerly, SettingsViewState.Loading)
 
     fun onCLickClose() {
@@ -48,7 +47,10 @@ internal class SettingsViewModel(
             MenuItemId.LICENSE -> Unit
             MenuItemId.ABOUT -> Unit
             MenuItemId.ALWAYS_ON_DISPLAY -> {
-                alwaysOnState.update { (menuItem.state as MenuItemState.SwitcherState).isEnabled.not() }
+                viewModelScope.launch {
+                    val newState = (menuItem.state as MenuItemState.SwitcherState).isEnabled.not()
+                    keepScreenOnInteractor.setIsScreenAlwaysOn(newState)
+                }
             }
         }
     }

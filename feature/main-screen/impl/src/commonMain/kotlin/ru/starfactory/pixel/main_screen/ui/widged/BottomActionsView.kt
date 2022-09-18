@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Power
 import androidx.compose.material.icons.filled.Settings
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import ru.starfactory.core.compose.Configuration
 import ru.starfactory.core.compose.LocalConfiguration
 import ru.starfactory.core.uikit.theme.PixelTheme
+import ru.starfactory.core.uikit.view.AutoSizeText
 import ru.starfactory.core.uikit.widget.PWBottomMenuAction
 import ru.starfactory.core.uikit.widget.PWBottomMenuActionOrientation
 
@@ -93,7 +93,7 @@ private fun BottomActionFlat(text: String, modifier: Modifier = Modifier) {
                 contentDescription = null,
                 Modifier.size(32.dp)
             )
-            Text(
+            AutoSizeText(
                 text,
                 Modifier.padding(top = 8.dp),
                 textAlign = TextAlign.Center

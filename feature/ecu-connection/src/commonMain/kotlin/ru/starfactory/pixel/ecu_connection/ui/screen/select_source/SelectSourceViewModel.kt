@@ -1,10 +1,13 @@
 package ru.starfactory.pixel.ecu_connection.ui.screen.select_source
 
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.pop
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ru.starfactory.core.decompose.view_model.ViewModel
+import ru.starfactory.core.navigation.Screen
 import ru.starfactory.core.serial.bluetooth.domain.BluetoothSerialDevicesProvider
 import ru.starfactory.pixel.ecu_connection.domain.source.EcuSourceInteractor
 import ru.starfactory.pixel.ecu_connection.domain.source.Source
@@ -12,6 +15,7 @@ import ru.starfactory.pixel.ecu_connection.domain.source.Source
 internal class SelectSourceViewModel(
     private val ecuSourceInteractor: EcuSourceInteractor,
     private val bluetoothSerialInteractor: BluetoothSerialDevicesProvider,
+    private val rootNavigation: StackNavigation<Screen>,
 ) : ViewModel() {
     val state = combine(
         ecuSourceInteractor.observeSources(),
@@ -33,6 +37,10 @@ internal class SelectSourceViewModel(
         viewModelScope.launch {
             bluetoothSerialInteractor.requestConnectPermission()
         }
+    }
+
+    fun onCLickClose() {
+        rootNavigation.pop()
     }
 }
 

@@ -59,5 +59,5 @@ private fun Set<AndroidBluetoothDevice>.toBluetoothDevices() = map { it.toBlueto
 private fun AndroidBluetoothDevice.toBluetoothDevice() = BluetoothDevice(
     address = this.address,
     name = this.name,
-    channels = this.uuids.map { it.uuid }
+    channels = this.uuids?.map { it.uuid } ?: emptyList()
 )

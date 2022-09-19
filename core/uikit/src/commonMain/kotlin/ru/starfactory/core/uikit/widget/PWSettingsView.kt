@@ -48,6 +48,7 @@ fun PWSettingsView(
             Modifier
                 .align(Alignment.BottomStart)
                 .padding(16.dp),
+            orientation = PWBottomMenuActionOrientation.Vertical,
             onClick = onClickClose,
             borderColor = PixelTheme.colors.error
         )

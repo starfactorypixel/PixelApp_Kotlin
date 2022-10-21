@@ -7,6 +7,8 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.drawable.toBitmap
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 internal class AndroidAppsInteractor(
@@ -32,6 +34,11 @@ internal class AndroidAppsInteractor(
             .associateBy { it.id }
             .values
             .toList()
+    }
+
+    override fun observeApps(): Flow<List<AppInfo>> {
+        // TODO write normal flow solution
+        return flow { emit(getApps()) }
     }
 
     override suspend fun getIcon(appInfo: AppInfo): ImageBitmap = withContext(Dispatchers.IO) {

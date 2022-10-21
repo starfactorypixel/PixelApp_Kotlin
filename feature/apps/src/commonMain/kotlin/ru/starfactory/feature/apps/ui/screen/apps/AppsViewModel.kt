@@ -1,10 +1,11 @@
 package ru.starfactory.feature.apps.ui.screen.apps
 
 import androidx.compose.ui.graphics.ImageBitmap
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import ru.starfactory.core.apps.domain.AppInfo
 import ru.starfactory.core.apps.domain.AppsInteractor
 import ru.starfactory.core.decompose.view_model.ViewModel
@@ -12,11 +13,25 @@ import ru.starfactory.core.decompose.view_model.ViewModel
 internal class AppsViewModel(
     private val appsInteractor: AppsInteractor,
 ) : ViewModel() {
-    val state = flow { emit(appsInteractor.getApps()) }
-        .map { AppsViewState.ListApps(it) }
+    private val favorites = MutableStateFlow(emptySet<String>())
+
+    val state = combine(appsInteractor.observeApps(), favorites) { apps, favorites ->
+        val sortedApps = apps.groupBy { it.id in favorites }
+        AppsViewState.ListApps(
+            favoriteApps = sortedApps[true] ?: emptyList(),
+            apps = sortedApps[false] ?: emptyList(),
+        )
+    }
         .stateIn(viewModelScope, SharingStarted.Eagerly, AppsViewState.Loading)
 
     suspend fun getIcon(app: AppInfo): ImageBitmap = appsInteractor.getIcon(app)
 
     fun onClickApp(app: AppInfo) = appsInteractor.launchApp(app)
+    fun onClickAddAppToFavorite(app: AppInfo) {
+        favorites.update { it + app.id }
+    }
+
+    fun onClickRemoveAppFromFavorite(app: AppInfo) {
+        favorites.update { it - app.id }
+    }
 }

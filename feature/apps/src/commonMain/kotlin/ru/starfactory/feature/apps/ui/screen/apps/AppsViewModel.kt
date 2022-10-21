@@ -17,4 +17,6 @@ internal class AppsViewModel(
         .stateIn(viewModelScope, SharingStarted.Eagerly, AppsViewState.Loading)
 
     suspend fun getIcon(app: AppInfo): ImageBitmap = appsInteractor.getIcon(app)
+
+    fun onClickApp(app: AppInfo) = appsInteractor.launchApp(app)
 }

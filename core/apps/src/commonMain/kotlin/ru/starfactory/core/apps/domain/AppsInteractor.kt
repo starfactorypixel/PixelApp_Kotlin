@@ -10,4 +10,5 @@ interface AppsInteractor {
 
     suspend fun getApps(): List<AppInfo>
     suspend fun getIcon(appInfo: AppInfo): ImageBitmap
+    fun launchApp(appInfo: AppInfo)
 }

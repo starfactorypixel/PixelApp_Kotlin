@@ -29,19 +29,27 @@ import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsets
 @Composable
 internal fun AppsView(viewModel: AppsViewModel) {
     val state by viewModel.state.collectAsState()
-    AppsContent(state, viewModel::getIcon)
+    AppsContent(state, viewModel::getIcon, viewModel::onClickApp)
 }
 
 @Composable
-private fun AppsContent(state: AppsViewState, iconLoader: suspend (AppInfo) -> ImageBitmap) {
+private fun AppsContent(
+    state: AppsViewState,
+    iconLoader: suspend (AppInfo) -> ImageBitmap,
+    onClickApp: (AppInfo) -> Unit,
+) {
     return when (state) {
-        is AppsViewState.ListApps -> ListAppsContent(state, iconLoader)
+        is AppsViewState.ListApps -> ListAppsContent(state, iconLoader, onClickApp)
         AppsViewState.Loading -> Unit // Loading is very fast
     }
 }
 
 @Composable
-private fun ListAppsContent(state: AppsViewState.ListApps, iconLoader: suspend (AppInfo) -> ImageBitmap) {
+private fun ListAppsContent(
+    state: AppsViewState.ListApps,
+    iconLoader: suspend (AppInfo) -> ImageBitmap,
+    onClickApp: (AppInfo) -> Unit,
+) {
     val mainMenuInsets = LocalMainMenuInsets.current
     if (!mainMenuInsets.isPositioned) return
 
@@ -57,13 +65,17 @@ private fun ListAppsContent(state: AppsViewState.ListApps, iconLoader: suspend (
         contentPadding = PaddingValues(24.dp)
     ) {
         items(apps, key = { it.id }) {
-            AppContent(it, iconLoader)
+            AppContent(it, iconLoader, onClickApp)
         }
     }
 }
 
 @Composable
-private fun AppContent(app: AppInfo, iconLoader: suspend (AppInfo) -> ImageBitmap) {
+private fun AppContent(
+    app: AppInfo,
+    iconLoader: suspend (AppInfo) -> ImageBitmap,
+    onClickApp: (AppInfo) -> Unit,
+) {
     val icon by flow { emit(iconLoader(app)) }
         .collectAsState(null)
 
@@ -71,7 +83,7 @@ private fun AppContent(app: AppInfo, iconLoader: suspend (AppInfo) -> ImageBitma
         Modifier
             .fillMaxSize()
             .clip(MaterialTheme.shapes.medium)
-            .clickable { }
+            .clickable { onClickApp(app) }
             .padding(8.dp)
     ) {
         if (icon != null) {

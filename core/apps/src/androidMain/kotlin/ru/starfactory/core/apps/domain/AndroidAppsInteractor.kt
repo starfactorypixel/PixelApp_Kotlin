@@ -9,7 +9,9 @@ import androidx.core.graphics.drawable.toBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-internal class AndroidAppsInteractor(context: Context) : AppsInteractor {
+internal class AndroidAppsInteractor(
+    private val context: Context
+) : AppsInteractor {
     private val pm: PackageManager = context.packageManager
     override val isAvailable: Boolean = true
 
@@ -37,5 +39,10 @@ internal class AndroidAppsInteractor(context: Context) : AppsInteractor {
         pm.getApplicationIcon(androidAppInfo)
             .toBitmap()
             .asImageBitmap()
+    }
+
+    override fun launchApp(appInfo: AppInfo) {
+        val intent = pm.getLaunchIntentForPackage(appInfo.id)
+        context.startActivity(intent)
     }
 }

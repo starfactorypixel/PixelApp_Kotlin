@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,26 +20,28 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.flow.flow
 import ru.starfactory.core.apps.domain.AppInfo
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsets
 
 @Composable
 internal fun AppsView(viewModel: AppsViewModel) {
     val state by viewModel.state.collectAsState()
-    AppsContent(state)
+    AppsContent(state, viewModel::getIcon)
 }
 
 @Composable
-private fun AppsContent(state: AppsViewState) {
+private fun AppsContent(state: AppsViewState, iconLoader: suspend (AppInfo) -> ImageBitmap) {
     return when (state) {
-        is AppsViewState.ListApps -> ListAppsContent(state)
+        is AppsViewState.ListApps -> ListAppsContent(state, iconLoader)
         AppsViewState.Loading -> Unit // Loading is very fast
     }
 }
 
 @Composable
-private fun ListAppsContent(state: AppsViewState.ListApps) {
+private fun ListAppsContent(state: AppsViewState.ListApps, iconLoader: suspend (AppInfo) -> ImageBitmap) {
     val mainMenuInsets = LocalMainMenuInsets.current
     if (!mainMenuInsets.isPositioned) return
 
@@ -54,13 +57,16 @@ private fun ListAppsContent(state: AppsViewState.ListApps) {
         contentPadding = PaddingValues(24.dp)
     ) {
         items(apps, key = { it.id }) {
-            AppContent(it)
+            AppContent(it, iconLoader)
         }
     }
 }
 
 @Composable
-private fun AppContent(app: AppInfo) {
+private fun AppContent(app: AppInfo, iconLoader: suspend (AppInfo) -> ImageBitmap) {
+    val icon by flow { emit(iconLoader(app)) }
+        .collectAsState(null)
+
     Row(
         Modifier
             .fillMaxSize()
@@ -68,7 +74,11 @@ private fun AppContent(app: AppInfo) {
             .clickable { }
             .padding(8.dp)
     ) {
-        Image(app.icon, null, Modifier.size(64.dp))
+        if (icon != null) {
+            Image(icon!!, null, Modifier.size(64.dp))
+        } else {
+            Spacer(Modifier.size(64.dp))
+        }
         Text(
             app.name,
             Modifier.padding(start = 12.dp).align(Alignment.CenterVertically)

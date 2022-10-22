@@ -13,12 +13,15 @@ import ru.starfactory.core.decompose.view_model.ViewModel
 internal class AppsViewModel(
     private val appsInteractor: AppsInteractor,
 ) : ViewModel() {
-    private val favorites = MutableStateFlow(emptySet<String>())
+    private val favorites = MutableStateFlow(emptyList<String>())
 
     val state = combine(appsInteractor.observeApps(), favorites) { apps, favorites ->
         val sortedApps = apps.groupBy { it.id in favorites }
+        // TODO это конечно максимально костыльная сортировка, нужно написать что то не за O(много)
+        val favoritesSet = (sortedApps[true] ?: emptyList()).associateBy { it.id }
+        val sortedFavorites = favorites.mapNotNull { favoritesSet[it] }
         AppsViewState.ListApps(
-            favoriteApps = sortedApps[true] ?: emptyList(),
+            favoriteApps = sortedFavorites,
             apps = sortedApps[false] ?: emptyList(),
         )
     }

@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.flow
 import ru.starfactory.core.apps.domain.AppInfo
+import ru.starfactory.core.uikit.utils.header
 import ru.starfactory.pixel.main_screen.ui.main_menu_insets.LocalMainMenuInsets
 
 @Composable
@@ -84,8 +85,16 @@ private fun ListAppsContent(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(24.dp)
     ) {
-        items(favoriteApps, key = { it.id }) {
-            AppContent(it, true, iconLoader, onClickApp, onClickRemoveAppFromFavorite)
+        if (favoriteApps.isNotEmpty()) {
+            header {
+                Text("Favorites")
+            }
+            items(favoriteApps, key = { it.id }) {
+                AppContent(it, true, iconLoader, onClickApp, onClickRemoveAppFromFavorite)
+            }
+            header {
+                Text("Other")
+            }
         }
         items(apps, key = { it.id }) {
             AppContent(it, false, iconLoader, onClickApp, onClickAddAppToFavorite)

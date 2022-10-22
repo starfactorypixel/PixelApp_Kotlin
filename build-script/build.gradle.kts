@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.gradlePlugins.android)
     implementation(libs.gradlePlugins.jb.compose)
     implementation(libs.gradlePlugins.checkUpdates)
+    implementation(libs.gradlePlugins.sqldelight)
     implementation(libs.gradlePlugins.detekt)
 
     implementation(libs.gradlePlugins.google.services)

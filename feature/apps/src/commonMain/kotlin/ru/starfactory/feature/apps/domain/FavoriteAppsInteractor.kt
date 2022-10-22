@@ -11,6 +11,7 @@ internal interface FavoriteAppsInteractor {
 }
 
 class FavoriteAppsInteractorImpl : FavoriteAppsInteractor {
+    // TODO add database for this
     private val favorites = MutableStateFlow(emptyList<String>())
     override fun observeFavoriteAppIds(): Flow<List<String>> {
         return favorites

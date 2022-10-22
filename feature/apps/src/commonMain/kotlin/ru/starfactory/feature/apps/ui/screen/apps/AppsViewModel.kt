@@ -1,21 +1,21 @@
 package ru.starfactory.feature.apps.ui.screen.apps
 
 import androidx.compose.ui.graphics.ImageBitmap
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import ru.starfactory.core.apps.domain.AppInfo
 import ru.starfactory.core.apps.domain.AppsInteractor
 import ru.starfactory.core.decompose.view_model.ViewModel
+import ru.starfactory.feature.apps.domain.FavoriteAppsInteractor
 
 internal class AppsViewModel(
     private val appsInteractor: AppsInteractor,
+    private val favoriteAppsInteractor: FavoriteAppsInteractor,
 ) : ViewModel() {
-    private val favorites = MutableStateFlow(emptyList<String>())
 
-    val state = combine(appsInteractor.observeApps(), favorites) { apps, favorites ->
+    val state = combine(appsInteractor.observeApps(), favoriteAppsInteractor.observeFavoriteAppIds()) { apps, favorites ->
         val sortedApps = apps.groupBy { it.id in favorites }
         // TODO это конечно максимально костыльная сортировка, нужно написать что то не за O(много)
         val favoritesSet = (sortedApps[true] ?: emptyList()).associateBy { it.id }
@@ -31,10 +31,10 @@ internal class AppsViewModel(
 
     fun onClickApp(app: AppInfo) = appsInteractor.launchApp(app)
     fun onClickAddAppToFavorite(app: AppInfo) {
-        favorites.update { it + app.id }
+        viewModelScope.launch { favoriteAppsInteractor.addAppIdToFavorite(app.id) }
     }
 
     fun onClickRemoveAppFromFavorite(app: AppInfo) {
-        favorites.update { it - app.id }
+        viewModelScope.launch { favoriteAppsInteractor.removeAppIdFromFavorite(app.id) }
     }
 }

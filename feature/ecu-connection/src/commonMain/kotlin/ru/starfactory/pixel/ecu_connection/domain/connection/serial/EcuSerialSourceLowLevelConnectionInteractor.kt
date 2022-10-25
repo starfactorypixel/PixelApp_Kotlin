@@ -43,7 +43,6 @@ internal interface EcuSerialSourceLowLevelConnectionInteractor {
     }
 }
 
-@Suppress("MagicNumber")
 internal class EcuSerialSourceLowLevelConnectionInteractorImpl(
     private val serialInteractor: SerialInteractor,
     private val serialDevice: SerialDevice,
@@ -67,7 +66,7 @@ internal class EcuSerialSourceLowLevelConnectionInteractorImpl(
                 Log.d(TAG) { "Connection error with $serialDevice" }
                 emit(Connection.Error(e))
             }
-            delay(2000)
+            delay(RECONNECTING_TIMEOUT)
             Log.d(TAG) { "Reconnecting to $serialDevice" }
             emit(Connection.Reconnecting)
         }
@@ -111,7 +110,7 @@ internal class EcuSerialSourceLowLevelConnectionInteractorImpl(
 
                 // Response ping
                 // TODO нужно тут добавить проверку, если давно нет пингов, закрывать соединение
-                if (msg.type == EcuMessage.Type.HANDSHAKE && msg.id == 0xFFFF) {
+                if (msg.type == EcuMessage.Type.HANDSHAKE && msg.id == HANDSHAKE_PING_ID) {
                     withEcuProtocol { ecuProtocol ->
                         ecuProtocol.writeMessage(msg)
                     }
@@ -139,5 +138,7 @@ internal class EcuSerialSourceLowLevelConnectionInteractorImpl(
 
     companion object {
         private val TAG = EcuSerialSourceLowLevelConnectionInteractor::class.simpleName!!
+        private const val RECONNECTING_TIMEOUT = 2000L
+        private const val HANDSHAKE_PING_ID = 0xFFFF
     }
 }

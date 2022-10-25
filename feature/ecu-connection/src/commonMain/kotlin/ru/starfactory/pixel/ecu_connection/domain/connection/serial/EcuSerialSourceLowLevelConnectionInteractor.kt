@@ -88,7 +88,7 @@ internal class EcuSerialSourceLowLevelConnectionInteractorImpl(
 
         val ecuProtocol = EcuProtocol(::sender)
 
-        val errorChannel = Channel<Exception>()
+        val errorChannel = Channel<Exception>(capacity = 1)
         val lock = Mutex()
         suspend fun withEcuProtocol(block: suspend (EcuProtocol) -> Unit) {
             return lock.withLock {
@@ -97,7 +97,7 @@ internal class EcuSerialSourceLowLevelConnectionInteractorImpl(
                 } catch (e: CancellationException) {
                     throw e
                 } catch (e: Exception) {
-                    errorChannel.send(e)
+                    errorChannel.trySend(e)
                     throw e
                 }
             }

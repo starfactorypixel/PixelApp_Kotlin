@@ -2,6 +2,7 @@ package ru.starfactory.pixel.ecu_protocol
 
 interface EcuProtocol {
     fun writeHandshake()
+    fun writeMessage(message: EcuMessage)
 
     companion object {
         operator fun invoke(sender: (EcuMessage) -> Unit): EcuProtocol = EcuProtocolImpl(sender)
@@ -37,7 +38,11 @@ internal class EcuProtocolImpl(
             type = EcuMessage.Type.HANDSHAKE,
             id = 0
         )
-        sender(msg)
+        writeMessage(msg)
+    }
+
+    override fun writeMessage(message: EcuMessage) {
+        sender(message)
     }
 
     companion object {

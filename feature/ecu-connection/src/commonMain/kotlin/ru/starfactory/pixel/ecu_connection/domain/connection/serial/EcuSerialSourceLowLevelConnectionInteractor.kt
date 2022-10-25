@@ -6,6 +6,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.shareIn
@@ -13,6 +14,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import ru.starfactory.core.coroutines.shareDefault
 import ru.starfactory.core.logger.Log
+import ru.starfactory.core.serial.domain.SerialConnection
 import ru.starfactory.core.serial.domain.SerialDevice
 import ru.starfactory.core.serial.domain.SerialInteractor
 import ru.starfactory.pixel.ecu_connection.domain.connection.serial.EcuSerialSourceLowLevelConnectionInteractor.Connection
@@ -20,6 +22,10 @@ import ru.starfactory.pixel.ecu_protocol.EcuMessage
 import ru.starfactory.pixel.ecu_protocol.EcuProtocol
 import ru.starfactory.pixel.ecu_protocol.EcuProtocolRaw
 
+/**
+ * Low level protocol interactor
+ * Initialize connection, error retry, ping check
+ */
 internal interface EcuSerialSourceLowLevelConnectionInteractor {
     fun observeConnection(): Flow<Connection>
 
@@ -49,60 +55,9 @@ internal class EcuSerialSourceLowLevelConnectionInteractorImpl(
 
         while (true) {
             try {
-                serialInteractor.connect(serialDevice) {
-                    coroutineScope {
-                        Log.d(TAG) { "Connected to $serialDevice" }
-
-                        val ecuProtocolRaw = EcuProtocolRaw(it.inputStream, it.outputStream)
-
-                        fun sender(msg: EcuMessage) {
-                            Log.t(TAG) { "Msg to $serialDevice: $msg" }
-                            ecuProtocolRaw.writeMessage(msg)
-                        }
-
-                        val ecuProtocol = EcuProtocol(::sender)
-
-                        val errorChannel = Channel<Exception>()
-                        val lock = Mutex()
-                        suspend fun withEcuProtocol(block: suspend (EcuProtocol) -> Unit) {
-                            return lock.withLock {
-                                try {
-                                    block(ecuProtocol)
-                                } catch (e: CancellationException) {
-                                    throw e
-                                } catch (e: Exception) {
-                                    errorChannel.send(e)
-                                    throw e
-                                }
-                            }
-                        }
-
-                        val receiveChannel = flow {
-                            while (true) {
-                                val msg = ecuProtocolRaw.readMessage()
-                                Log.t(TAG) { "Msg from $serialDevice: $msg" }
-
-                                if (msg.type == EcuMessage.Type.HANDSHAKE && msg.id == 0xFFFF) {
-                                    withEcuProtocol {
-                                        it.writeHandshake()
-                                    }
-                                }
-
-                                emit(msg)
-                            }
-                        }.shareIn(this, SharingStarted.Eagerly, 0)
-
-                        ecuProtocol.writeHandshake()
-
-                        emit(
-                            object : Connection.Connected {
-                                override fun observeMessages(): Flow<EcuMessage> = receiveChannel
-                                override suspend fun withEcuProtocol(block: suspend (EcuProtocol) -> Unit) = withEcuProtocol(block)
-                            }
-                        )
-
-                        throw errorChannel.receive()
-                    }
+                serialInteractor.connect(serialDevice) { connection ->
+                    Log.d(TAG) { "Connected to $serialDevice" }
+                    processConnection(this, connection)
                 }
             } catch (e: CancellationException) {
                 throw e
@@ -116,6 +71,64 @@ internal class EcuSerialSourceLowLevelConnectionInteractorImpl(
         }
     }
         .shareDefault(scope)
+
+    @Suppress("TooGenericExceptionCaught")
+    private suspend fun processConnection(
+        collector: FlowCollector<Connection>,
+        connection: SerialConnection
+    ): Unit = coroutineScope {
+
+        val ecuProtocolRaw = EcuProtocolRaw(connection.inputStream, connection.outputStream)
+
+        fun sender(msg: EcuMessage) {
+            Log.t(TAG) { "Msg to $serialDevice: $msg" }
+            ecuProtocolRaw.writeMessage(msg)
+        }
+        val ecuProtocol = EcuProtocol(::sender)
+
+        val errorChannel = Channel<Exception>()
+        val lock = Mutex()
+        suspend fun withEcuProtocol(block: suspend (EcuProtocol) -> Unit) {
+            return lock.withLock {
+                try {
+                    block(ecuProtocol)
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    errorChannel.send(e)
+                    throw e
+                }
+            }
+        }
+
+        val receiveChannel = flow {
+            while (true) {
+                val msg = ecuProtocolRaw.readMessage()
+                Log.t(TAG) { "Msg from $serialDevice: $msg" }
+
+                // Response ping
+                // TODO нужно тут добавить проверку, если давно нет пингов, закрывать соединение
+                if (msg.type == EcuMessage.Type.HANDSHAKE && msg.id == 0xFFFF) {
+                    withEcuProtocol { ecuProtocol ->
+                        ecuProtocol.writeMessage(msg)
+                    }
+                }
+
+                emit(msg)
+            }
+        }.shareIn(this, SharingStarted.Eagerly, 0)
+
+        ecuProtocol.writeHandshake()
+
+        collector.emit(
+            object : Connection.Connected {
+                override fun observeMessages(): Flow<EcuMessage> = receiveChannel
+                override suspend fun withEcuProtocol(block: suspend (EcuProtocol) -> Unit) = withEcuProtocol(block)
+            }
+        )
+
+        throw errorChannel.receive()
+    }
 
     override fun observeConnection(): Flow<Connection> {
         return connectionObservable

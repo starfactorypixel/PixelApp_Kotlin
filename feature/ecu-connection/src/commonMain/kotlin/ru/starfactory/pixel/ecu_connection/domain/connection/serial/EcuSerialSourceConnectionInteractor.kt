@@ -1,125 +1,76 @@
 package ru.starfactory.pixel.ecu_connection.domain.connection.serial
 
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.retry
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
+import kotlinx.coroutines.withContext
 import ru.starfactory.core.coroutines.shareDefault
-import ru.starfactory.core.logger.Log
-import ru.starfactory.core.serial.domain.SerialDevice
-import ru.starfactory.core.serial.domain.SerialInteractor
 import ru.starfactory.pixel.ecu_connection.domain.connection.EcuPrimaryState
 import ru.starfactory.pixel.ecu_connection.domain.connection.EcuSourceConnectionInteractor
-import ru.starfactory.pixel.ecu_protocol.EcuProtocol
-import ru.starfactory.pixel.ecu_protocol.EcuProtocolRaw
+import ru.starfactory.pixel.ecu_connection.domain.connection.serial.EcuSerialSourceLowLevelConnectionInteractor.Connection
+import ru.starfactory.pixel.ecu_protocol.EcuMessage
+import java.nio.ByteBuffer
 
 internal interface EcuSerialSourceConnectionInteractor : EcuSourceConnectionInteractor
 
 @Suppress("MagicNumber")
 internal class EcuSerialSourceConnectionInteractorImpl(
-    private val serialInteractor: SerialInteractor,
-    private val serialDevice: SerialDevice,
+    private val ll: EcuSerialSourceLowLevelConnectionInteractor,
     private val scope: CoroutineScope,
 ) : EcuSerialSourceConnectionInteractor {
 
-    @Suppress("TooGenericExceptionCaught")
-    private val connectionObservable = flow {
-        emit(Connection.Connecting)
-        Log.d(TAG) { "Start connection to $serialDevice" }
-
-        while (true) {
-            try {
-                serialInteractor.connect(serialDevice) {
-                    Log.d(TAG) { "Connected to $serialDevice" }
-
-                    val ecuProtocol = EcuProtocol(EcuProtocolRaw(it.inputStream, it.outputStream))
-                    val lock = Mutex()
-
-                    val errorChannel = Channel<Exception>()
-
-                    emit(
-                        object : Connection.Connected {
-                            override suspend fun <T> withEcuProtocol(block: suspend (EcuProtocol) -> T): T {
-                                return lock.withLock {
-                                    try {
-                                        block(ecuProtocol)
-                                    } catch (e: CancellationException) {
-                                        throw e
-                                    } catch (e: Exception) {
-                                        errorChannel.send(e)
-                                        throw e
-                                    }
-                                }
-                            }
-                        }
-                    )
-
-                    throw errorChannel.receive()
-                }
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Log.d(TAG) { "Connection error with $serialDevice" }
-                emit(Connection.Error(e))
-            }
-            delay(2000)
-            Log.d(TAG) { "Reconnecting to $serialDevice" }
-            emit(Connection.Reconnecting)
-        }
-    }
-        .shareDefault(scope)
+    private val speed = createUByteSubscriptionFlow(125)
+    private val voltage = createUIntSubscriptionFlow(174)
 
     override fun observePrimaryState(): Flow<EcuPrimaryState> {
-        return connectionObservable
-            .flatMapLatest { connection ->
-                if (connection is Connection.Connected) {
-                    flow {
-                        while (true) {
-                            val ecuPrimaryState = connection.withEcuProtocol { ecuProtocol ->
-                                val speed = ecuProtocol.readUByteRegister(125)
-                                val voltage = ecuProtocol.readUIntRegister(174)
+        return combine(speed, voltage) { seed, voltage ->
+            EcuPrimaryState(seed.toInt(), voltage.toFloat() / 1000)
+        }
+    }
 
-                                EcuPrimaryState(
-                                    speed = speed.toInt(),
-                                    batteryCharge = voltage.toFloat() / 1000, // TODO this not a charge I know
-                                )
+    private fun createUByteSubscriptionFlow(id: Int): Flow<UByte> = createRawSubscriptionFlow(id) { it.get().toUByte() }
+    private fun createUIntSubscriptionFlow(id: Int): Flow<UInt> = createRawSubscriptionFlow(id) { it.int.toUInt() }
+    private fun <T> createRawSubscriptionFlow(id: Int, dataMapper: (ByteBuffer) -> T): Flow<T> {
+        return ll.observeConnection().flatMapLatest { connection ->
+            if (connection is Connection.Connected) {
+                channelFlow {
+
+                    val listenJob = launch {
+                        connection.observeMessages().collect {
+                            if ((it.type == EcuMessage.Type.SUBSCRIPTIONS || it.type == EcuMessage.Type.EVENT) && it.id == id) {
+                                channel.send(it.data)
                             }
-
-                            emit(ecuPrimaryState)
-
-                            delay(1000)
                         }
                     }
-                } else {
-                    emptyFlow()
+
+                    try {
+                        connection.withEcuProtocol { ecuProtocol ->
+                            ecuProtocol.subscribe(id)
+                        }
+                        listenJob.join()
+                    } finally {
+                        withContext(NonCancellable) {
+                            connection.withEcuProtocol { ecuProtocol ->
+                                ecuProtocol.unsubscribe(id)
+                            }
+                        }
+                    }
                 }
+            } else {
+                emptyFlow()
             }
-            .retry { true }
-            .onStart { emit(EcuPrimaryState(0, 0f)) }
-            .flowOn(Dispatchers.IO)
-    }
-
-    private sealed interface Connection {
-        object Connecting : Connection
-        interface Connected : Connection {
-            suspend fun <T> withEcuProtocol(block: suspend (EcuProtocol) -> T): T
         }
-
-        data class Error(val reason: Exception) : Connection
-        object Reconnecting : Connection
-    }
-
-    companion object {
-        private val TAG = EcuSerialSourceConnectionInteractor::class.simpleName!!
+            .map { dataMapper(ByteBuffer.wrap(it)) }
+            .retry { true }
+            .shareDefault(scope + Dispatchers.IO)
     }
 }

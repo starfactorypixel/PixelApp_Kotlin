@@ -1,42 +1,48 @@
 package ru.starfactory.pixel.ecu_protocol
 
-import java.nio.ByteBuffer
-
 interface EcuProtocol {
-    fun readUIntRegister(registerId: Int): UInt
-    fun readUByteRegister(registerId: Int): UByte
+    fun writeHandshake()
+    fun subscribe(id: Int)
+    fun unsubscribe(id: Int)
+    fun writeMessage(message: EcuMessage)
 
     companion object {
-        operator fun invoke(raw: EcuProtocolRaw): EcuProtocol = EcuProtocolImpl(raw)
+        operator fun invoke(sender: (EcuMessage) -> Unit): EcuProtocol = EcuProtocolImpl(sender)
     }
 }
 
 internal class EcuProtocolImpl(
-    private val raw: EcuProtocolRaw
+    private val sender: (EcuMessage) -> Unit
 ) : EcuProtocol {
-    override fun readUIntRegister(registerId: Int): UInt {
-        val raw = readRegister(registerId)
-        check(raw.remaining() == INT_SIZE) { "Wrong data size ${raw.remaining()}" }
-        return raw.int.toUInt()
-    }
-
-    override fun readUByteRegister(registerId: Int): UByte {
-        val raw = readRegister(registerId)
-        check(raw.remaining() == BYTE_SIZE) { "Wrong data size ${raw.remaining()}" }
-        return raw.get().toUByte()
-    }
-
-    private fun readRegister(registerId: Int): ByteBuffer {
-        val request = EcuMessage(
-            type = EcuMessage.Type.BUFFER,
-            id = registerId
+    override fun writeHandshake() {
+        val msg = EcuMessage(
+            type = EcuMessage.Type.HANDSHAKE,
+            id = 0
         )
-        raw.writeMessage(request)
-        return ByteBuffer.wrap(raw.readMessage().data)
+        writeMessage(msg)
+    }
+
+    override fun subscribe(id: Int) {
+        val msg = EcuMessage(
+            type = EcuMessage.Type.SUBSCRIPTIONS,
+            id = id
+        )
+        writeMessage(msg)
+    }
+
+    override fun unsubscribe(id: Int) {
+        val msg = EcuMessage(
+            type = EcuMessage.Type.SUBSCRIPTIONS,
+            id = id or UNSUBSCRIBE_MASK
+        )
+        writeMessage(msg)
+    }
+
+    override fun writeMessage(message: EcuMessage) {
+        sender(message)
     }
 
     companion object {
-        private const val BYTE_SIZE = 1
-        private const val INT_SIZE = 4
+        const val UNSUBSCRIBE_MASK = 0x8000
     }
 }

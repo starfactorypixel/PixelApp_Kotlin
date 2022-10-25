@@ -2,8 +2,6 @@ package ru.starfactory.pixel.ecu_protocol
 
 @Suppress("MagicNumber")
 data class EcuMessage(
-    val transport: Transport = Transport.Raw,
-    val haveAdditionalData: Boolean = false,
     val type: Type,
     val id: Int,
     val data: ByteArray = ByteArray(0),
@@ -12,16 +10,13 @@ data class EcuMessage(
         MIRROR(0x00),
         BUFFER(0x01),
         CAN(0x02),
+
+        HANDSHAKE(0x10),
+        SUBSCRIPTIONS(0x11),
+
+        EVENT(0x15),
+
         ERROR(0x1E),
-        ;
-
-        companion object
-    }
-
-    enum class Transport(val raw: Int) {
-        Raw(0x0),
-        RS485(0x1),
-        Bluetooth(0x2),
         ;
 
         companion object
@@ -33,8 +28,6 @@ data class EcuMessage(
 
         other as EcuMessage
 
-        if (transport != other.transport) return false
-        if (haveAdditionalData != other.haveAdditionalData) return false
         if (type != other.type) return false
         if (id != other.id) return false
         if (!data.contentEquals(other.data)) return false
@@ -43,9 +36,7 @@ data class EcuMessage(
     }
 
     override fun hashCode(): Int {
-        var result = transport.hashCode()
-        result = 31 * result + haveAdditionalData.hashCode()
-        result = 31 * result + type.hashCode()
+        var result = type.hashCode()
         result = 31 * result + id
         result = 31 * result + data.contentHashCode()
         return result

@@ -10,7 +10,7 @@ import ru.starfactory.core.coroutines.shareDefault
 interface SerialInteractor {
     fun observeSerialDevices(): Flow<List<SerialDevice>>
     fun observeSerialDevice(id: String): Flow<SerialDevice?>
-    suspend fun connect(serialDevice: SerialDevice, block: suspend CoroutineScope.(SerialConnection) -> Unit)
+    suspend fun connect(serialDevice: SerialDevice, block: suspend (SerialConnection) -> Unit)
 }
 
 internal class SerialInteractorImpl(
@@ -33,7 +33,7 @@ internal class SerialInteractorImpl(
             .distinctUntilChanged()
     }
 
-    override suspend fun connect(serialDevice: SerialDevice, block: suspend CoroutineScope.(SerialConnection) -> Unit) {
+    override suspend fun connect(serialDevice: SerialDevice, block: suspend (SerialConnection) -> Unit) {
         providers[serialDevice.providerId]!!.connect(serialDevice.deviceId, block)
     }
 }

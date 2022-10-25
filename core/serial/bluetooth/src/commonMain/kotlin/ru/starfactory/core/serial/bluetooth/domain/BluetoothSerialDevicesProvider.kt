@@ -1,6 +1,5 @@
 package ru.starfactory.core.serial.bluetooth.domain
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.starfactory.core.bluetooth.domain.BluetoothInteractor
@@ -36,7 +35,7 @@ internal class BluetoothSerialDevicesProviderImpl(
             }
     }
 
-    override suspend fun connect(id: String, block: suspend CoroutineScope.(SerialConnection) -> Unit) {
+    override suspend fun connect(id: String, block: suspend (SerialConnection) -> Unit) {
         bluetoothInteractor.connect(id, SERIAL_UUID) {
             val serialConnection = object : SerialConnection {
                 override val inputStream: InputStream = it.inputStream

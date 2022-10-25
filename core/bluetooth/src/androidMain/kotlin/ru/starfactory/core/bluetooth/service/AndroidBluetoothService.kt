@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
@@ -33,7 +31,7 @@ class AndroidBluetoothService(context: Context) : BluetoothService {
     override suspend fun connect(
         address: String,
         channelId: UUID,
-        block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit
+        block: suspend (BluetoothService.BluetoothConnection) -> Unit
     ) {
         val device = bluetoothAdapter.getRemoteDevice(address)
         device.createRfcommSocketToServiceRecord(channelId).use { channel ->
@@ -46,9 +44,8 @@ class AndroidBluetoothService(context: Context) : BluetoothService {
                 override val inputStream: InputStream = channel.inputStream
                 override val outputStream: OutputStream = channel.outputStream
             }
-            coroutineScope {
-                block(this, connection)
-            }
+
+            block(connection)
         }
     }
 }

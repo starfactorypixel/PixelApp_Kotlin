@@ -28,11 +28,11 @@ internal class EcuSerialSourceConnectionInteractorImpl(
     private val scope: CoroutineScope,
 ) : EcuSerialSourceConnectionInteractor {
 
-    private val seed = createUByteSubscriptionFlow(125)
+    private val speed = createUByteSubscriptionFlow(125)
     private val voltage = createUIntSubscriptionFlow(174)
 
     override fun observePrimaryState(): Flow<EcuPrimaryState> {
-        return combine(seed, voltage) { seed, voltage ->
+        return combine(speed, voltage) { seed, voltage ->
             EcuPrimaryState(seed.toInt(), voltage.toFloat() / 1000)
         }
     }

@@ -2,6 +2,7 @@ package ru.starfactory.pixel.ecu_connection.domain.connection.serial
 
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.plus
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import ru.starfactory.core.coroutines.shareDefault
@@ -70,7 +72,7 @@ internal class EcuSerialSourceLowLevelConnectionInteractorImpl(
             emit(Connection.Reconnecting)
         }
     }
-        .shareDefault(scope)
+        .shareDefault(scope + Dispatchers.IO)
 
     @Suppress("TooGenericExceptionCaught")
     private suspend fun processConnection(
@@ -84,6 +86,7 @@ internal class EcuSerialSourceLowLevelConnectionInteractorImpl(
             Log.t(TAG) { "Msg to $serialDevice: $msg" }
             ecuProtocolRaw.writeMessage(msg)
         }
+
         val ecuProtocol = EcuProtocol(::sender)
 
         val errorChannel = Channel<Exception>()

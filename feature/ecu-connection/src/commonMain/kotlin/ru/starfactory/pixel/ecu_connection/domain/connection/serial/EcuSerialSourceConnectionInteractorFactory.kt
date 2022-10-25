@@ -18,7 +18,7 @@ internal class EcuSerialSourceConnectionInteractorFactoryImpl(
         val ll = EcuSerialSourceLowLevelConnectionInteractorImpl(
             serialInteractor, device, scope
         )
-        return EcuSerialSourceConnectionInteractorImpl(ll)
+        return EcuSerialSourceConnectionInteractorImpl(ll, scope)
     }
 
     companion object {

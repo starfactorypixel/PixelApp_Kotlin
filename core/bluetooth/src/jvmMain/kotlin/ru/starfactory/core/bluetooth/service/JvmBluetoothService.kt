@@ -1,6 +1,5 @@
 package ru.starfactory.core.bluetooth.service
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.starfactory.core.bluetooth.domain.BluetoothDevice
@@ -19,7 +18,7 @@ class JvmBluetoothService : BluetoothService {
     override suspend fun connect(
         address: String,
         channelId: UUID,
-        block: suspend CoroutineScope.(BluetoothService.BluetoothConnection) -> Unit
+        block: suspend (BluetoothService.BluetoothConnection) -> Unit
     ) {
         TODO("Not yet implemented")
     }

@@ -39,8 +39,6 @@ class EcuProtocolRaw(
         check(cfg2.toInt() ushr 7 and 0x1 == 1) { "Incorrect direction flag" }
 
         return EcuMessage(
-            transport = EcuMessage.Transport.fromRaw(cfg1.toInt() ushr 3 and 0x4),
-            haveAdditionalData = cfg2.toInt() ushr 6 and 0x1 == 1,
             type = EcuMessage.Type.fromRaw(cfg2.toInt() and 0x1f),
             id = id,
             data = data
@@ -50,7 +48,7 @@ class EcuProtocolRaw(
     fun writeMessage(message: EcuMessage) {
         o.writeByte(START_BYTE)
         o.resetCrc()
-        o.writeByte(((PROTOCOL_VERSION shl 5) or (message.transport.raw shl 3)).toByte())
+        o.writeByte((PROTOCOL_VERSION shl 5).toByte())
         o.writeByte(message.type.raw.toByte())
         o.writeShort(message.id.toShort())
         check(message.data.size <= MAX_DATA_LENGTH) { "Data size ${message.data.size} more that max data size" }
@@ -100,12 +98,7 @@ class EcuProtocolRaw(
     }
 
     companion object {
-        private val TRANSPORT_MAPPING = EcuMessage.Transport.values().associateBy { it.raw }
         private val TYPE_MAPPING = EcuMessage.Type.values().associateBy { it.raw }
-
-        private fun EcuMessage.Transport.Companion.fromRaw(raw: Int): EcuMessage.Transport {
-            return TRANSPORT_MAPPING[raw] ?: error("Unknown transport $raw")
-        }
 
         private fun EcuMessage.Type.Companion.fromRaw(raw: Int): EcuMessage.Type {
             return TYPE_MAPPING[raw] ?: error("Unknown type $raw")

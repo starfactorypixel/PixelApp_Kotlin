@@ -9,6 +9,9 @@ object Log {
     fun d(tag: String, message: String) = log(LogLevel.DEBUG, tag) { message }
     fun d(tag: String, message: () -> String) = log(LogLevel.DEBUG, tag, message)
 
+    fun t(tag: String, message: String) = log(LogLevel.TRACE, tag) { message }
+    fun t(tag: String, message: () -> String) = log(LogLevel.TRACE, tag, message)
+
     fun log(level: LogLevel, tag: String, message: () -> String) {
         LogConfig.loggers.forEach { it.log(level, tag, message) }
     }

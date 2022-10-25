@@ -15,7 +15,10 @@ internal class EcuSerialSourceConnectionInteractorFactoryImpl(
 ) : EcuSerialSourceConnectionInteractorFactory {
     override fun create(device: SerialDevice): EcuSerialSourceConnectionInteractor {
         Log.d(TAG) { "Creating instance for $device" }
-        return EcuSerialSourceConnectionInteractorImpl(serialInteractor, device, scope)
+        val ll = EcuSerialSourceLowLevelConnectionInteractorImpl(
+            serialInteractor, device, scope
+        )
+        return EcuSerialSourceConnectionInteractorImpl(ll)
     }
 
     companion object {
